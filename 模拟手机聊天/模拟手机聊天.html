@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟在线聊天</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+	<div class="top-line"></div>
+	<div class="content">
+		<ul id="list">
+			 <!--<li class="active-b"><i></i><span></span>我在这里</li>--> 
+		</ul>	
+	</div>
+	<div class="bottom-box">
+		<img src="images/img1.png" id="people-icon">
+		<input type="text" name="" id="text" />
+		<div id="btn">发送</div>
+	</div>
+	<a href="#" class="bottom-menu"></a>
+</div>
+
+<script>
+var peopleIcon = document.getElementById('people-icon');
+var onOff = true;
+peopleIcon.onclick = function (){
+	if(onOff){
+		peopleIcon.src = 'images/img2.png';
+		onOff = false;
+	}else{
+		peopleIcon.src = 'images/img1.png';
+		onOff = true;
+	}
+}
+var list = document.getElementById('list');
+var text = document.getElementById('text');
+var btn = document.getElementById('btn');
+
+btn.onclick = function (){
+	if(text.value == ''){
+		alert('您还没有输入内容，请先输入内容吧！')
+	}else{
+		if(onOff){
+			list.innerHTML = '<li class="active-a"><i></i><span></span>'+text.value+'</li>' + list.innerHTML;
+		}else{
+			list.innerHTML = '<li class="active-b"><i></i><span></span>'+text.value+'</li>' + list.innerHTML;
+		}
+	}
+}
+</script>
+</body>
+</html>

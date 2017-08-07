@@ -1,0 +1,147 @@
+/*
+* @Author: shen
+* @Date:   2017-06-13 17:52:22
+* @Last Modified by:   shen
+* @Last Modified time: 2017-06-14 10:53:20
+*/
+body{
+	background: #c1b2ce;
+	cursor: pointer;
+	font-size: 14px;
+	color: #fff;
+	font-family: "微软雅黑";
+	line-height: 1;
+}
+input{
+	border: none;
+	background: none;
+}
+.wrap{
+	width: 356px;
+	height: 679px;
+	border-radius: 20px;
+	background: #e7e5ef;
+	margin: 100px auto;
+	position: relative;
+	box-shadow: 6px 6px 30px #9877b5;
+}
+.wrap .top-line{
+	width: 58px;
+	height: 4px;
+	background: #a2a1a7;
+	border-radius: 1px;
+	position: absolute;
+	top: 22px;
+	left: 50%;
+	margin-left: -27px;
+}
+.wrap .content{
+	width: 322px;
+	height: 562px;
+	background: url(../images/bg.png) no-repeat;
+	position: absolute;
+	top: 45px;
+	left: 17px;
+}
+.bottom-box{
+	width: 318px;
+	height: 60px;
+	background: rgba(0,0,0,0.4);
+	position: absolute;
+	bottom: 74px;
+	left: 50%;
+	margin-left: -159px;
+}
+.bottom-box img{
+	float: left;
+	width: 34px;
+	height: 40px;
+	margin: 11px 0 0 17px;
+}
+#text{
+	float: left;
+	width: 190px;
+	height: 40px;
+	background: #fff;
+	border-radius: 5px;
+	margin: 11px 0 0 16px;
+	outline: none;
+	text-indent: 6px;
+	font: 14px/40px "微软雅黑";
+}
+#btn{
+	float: left;
+	font-size: 16px;
+	color: #e15671;
+	font-family: "微软雅黑";
+	line-height: 1;
+	margin: 22px 0 0 16px;
+	text-decoration: none;
+}
+.wrap .bottom-menu{
+	width: 50px;
+	height: 40px;
+	background: url(../images/logo.png) no-repeat;
+	position: absolute;
+	bottom: 15px;
+	left: 50%;
+	margin-left: -25px;
+}
+#list{
+	width: 278px;
+	height: 456px;
+	margin: 0px;
+	padding: 22px;
+	list-style: none;
+	color: #fff;
+	overflow: auto;
+}
+.active-a,.active-b{
+	width: 196px;
+	min-height: 27px;
+	line-height: 24px;
+	font-size: 14px;
+	padding: 8px 20px 5px 14px;
+	border-radius: 4px;
+	position: relative;
+
+	margin-bottom: 20px;
+}
+.active-a{
+	float: right;
+	background: rgba(225,86,113,0.8);
+	margin-right: 48px;
+}
+.active-a i,.active-b i{
+	position: absolute;
+	width: 5px;
+	height: 9px;
+	top: 16px;
+}
+.active-a i{
+	right: -5px;
+	background: url(../images/a-arrow.png) no-repeat;
+}
+.active-a span,.active-b span{
+	position: absolute;
+	width: 34px;
+	height: 40px;
+	top: 0;
+}
+.active-a span{
+	background: url(../images/img1.png) no-repeat;
+	right: -48px;
+}
+.active-b{
+	float: left;
+	background: rgba(0,0,0,0.8);
+	margin-left: 48px;
+}
+.active-b i{
+	background: url(../images/b-arrow.png) no-repeat;
+	left: -5px;
+}
+.active-b span{
+	background: url(../images/img2.png) no-repeat;
+	left: -48px;
+}
