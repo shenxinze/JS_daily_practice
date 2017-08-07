@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		.clearfix{
+			content: "";
+			display: block;
+			clear: both;
+			height: 0;
+			overflow: hidden;
+		}
+		#box{
+			width: 100px;
+			height: 100px;
+			border: 2px solid #000;
+			background: #fff;
+		}
+		#set{
+			width: 500px;
+			height: 300px;
+			border: 10px solid pink;
+			padding-top: 20px;
+			background: #fff;
+			position: absolute;
+			top:50%;
+			left: 50%;
+			margin: -150px 0 0 -250px;
+			display: none;
+		}
+		#set p{
+			height: 50px;
+		}
+		#set span{
+			float: left;
+			width: 160px;
+			height: 50px;
+			line-height: 50px;
+			text-align: right;
+		}
+		#set b{
+			float: left;
+			width: 100px;
+			height: 50px;
+			line-height: 50px;
+			background: #eee;
+			text-align: center;
+			margin-right: 10px;
+		}
+		#set input{
+			float: left;
+			width: 120px;
+			height: 40px;
+			background: red;
+			color: #fff;
+			line-height: 40px;
+			text-align: center;
+			border: none;
+			margin-right: 20px;
+			font-size: 20px;
+		}
+		#set .input-p{
+			float: right;
+		}
+		#bg{
+			width: 100%;
+			height: 100%;
+			background: rgba(0,0,0,0.2);
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+<p>
+	<span>请为下面的div设置样式：</span>
+	<input type="button" name="" id="but" value="点击设置" />
+</p>
+<div id="box"></div>
+<div id="bg">
+<div class="set" id="set">
+	<p class="clearfix">
+		<span>请选择背景色：</span>
+		<b href="" id="red">红</b>
+		<b href="" id="green">绿</b>
+		<b href="" id="blue">蓝</b>
+	</p>
+	<p class="clearfix">
+		<span>请选择宽（px）：</span>
+		<b href="" id="w2">200</b>
+		<b href="" id="w3">300</b>
+		<b href="" id="w4">400</b>
+	</p>
+	<p class="clearfix">
+		<span>请选择高（px）：</span>
+		<b href="" id="h2">200</b>
+		<b href="" id="h3">300</b>
+		<b href="" id="h4">400</b>
+	</p>
+	<p class="input-p clearfix">
+		<input type="button" value="恢复" id="but1" />
+		<input type="button" value="确定" id="but2" />
+	</p>
+</div>
+</div>
+<script type="text/javascript">
+	var but = document.getElementById("but");
+	var box = document.getElementById("box");
+	var set = document.getElementById("set");
+	var red = document.getElementById("red");
+	var green = document.getElementById("green");
+	var blue = document.getElementById("blue");
+	var w2 = document.getElementById("w2");
+	var w3 = document.getElementById("w3");
+	var w4 = document.getElementById("w4");
+	var h2 = document.getElementById("h2");
+	var h3 = document.getElementById("h3");
+	var h4 = document.getElementById("h4");
+	var but1 = document.getElementById("but1");
+	var but2 = document.getElementById("but2");
+	var bg = document.getElementById("bg");
+	
+	but.onclick = function(){
+		set.style.display = "block";
+		bg.style.display = "block";
+	}
+	red.onclick = function(){
+		box.style.background = "red";
+	}
+	green.onclick = function(){
+		box.style.background = "green";
+	}
+	blue.onclick = function(){
+		box.style.background = "blue";
+	}
+	w2.onclick = function(){
+		box.style.width = "200px";
+	}
+	w3.onclick = function(){
+		box.style.width = "300px";
+	}
+	w4.onclick = function(){
+		box.style.width = "400px";
+	}
+	h2.onclick = function(){
+		box.style.height = "200px";
+	}
+	h3.onclick = function(){
+		box.style.height = "300px";
+	}
+	h4.onclick = function(){
+		box.style.height = "400px";
+	}
+	but1.onclick = function(){
+		box.style.height = "100px";
+		box.style.width = "100px";
+		box.style.background = "none";
+	}
+	but2.onclick = function(){
+		set.style.display = "none";
+		bg.style.display = "none";
+	}
+</script>
+</body>
+</html>
