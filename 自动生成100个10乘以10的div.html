@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>自动生成100个10乘以10的div</title>
+	<style>
+		div{
+			width: 60px;
+			height: 60px;
+			background: skyblue;
+			position: absolute;
+			left: 0;
+			top: 0;
+			font:20px/60px '微软雅黑';
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+<script>
+var str = '';
+var n = -1;
+for( var i = 0; i < 100; i++ ){
+	if( i % 10 == 0 ){
+		n++;
+	}
+	str += '<div style="left:'+(i%10)*61+'px;top:'+n*61+'px;">'+i+'</div>' 
+}
+document.body.innerHTML = str;
+</script>
+</body>
+</html>
