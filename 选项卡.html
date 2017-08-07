@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<style>
+		div{
+			width: 800px;
+			height: 500px;
+			border: 1px solid red;
+			display: none;
+		}
+		.active{
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+<input type="button" name="" value="选项卡一" class="active" />
+<input type="button" name="" value="选项卡二" />
+<input type="button" name="" value="选项卡三" />
+<br><br>
+<div style="display: block;">选项卡一的内容</div>
+<div>选项卡二的内容</div>
+<div>选项卡三的内容</div>
+<script>
+var inputs = document.getElementsByTagName('input');
+var divs = document.getElementsByTagName('div');
+var prevIndex = 0;
+for(var i = 0;i<divs.length;i++){
+	inputs[i].index = i;
+	inputs[i].onclick = function (){
+		inputs[prevIndex].className = '';
+		this.className = 'active';
+		divs[prevIndex].style.display = 'none';
+		divs[this.index].style.display = 'block';
+		prevIndex = this.index;
+	}
+}
+</script>
+</body>
+</html>
