@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>生成四个V</title>
+	<style type="text/css">
+		a{	
+			text-decoration: none;
+			color: inherit;
+			width: 120px;
+			height: 40px;
+			display: block;
+			border: 1px solid deepskyblue;
+			color: deepskyblue;
+			font: 14px/40px "微软雅黑";
+			text-align: center;
+			border-radius: 6px;
+			position: absolute;
+			top: 420px;
+			left: 50%;
+			margin-left: -60px;
+		}
+		.active,a:hover{
+			background: deepskyblue;
+			color: #fff;
+		}
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.wrap{
+			width: 600px;
+			height: 550px;
+			background: url(images/bg.png) no-repeat;
+			margin: 0 auto 0;
+			padding-top: 50px;
+		}
+		.wrap .box{
+			width: 290px;
+			height: 490px;
+			background: url(images/bg1.png) no-repeat;
+			margin: 0 auto;
+			border: 1px solid transparent;
+			position: relative;
+		}
+		#list{
+			width: 250px;
+			height: 250px;
+			position: relative;
+			margin: 100px auto 0;
+		}
+		#list li{
+			width: 50px;
+			height: 50px;
+			background: red;
+			color: #fff;
+			line-height: 50px;
+			text-align: center;
+			position: absolute;
+			bottom: 0;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="box">
+		<ul id="list">
+			<!-- <li></li> -->
+		</ul>
+		<a href="javascript:;" id="btn">变 换</a>
+	</div>
+</div>
+<script>
+var list = document.getElementById('list');
+var lis = list.getElementsByTagName('li');
+var btn = document.querySelectorAll('.box a')[0];
+var str = '';
+var m = 0;
+var n = 0;
+btn.onclick = function (){
+	str = '';
+	n++;
+	n > 4 ? n = 1 : null; 
+	if(n == 1){
+		for(var i = 0;i<=4;i++){
+			if(i>=2){
+				m = i;
+			}else{
+				m = 4 - i;
+			}
+			str += '<li style="left:'+i*50+'px;top:'+m*50+'px;">'+i+'</li>'
+		}
+	}
+	if(n == 2){
+		for(var i = 0;i<=4;i++){
+			if(i<=2){
+				m = 4 - i;
+			}else{
+				m = i;
+			}
+			str += '<li style="left:'+m*50+'px;top:'+i*50+'px;">'+i+'</li>'
+		}
+	}
+	if(n == 3){
+		for(var i = 0;i<=4;i++){
+			if(i>=2){
+				m = 4 - i;
+			}else{
+				m = i;
+			}
+			str += '<li style="left:'+i*50+'px;top:'+m*50+'px;">'+i+'</li>'
+		}
+	}
+	if(n == 4){
+		for(var i = 0;i<=4;i++){
+			if(i>=2){
+				m = 4 - i;
+			}else{
+				m = i;
+			}
+			str += '<li style="left:'+m*50+'px;top:'+i*50+'px;">'+i+'</li>'
+		}
+	}
+
+	list.innerHTML = str;
+}
+
+//开口朝左
+/*for(var i = 0;i<=4;i++){
+	if(i>=2){
+		m = 4 - i;
+	}else{
+		m = i;
+	}
+	str += '<li style="left:'+m*50+'px;top:'+i*50+'px;">'+i+'</li>'
+}*/
+//开口朝下
+/*for(var i = 0;i<=4;i++){
+	if(i>=2){
+		m = i;
+	}else{
+		m = 4 - i;
+	}
+	str += '<li style="left:'+i*50+'px;top:'+m*50+'px;">'+i+'</li>'
+}*/
+//开口朝右
+/*for(var i = 0;i<=4;i++){
+	if(i<=2){
+		m = 4 - i;
+	}else{
+		m = i;
+	}
+	str += '<li style="left:'+m*50+'px;top:'+i*50+'px;">'+i+'</li>'
+}*/
+//开口朝上
+/*for(var i = 0;i<=4;i++){
+	if(i>=2){
+		m = 4 - i;
+	}else{
+		m = i;
+	}
+	str += '<li style="left:'+i*50+'px;top:'+m*50+'px;">'+i+'</li>'
+}*/
+
+</script>
+</body>
+</html>
