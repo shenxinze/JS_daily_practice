@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>图片轮播</title>
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="wrap">
+	<div class="pad">
+		<div class="top-line"></div>
+		<div class="content-box">
+			<div class="top-info">
+				<p class="choose">
+					<a href="javasript:;" class="active" id="way1">循环切换</a>
+					<a href="javasript:;" id="way2">顺序切换</a>
+				</p>
+				<p class="text-desc" id="text-desc">图片可从最后一张跳转到第一张循环切换</p>
+				<p class="text-desc" id="text-desc1">图片只能到最后一张或者第一张切换</p>
+			</div>
+			<div class="switch-box">
+				<span id="num-img">1&nbsp;/&nbsp;4</span>
+				<img src="./images/img1.jpg" alt="" id="img" />
+				<a href="javasript:;" id="left"></a>
+				<a href="javasript:;" id="right"></a>
+				<p id="text-info">文字描述一</p>
+				<div class="tip" id="tip-right">
+					<i id="close"></i>
+					<p class="tit">JavaScript提醒</p>
+					<p class="tit-desc">已经到最后一张啦～</p>
+					<p><a href="javascript:;" class="sure" id="sure">确定</a></p>
+				</div>
+				<div class="tip" id="tip-left">
+					<i id="close-1"></i>
+					<p class="tit">JavaScript提醒</p>
+					<p class="tit-desc">这已经是第一张了，不能再往前了~</p>
+					<p><a href="javascript:;" class="sure" id="sure-1">确定</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="menu"></div>
+	</div>
+</div>
+<script>
+var way1 = document.getElementById('way1');
+var way2 = document.getElementById('way2');
+var textDesc = document.getElementById('text-desc');
+var textDesc1 = document.getElementById('text-desc1');
+textDesc1.style.display = 'none';
+
+way1.onclick = function (){
+	way2.className = '';
+	this.className = 'active';
+	textDesc.style.display = 'block';
+	textDesc1.style.display = 'none';
+	state = true;
+}
+way2.onclick = function (){
+	way1.className = '';
+	this.className = 'active';
+	textDesc.style.display = 'none';
+	textDesc1.style.display = 'block';
+	state = false;
+}
+//循环切换
+var left = document.getElementById('left');
+var right = document.getElementById('right');
+var imgs = document.getElementById('img');
+var textInfo = document.getElementById('text-info');
+var numImg = document.getElementById('num-img');
+
+var tipRight = document.getElementById('tip-right');
+var tipLeft = document.getElementById('tip-left');
+var sure = document.getElementById('sure');
+var close = document.getElementById('close');
+var sure1 = document.getElementById('sure-1');
+var close1 = document.getElementById('close-1');
+var arrT = ['文字描述一','文字描述二','文字描述三','文字描述四'];
+var n = 1;
+var state = true;
+right.onclick = function (){
+	if(state){
+		n++;
+		if( n > 4){
+			n = 1;
+			imgs.src = './images/img'+n+'.jpg';
+			textInfo.innerHTML = arrT[n-1];
+			numImg.innerText = ''+n+' / '+arrT.length+'';
+		}else{
+			imgs.src = './images/img'+n+'.jpg';
+			textInfo.innerHTML = arrT[n-1];
+			numImg.innerText = ''+n+' / '+arrT.length+'';
+			
+		}
+	}else{
+		n++;
+		if( n > arrT.length){
+			n = arrT.length;
+			tipRight.style.display = 'block';
+			sure.onclick = close.onclick = function (){
+				tipRight.style.display = "none";
+			}
+		}else{
+			imgs.src = './images/img'+n+'.jpg';
+			textInfo.innerHTML = arrT[n-1];
+			numImg.innerText = ''+n+' / '+arrT.length+'';
+		}
+	}
+}
+left.onclick = function (){
+	if(state){
+		n--;
+		if( n < 1){
+			n = 4;
+			imgs.src = './images/img'+n+'.jpg';
+			textInfo.innerHTML = arrT[n-1];
+			numImg.innerText = ''+n+' / '+arrT.length+'';
+		}else{
+			imgs.src = './images/img'+n+'.jpg';
+			textInfo.innerHTML = arrT[n-1];
+			numImg.innerText = ''+n+' / '+arrT.length+'';
+		}
+	}else{
+		n--;
+		if( n < 1){
+			n = 1;
+			tipLeft.style.display = 'block';
+			sure1.onclick = close1.onclick = function (){
+				tipLeft.style.display = "none";
+			}
+		}else{
+			imgs.src = './images/img'+n+'.jpg';
+			textInfo.innerHTML = arrT[n-1];
+			numImg.innerText = ''+n+' / '+arrT.length+'';
+		}
+	}
+	
+	
+}
+/*right.onclick = function (){
+	n++;
+	if( n > arrT.length){
+		n = arrT.length;
+		tipRight.style.display = 'block';
+		sure.onclick = close.onclick = function (){
+			tipRight.style.display = "none";
+		}
+	}else{
+		imgs.src = './images/img'+n+'.jpg';
+		textInfo.innerHTML = arrT[n-1];
+		numImg.innerText = ''+n+' / '+arrT.length+'';
+	}
+}
+left.onclick = function (){
+	n--;
+	if( n < 1){
+		n = 1;
+		tipLeft.style.display = 'block';
+		sure1.onclick = close1.onclick = function (){
+			tipLeft.style.display = "none";
+		}
+	}else{
+		imgs.src = './images/img'+n+'.jpg';
+		textInfo.innerHTML = arrT[n-1];
+		numImg.innerText = ''+n+' / '+arrT.length+'';
+	}
+}*/
+</script>
+</body>
+</html>
