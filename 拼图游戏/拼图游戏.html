@@ -26,7 +26,7 @@
        		</li>
 		</ul>
 		<div class="right">
-			<img src="./images/img.jpg" alt="" />
+			<img src="./images/img.jpg" alt=""" />
 		</div>
 	</div>
 	<div class="gameArea">
@@ -56,16 +56,19 @@ list.innerHTML = str;
 //点击“难度选择”按钮
 var btn2 = document.querySelector('.btn a:nth-child(2)');
 var selects = document.querySelectorAll('option');
-
+m = 0;
 btn2.onclick = function (){
+    var n = -1;
+
     str = '';
     m++;
     if( m > 2) m = 0;
 
+    console.log(m)
     selects[m].selected = true;
     if(m == 0){
             console.log("m=0:"+m)
-        for( var i = 0; i < 6; i++ ){
+        for( var i = 0; i < 9; i++ ){
             if( i % 3 == 0 ){
                 n++;
             }
@@ -80,7 +83,6 @@ btn2.onclick = function (){
             }
             str += `<li style="width:${arr[1]}px;height:${arr[1]}px;left:${(i%6)*arr[1]}px;top:${n*arr[1]}px;background-position:${(-i%6)*arr[1]}px ${-n*arr[1]}px;"></li>`;
         } 
-        return str
     }
     if(m == 2){
         console.log("m=2:"+m)
