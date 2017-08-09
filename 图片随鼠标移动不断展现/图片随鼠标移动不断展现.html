@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>图片随鼠标不断展现</title>
+	<style>
+		.box{
+			width: 1000px;
+			height: 800px;
+			margin: 30px auto 0;
+			background-image: url(./img.jpg);
+			background-repeat: no-repeat;
+			background-position: 0 0;
+			background-size: 1000px 800px;
+			position: relative;
+		}
+		ul{
+			margin: 0;
+			padding: 0;
+			width: 1000px;
+			height: 800px;
+			position: absolute;
+		}
+		li{
+			list-style: none;
+			width: 100px;
+			height: 80px;
+			box-sizing: border-box;
+			border: 1px solid #fff;
+			position: absolute;
+			left: 0;
+			top: 0;
+			background-color: #666;
+			transition: 0.5s;
+
+		}
+	</style>
+</head>
+<body>
+<div class="box">
+	<ul class="list">
+		<!-- <li></li> -->
+	</ul>
+</div>
+<script>
+var list = document.querySelector('.list');
+var str = '';
+var n = -1;
+for( var i = 0 ; i < 100 ; i++ ){
+	i % 10 == 0 ? n++ : null;
+	str += '<li style="left:'+(i%10)*100+'px;top:'+n*80+'px;background-position:'+(-i%10)*100+'px '+-n*80+'px;"></li>';
+}
+list.innerHTML = str;
+lis = list.children;
+for( var i = 0 ; i < lis.length ; i++ ){
+	lis[i].onmouseover = function (){
+		this.style.backgroundColor = 'transparent';
+	}
+}
+</script>
+</body>
+</html>
