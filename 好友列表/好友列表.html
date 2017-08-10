@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>好友列表</title>
+	<style>
+		h3{
+			margin: 0;
+			width: 280px;
+			height: 46px;
+			/*background: url(./images/r-arrow.png) no-repeat 14px 20px rgba(0,0,0,0.7);*/
+			background-image: url(./images/r-arrow.png);
+			background-repeat: no-repeat;
+			background-position: 14px 20px;
+			background-color: rgba(0,0,0,0.7);
+			font: 16px/46px '微软雅黑';
+			color: #fff;
+			text-indent: 40px;
+			border-radius: 4px;
+		}
+		ul{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			margin: 20px 0 0 20px;
+		}
+		a{
+			text-decoration: none;
+			color: inherit;
+			display: block;
+		}
+		.wrap{
+			width: 1000px;
+			height: 750px;
+			background: url(./images/bg.png) no-repeat;
+			margin: 50px auto 0;
+			padding-top: 50px;
+		}
+		.phone{
+			width: 384px;
+			height: 707px;
+			background: url(./images/bg1.png) no-repeat;
+			margin: 0 auto;
+			position: relative;
+		}
+		.box{
+			width: 322px;
+			height: 562px;
+			/*background: #000;*/
+			position: absolute;
+			top: 50px;
+			left: 26px;
+		}
+		p{
+			margin: 0;
+			padding: 5px 0 4px 0px;
+			width: 280px;
+			background: #000;
+			/*background: #fff;*/
+			display: none;
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+		}
+		a{
+			color: #fff;
+			font: 14px/36px '微软雅黑';
+			text-indent: 42px;
+		}
+		li{
+			width: 280px;
+			margin-bottom: 10px;
+		}
+		.active{
+			background-color: rgba(221,84,111,0.9);
+			background-image: url(./images/b-arrow.png);
+		}
+		.active1{
+			background: #dd556f;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="phone">
+		<div class="box">
+			<ul>
+				<li>
+					<h3>我的好友</h3>
+					<p>
+						<a href="javascript:;">美丽俏佳人LOVE</a>
+						<a href="javascript:;">从来就是这么任性～～</a>
+						<a href="javascript:;">风雨无阻</a>
+						<a href="javascript:;">LEO</a>
+					</p>
+				</li>
+				<li>
+					<h3>企业好友</h3>
+					<p>
+						<a href="javascript:;">美丽俏佳人LOVE</a>
+						<a href="javascript:;">从来就是这么任性～～</a>
+						<a href="javascript:;">风雨无阻</a>
+						<a href="javascript:;">LEO</a>
+					</p>
+				</li>
+				<li>
+					<h3>黑名单</h3>
+					<p>
+						<a href="javascript:;">美丽俏佳人LOVE</a>
+					</p>
+				</li>
+			</ul>
+		</div>	
+	</div>
+</div>
+<script>
+var oH3 = document.getElementsByTagName('h3');
+var oP = document.getElementsByTagName('p');
+var oA = document.getElementsByTagName('a');
+for(var i = 0;i < oH3.length;i++){
+	oH3[i].isClick = true;
+	oH3[i].index = i;
+	oH3[i].onclick = function (){
+		for(var i = 0;i < oA.length;i++){
+			oA[i].className = '';
+		}
+		for(var i = 0;i<oH3.length;i++){
+
+			if(this.index != i){
+				oH3[i].className = '';
+				oH3[i].isClick = true;
+				oP[i].style.display = 'none';
+			}
+		}
+		if(this.isClick){
+			this.className = 'active';
+
+			oP[this.index].style.display = 'block';
+		}else{
+			this.className = '';
+			oP[this.index].style.display = 'none';
+		}
+		this.isClick = !this.isClick;
+	}
+}
+var prevIndex = 0;
+for(var i = 0;i < oA.length;i++){
+	oA[i].index = i;
+	oA[i].onclick = function (){
+		for(var i = 0;i < oA.length;i++){
+			oA[prevIndex].className = '';
+			this.className = 'active1';
+			prevIndex = this.index;
+		}
+	}
+	oA[i].onmousemove = function (){
+		this.style.backgroundColor = '#666';
+	}
+	oA[i].onmouseout = function (){
+		this.style.backgroundColor = '';
+	}
+}
+
+</script>	
+</body>
+</html>
