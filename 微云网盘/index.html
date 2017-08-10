@@ -6,6 +6,22 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+<div class="tipBox">
+	<div class="tipTimeOut"><i></i>连接服务器超时，请稍后再试</div>
+	<div class="tipDelSuccess"><i></i>删除文件成功</div>
+	<div class="tipSelectFile"><i></i>请选择文件</div>
+</div>
+<div class="warnTip">
+	<div class="tipDel">
+		<h3>确定要删除这个文件夹吗？</h3>
+		<p class="info">已删除的文件可以在回收站找到</p>
+		<p class="btn">
+			<a href="javascript:;">确定</a>
+			<a href="javascript:;">取消</a>
+		</p>
+		<span></span>
+	</div>
+</div>
 <div class="topInfo clear">
 	<div class="left clear">
 		<h1><a href=""><img src="images/logo.png">妙味云盘</a></h1>
@@ -44,7 +60,6 @@
 
 </div>
 <div class="content">
-	
 	<div class="right">
 		<div class="page-list clear">
 			<div class="choose"></div>
@@ -169,6 +184,9 @@
 		</ul> -->
 	</div>
 </div>
+
+
+
 <script src='js/data.js'></script>
 <script src='js/index.js'></script>
 <script>
@@ -243,7 +261,7 @@ function createFileHtml (id){
 		var filesHtml = childs.map(function(item){
 			return `<li data-id="${item.id}">
 						<a href="javascript:;" class="active">
-							<span class="-doc-choose"></span>
+							<span></span>
 							<strong>${item.title}</strong>
 						</a>
 					</li>`
@@ -329,28 +347,106 @@ clickFileLi()
 function clickFileLi (){
 	var fileLi = docList.getElementsByTagName('li');
 	for( var i = 0;i < fileLi.length;i++){
-		fileLi[i].onclick = function (){
+		fileLi[i].onclick = function (ev){
 			var fileLiId = this.dataset.id;
+			if(ev.target.nodeName === 'SPAN'){
+				return false;
+			}
 			docList.innerHTML = createFileHtml(fileLiId);
 			navBar.innerHTML = creatNavHtml(fileLiId);
 			positionElement(fileLiId);
-			clickFileLi();
 			clickNavA();
+			clickFileLi();
 		}
 	}
 }
 
 /*------------ 给内容区的每个多选按钮绑定事件 ------------*/
-
-/*docList.onclick = function (ev){
-	
+var n = 0;
+var spans = docList.getElementsByTagName('span');
+docList.onclick = function (ev){
 	if(ev.target.nodeName === 'SPAN'){
-		console.log(ev.target);
-		var thisId = ev.target.parentNode.parentNode.dataset.id;
-
-		ev.target.className = 'doc-choose';
+		//console.log(ev.target)
+		if(ev.target.className == 'doc-choose'){
+			n--;
+			ev.target.className = '';
+			ev.target.style.visibility = 'hidden';
+			ev.target.parentNode.parentNode.className = '';
+			for(var i = 0;i < spans.length;i++){
+				if(n !== spans.length){
+					chooseAll.classList.remove('chooseActive');
+				}
+			}
+		}else{
+			n++;
+			ev.target.className = 'doc-choose';
+			ev.target.style.visibility = 'visible';
+			ev.target.parentNode.parentNode.className = 'active';
+			for(var i = 0;i < spans.length;i++){
+				if(n == spans.length){
+					chooseAll.classList.add('chooseActive');
+				}
+			}
+		}	
 	}
-}*/
+}
+
+
+/*------------ 给menu区域中的全选按钮绑定事件 ------------*/
+
+var chooseAll = document.querySelector('.choose');
+var offOn = true;
+chooseAll.onclick = function(){
+	if(offOn){
+		for(var i = 0;i<spans.length;i++ ){
+			this.classList.add('chooseActive');
+			spans[i].classList.add('doc-choose');
+			spans[i].style.visibility = 'visible';
+			spans[i].parentNode.parentNode.className = 'active';
+		}
+		offOn = false;
+	}else{
+		for(var i = 0;i<spans.length;i++ ){
+			this.classList.remove('chooseActive');
+			spans[i].classList.remove('doc-choose');
+			spans[i].style.visibility = 'hidden';
+			spans[i].parentNode.parentNode.className = '';
+		}
+		offOn = true;
+	}
+}
+
+/*------------ 鼠标拖拽选区选中文件 ------------*/
+
+var lis = docList.getElementsByTagName('li');
+
+document.onmousedown = function (ev){
+	var newDiv = document.createElement("div");
+	newDiv.className = 'newArea';
+	document.body.appendChild(newDiv);	
+
+	var disX = ev.clientX;
+	var disY = ev.clientY;
+
+	newDiv.style.left = disX + 'px';
+	newDiv.style.top = disY + 'px';
+
+	document.onmousemove = function (ev){
+		
+		newDiv.style.width = Math.abs(ev.clientX - disX) + 'px';
+		newDiv.style.height = Math.abs(ev.clientY - disY) + 'px';
+
+		newDiv.style.left = Math.min(disX,ev.clientX) + 'px';	
+		newDiv.style.top = Math.min(disY,ev.clientY) + 'px';	
+	};
+
+	document.onmouseup = function (){
+		document.onmousemove = null;
+		newDiv.remove();	
+	}
+	ev.preventDefault();
+}
+
 
 
 
