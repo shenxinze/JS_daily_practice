@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        td {
+            text-align: center;
+        }
+        .red{
+            background: red;
+        }
+        .color{
+            background-image: linear-gradient(135deg, #41c8ff 0, #41c8ff 25%,#46e6fe 75%);
+        }
+    </style>
+</head>
+
+<body>
+
+<form action="" name="form">
+    <p>
+        姓名:<input type="text" id="userName" name="username"/>
+    </p>
+    <p>
+        年龄:<input type="text" id="age" name="age"/>
+    </p>
+    <p>
+        性别: <select name="sex" id="sex">
+            <option value=" 男 ">男</option>
+            <option value="女">女</option>
+        </select>
+    </p>
+    <p>
+        <input type="button" id="add" value="添加" name="add"/>
+    </p>
+</form>
+<input type="button" id="delectAll" value="删除选中"  class="btn"> 
+<input type="button" value="年龄从小到大" id="ageSort"  class="btn"> 
+<table id="tab1" width="100%" border="1">
+
+    <thead>
+    <tr>
+        <th>
+            <input id="checkAll" type="checkbox" /> 全选
+        </th>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+        <!-- <tr>
+            <td>
+                <input type="checkbox"/>
+            </td>
+            <td>1</td>
+            <td>LEO</td>
+            <td>36</td>
+            <td>男</td>
+            <td>
+                <a href="javascript:;">删除</a>
+            </td>
+        </tr> -->
+    </tbody>
+
+</table>
+<script src="./utils.js"></script>
+<script src="./data.js"></script>
+<script>
+
+//在页面加载完成的时候，把个数据动态添加到表格中
+
+/*
+    1、根据数据生成表格。
+    2、数据的添加
+    3、全选、单选
+    4、单条删除，选中删除
+    5、排序（按年龄从大到小-从小到大）
+    6、如果是在排序的状态，添加后依然保持排序
+*/
+
+
+
+</script>
+</body>
+</html>
