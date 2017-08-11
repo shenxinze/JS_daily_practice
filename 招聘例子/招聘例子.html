@@ -180,5 +180,118 @@
 		</nav>
 	</div>
 </div>
+<script src="js/data.js"></script>
+<script>
+var rightList = document.getElementById('rightList');
+
+
+
+var hash = window.location.hash;
+var num = 0;
+if(hash){
+	if(hash.slice(1)){
+		num = hash.slice(1) - 1;
+	}else{
+		num = 0;
+	}
+}
+
+var search = window.location.search;
+var searchValue = 'world';
+
+if(search){
+	if(search.slice(1)){
+		searchValue = search.slice(1);
+	}else{
+		searchValue = 'world';
+	}
+}
+
+if(!data[searchValue]){
+	searchValue = 'world';
+	window.location.search = searchValue;
+}
+
+var datas = data[searchValue];
+
+
+
+
+//生成页码
+var pagesBox = document.getElementById('pagesBox');
+var pageNum = Math.ceil(datas.length/4);
+
+//num 大于 页码数 回归到一
+if(num + 1 > pageNum){
+	num = 0;
+	window.location.hash = num + 1;
+}
+
+//生成右侧结构
+createRightHtml(num)
+function createRightHtml(index){
+	var start = index * 4;
+	var end = start + 4;
+	var rightHtml = datas.slice(start,end).map(function(item){
+		return`
+			<li>
+				<span class="num">${item.num}</span>
+				<div class="list">
+					<a href=""><span class="job">职位需求：${item.job}</span><span>需求人数：${item.pNum}名</span><time>${item.data}</time></a>
+					<p><span class="text">${item.ask}</span><a href="javascript:;">查看详情>></a></p>
+				</div>
+			</li>`
+	})
+	rightList.innerHTML = rightHtml.join('');
+}
+
+var pageHtml = '';
+for(var i = 0;i < pageNum;i++){
+	pageHtml += `<a class="${ i == num ? 'active' : ''}" href="javascript:;">${i+1}</a>`;
+}
+pagesBox.innerHTML = pageHtml;
+
+//翻页
+var pageA = pagesBox.children;
+var prevIndex = num;
+for(var i = 0;i < pageA.length;i++){
+	pageA[i].index = i;
+	pageA[i].onclick = function (){
+		createRightHtml(this.index);
+		pageA[prevIndex].className = '';
+		this.className = 'active';
+		prevIndex = this.index;
+		//点击时候，记录hash
+		window.location.hash = this.index + 1;
+	}
+}
+
+//生成左侧结构
+var leftList = document.getElementById('leftList');
+var leftHtml = data.list.map(function (item,index){
+	return `<li data-zhaopin="${item.tip}"><span>${item.text}</span>${item.eng}</li>`
+})
+leftList.innerHTML = leftHtml.join('');
+
+var leftLi = leftList.children;
+
+//改变search值之后，添加样式
+for( var i = 0; i < leftLi.length; i++ ){
+	if(leftLi[i].dataset.zhaopin === searchValue){
+		leftLi[i].className = "active";
+	}
+};
+
+//点击左侧
+for( var i = 0; i < leftLi.length; i++ ){
+	leftLi[i].onclick = function (){
+		window.location.search = this.dataset.zhaopin;
+		for( var i = 0; i < leftLi.length; i++ ){
+			leftLi[i].className = '';
+		}
+		this.className = 'active';
+	};
+}
+</script>
 </body>
 </html>
