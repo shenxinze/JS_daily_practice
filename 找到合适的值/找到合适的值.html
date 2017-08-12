@@ -119,6 +119,63 @@
 			<p class="clear"><i></i><strong>把NaN所在的位置找出来：</strong><span>开始查找</span></p>
 		</div>
 	</div>
-</div>	
+</div>
+
+<script>
+var arr = ['100px', 'abc' - 6, [], -98765, 34, -2, 0, '300', ,function() {alert(1);}, null, document, [], true, '200px' - 30, '23.45元', 5, Number('abc'), function() {alert(3);}, 'xyz' - 90];
+var span = document.getElementsByTagName('span');
+var strong = document.getElementsByTagName('strong');
+var len = arr.length;
+var str = '';
+var n = -9999; //声明一个变量n,表示最小值
+
+console.log(arr)
+span[0].onclick = function (){
+	str = '';
+	this.className = 'active';
+	for(var i = 0;i < len;i++){
+		if(!isNaN(arr[i]) && typeof arr[i] === 'number'){
+			//console.log(arr[i])
+			str += arr[i] + '&nbsp;';
+		}
+		strong[0].innerHTML = '找到arr里所有的数字：' + str; 
+	}
+}
+
+span[1].onclick = function (){
+	str = '';
+	this.className = 'active';
+	for(var i = 0;i < len;i++){
+		if(!isNaN(arr[i]) || Number(arr[i]) || parseInt(arr[i]) || parseFloat(arr[i])){
+			str += arr[i] + '&nbsp;';
+		}
+	}
+	strong[1].innerHTML = '找到可以转成数字的：' + str; 
+}
+
+span[2].onclick = function (){
+	str = '';
+	this.className = 'active';
+	for(var i = 0;i < len;i++){
+		if(Number(arr[i]) > n){
+			n = arr[i]
+		}
+	}
+	str = n;
+	strong[2].innerHTML = '把转成数字以后，最大值判断出来：' + str; 
+}
+
+span[3].onclick = function (){
+	str = '';
+	this.className = 'active';
+	for(var i = 0;i < len;i++){
+		if(isNaN(arr[i]) && typeof arr[i] === 'number'){
+			str += i + '&nbsp;';
+		}
+	}
+	strong[3].innerHTML = '把NaN所在的位置找出来：' + str; 
+}
+</script>
+
 </body>
 </html>
