@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>找到合适的值</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+			font-family: '微软雅黑';
+			font-size: 16px;
+			line-height: 1;
+		}
+		.clear{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.wrap{
+			width: 1200px;
+			height: 800px;
+			background: url(./image/bg.jpg) no-repeat;
+			margin: 30px auto 0;
+			position: relative;
+		}
+		.content{
+			width: 694px;
+			height: 375px;
+			/*background: #000;*/
+			position: absolute;
+			left: 272px;
+			top: 202px;
+			/*overflow: hidden;*/
+		}
+		.top{
+			width: 531px;
+			height: 177px;
+			/*background: blue;*/
+			margin: 22px 0 0 22px;
+			line-height: 36px;
+			padding: 11px 64px 0 54px;
+			color: #fff;
+		}
+		.bottom{
+			width: 649px;
+			height: 187px;
+			/*background: blue;*/
+			margin: 0 0 0 22px;
+			
+		}
+		p{
+			width: 100%;
+			height: 36px;
+			line-height: 26px;
+			margin: 5px 0;
+		}
+		p:nth-child(1){
+			color: #ebed56;
+		}
+		p:nth-child(2){
+			color: #56d9ed;
+		}
+		p:nth-child(3){
+			color: #ed56a7;
+		}
+		p:nth-child(4){
+
+			color: #ffab48;
+		}
+		p i{
+			float: left;
+			width: 15px;
+			height: 15px;
+			background-image: url(./image/1.png);
+			background-repeat: no-repeat;
+			margin: 4px 6px 0 0;
+		}
+		p:nth-child(2) i{
+			background-image: url(./image/2.png);
+		}
+		p:nth-child(3) i{
+			background-image: url(./image/3.png);
+		}
+		p:nth-child(4) i{
+			background-image: url(./image/4.png);
+		}
+		span{
+			float: left;
+			width: 80px;
+			height: 26px;
+			border: 1px solid #fff;
+			border-radius: 13px/13px;
+			line-height: 26px;
+			text-align: center;
+			font-size: 14px;
+			color: #fff;
+			margin-left: 6px;
+		}
+		strong{
+			font-weight: normal;
+			float: left;
+			margin-top: 3px;
+		}
+		.active{
+			background: #fff;
+			color: #000;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="content">
+		<div class="top">
+		var arr = ['100px', 'abc' - 6, [], -98765, 34, -2, 0, '300', ,function() {alert(1);}, null, document, [], true, '200px' - 30, '23.45元', 5, Number('abc'), function() {alert(3);}, 'xyz' - 90];</div>
+		<div class="bottom">
+			<p class="clear"><i></i><strong>找到arr里所有的数字：</strong><span>开始查找</span></p>
+			<p class="clear"><i></i><strong>找到可以转成数字的：</strong><span>开始查找</span></p>
+			<p class="clear"><i></i><strong>把转成数字以后，最大值判断出来：</strong><span>开始查找</span></p>
+			<p class="clear"><i></i><strong>把NaN所在的位置找出来：</strong><span>开始查找</span></p>
+		</div>
+	</div>
+</div>	
+</body>
+</html>
