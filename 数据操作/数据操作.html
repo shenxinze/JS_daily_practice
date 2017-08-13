@@ -82,128 +82,186 @@
     5、排序（按年龄从大到小-从小到大）
     6、如果是在排序的状态，添加后依然保持排序
 */
-var tbody = $('tbody')[0];
-var trs = $('tr',tbody);
+// --------------操作数据的方法----------------
+function deleteById(id){
+   data = data.filter(function (item){
+       return item.id != id
+   })    
+}
+function getDateById(id){
+   return data.filter(function (item){
+       return item.id == id;    
+   })[0];
+}
 
-//根据data,生成结构
-render();
+// --------------操作数据的方法----------------
 function render(){
-    var html = data.map(function(item){
-        return`
-            <tr>
+    var html = data.map(function (item){
+        return `
+            <tr data-id="${item.id}">
                 <td>
-                    <input data-id='${item.id}' type="checkbox"/>
+                    <input ${item.checked ? 'checked' : ''} type="checkbox"/>
                 </td>
                 <td>${item.id}</td>
                 <td>${item.username}</td>
                 <td>${item.age}</td>
                 <td>${item.sex}</td>
                 <td>
-                    <a data-id='${item.id}' href="javascript:;">删除</a>
+                    <a data-id="${item.id}" href="javascript:;">删除</a>
                 </td>
-            </tr>`
-    }).join('');
-    tbody.innerHTML = html;
+            </tr>
+        `
+    });
+
+    tbody.innerHTML = html.join("");
 }
 
-var inputs = $('input',tbody);
+var tab1 = $("#tab1");
+var tbody = $("tbody",tab1)[0];
+// 所有单选的input
+var inputs = $("input",tbody);
 
-//删除结构，删除数据
-var checkAll = $('#checkAll');
-tbody.onclick = function (ev){
-    if(ev.target.nodeName === 'A'){
-        ev.target.parentNode.parentNode.remove();
-        if(inputs.length === 0){
-            checkAll.disabled = true;
-        }
-        var id = ev.target.dataset.id;
-        //删除数据
-        for(var i = 0;i < data.length;i++){
-            if(data[i].id == id){
-                data.splice(i,1);
-                break;
-            }
-        }
-        changeColor();
-    }
-
-    var n = 0;
-    for(var i = 0;i < inputs.length;i++){
-        if(inputs[i].checked){
-            n++;
-        }
-    }
-
-    if(n == inputs.length && n != 0){
-        checkAll.checked = true;
-    }
-
-    if(ev.target.nodeName === 'INPUT'){
-        var m = 0;
-        for(var i = 0;i < inputs.lenght;i++){
-            if(inputs[i].checked){
-                m++;
-            }
-       }
-       if(m === inputs.length){
-            checkAll.checked = true;
-       }else{
-            checkAll.checked = false;
-       }
-    }
-}
-
-//全选
-var checkAll = $('#checkAll');
-checkAll.onclick = function (){
-    for(var i = 0;i < inputs.length;i++){
-        inputs[i].checked = this.checked;
-    }
-}
-
-//删除选中的
-var delectAll = $('#delectAll');
-delectAll.onclick = function (){
-    var selectArr = [];
-    for(var i = 0;i < inputs.length;i++){
-        if(inputs[i].checked){
-            selectArr.push(inputs[i]);
-        }
-    }
-    if(selectArr.length === 0){
-        alert('请选择要删除的数据');
-    }else{
-        for(var i = 0;i < selectArr.length;i++){
-            selectArr[i].parentNode.parentNode.remove();
-            var id = selectArr[i].dataset.id;
-            for(var j = 0;j < data.length;j++){
-                if(data[j].id == id){
-                    data.splice(j,1);
-                    break;
-                }
-            }
-        }
-        // 批量删除数据
-        if(inputs.length === 0){
-            checkAll.checked = false;
-            checkAll.disabled = true;
-        }
-        changeColor();
-    }
-}
-
-//隔行变色
+render(); // 一上来渲染数据
+//10. 隔行变色
 changeColor();
 function changeColor(){
-    for(var i = 0;i < trs.length; i++){
+    var trs = $("tr",tbody);
+
+    for( var i = 0; i < trs.length; i++ ){
         if(i % 2 === 0){
-            trs[i].style.background = '#fe0';
+            trs[i].style.background = 'yellow'
         }else{
-            trs[i].style.background = '#fff';
+            trs[i].style.background = '#fff'
         }
-    }   
+    }
 }
 
+tbody.onclick = function (ev){
+    if(ev.target.nodeName === "A"){
+        ev.target.parentNode.parentNode.remove();
+        var id = ev.target.dataset.id;
+        // 通过id删除数据
+        deleteById(id);
+        if(!inputs.length){
+            checkAll.disabled = true;
+            checkAll.checked = false;
+            return;
+        }
+        if(whoSelect().length === inputs.length){
+            checkAll.checked = true;
+        }else{
+            checkAll.checked = false;
+        }
+        changeColor();
+
+    }else if(ev.target.nodeName === "INPUT"){
+        if(whoSelect().length === inputs.length){
+            checkAll.checked = true;
+        }else{
+            checkAll.checked = false;
+        }
+         var id = ev.target.parentNode.parentNode.dataset.id;
+            getDateById(id).checked = ev.target.checked;
+    }  
+};
+
+
+var checkAll = $("#checkAll");
+checkAll.onclick  =function (){
+    for( var i = 0; i < inputs.length; i++ ){
+       inputs[i].checked = this.checked; 
+       var id = inputs[i].parentNode.parentNode.dataset.id;
+        getDateById(id).checked = this.checked;    
+    }     
+};
+
+function whoSelect(){
+    var selectArr = [];
+    for( var i = 0; i < inputs.length; i++ ){
+        if(inputs[i].checked){
+            selectArr.push(inputs[i].parentNode.parentNode)
+        }
+    }
+    return selectArr;
+}
+
+var delectAll = $("#delectAll");
+
+delectAll.onclick  = function (){
+    var selectArr = whoSelect();
+    if(selectArr.length === 0){
+        alert("请选中要删除的内容")
+    }else{
+        for( var i = 0; i < selectArr.length; i++ ){
+            selectArr[i].remove();
+            deleteById(selectArr[i].dataset.id)
+        }
+        if(!inputs.length){
+            checkAll.disabled = true;
+            checkAll.checked = false;
+        }
+        changeColor();
+        
+    }
+};
+
+var add = $("#add");
+var userName = $("#userName");
+var age = $("#age");
+var sex = $("#sex");
+
+var customId = data.length + 1;
+
+add.onclick = function (){
+    var userNameVal = userName.value.trim();    
+    var ageVal = age.value.trim();  
+    if(userNameVal === '' || ageVal === ''){
+        alert("输入的不能为空");
+        return;
+    }  
+    var sexVal = sex.value.trim();
+    customId++;
+    data.push({
+        id:customId,
+        'username' : userNameVal,
+        'age' : ageVal,
+        'sex' : sexVal
+    });
+    if(ageSort.isSort){
+        if(ageSort.sort){
+            data.sort(function (a,b){
+                return a.age - b.age;
+            })
+        }else{
+            data.sort(function (a,b){
+                return b.age - a.age;
+            })
+        }
+    }
+     render();
+     changeColor();
+     checkAll.checked = false;
+};
+
+var ageSort = $("#ageSort");
+ageSort.onclick = function (){
+    this.isSort = true;
+     if(this.sort) {
+        data.sort(function (a,b){
+            return b.age - a.age;
+        })
+        this.value = '年龄从小到大排序'
+        this.sort = false;
+     }else{
+        data.sort(function (a,b){
+            return a.age - b.age;
+        })
+        this.value = '年龄从大到小排'
+        this.sort = true;
+     }
+     render();
+     changeColor();
+};
 </script>
 </body>
 </html>
