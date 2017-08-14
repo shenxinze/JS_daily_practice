@@ -2,7 +2,7 @@
 * @Author: shen
 * @Date:   2017-08-02 17:16:38
 * @Last Modified by:   shen
-* @Last Modified time: 2017-08-10 00:09:07
+* @Last Modified time: 2017-08-14 17:42:55
 */
 body,p,h1,h2,h3,h4,h5,h6,dl,dd{
 	margin:0;
@@ -402,6 +402,7 @@ body{
 }
 .content .right .doc-list .doc-choose{
 	background: url(../images/choose.png) no-repeat center center #55addc!important;
+	visibility: visible;
 }
 .content .right .doc-list strong{
 	display: block;
