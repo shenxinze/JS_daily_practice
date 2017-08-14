@@ -70,5 +70,35 @@
 	</div>
 	<p>这里有点文字</p>
 </div>	
+<script>
+var input = document.querySelectorAll('input');
+var oP = document.getElementsByTagName('p');
+
+input[1].onclick = function (){
+	oP[0].style.display = 'block';
+	var tValue = input[0].value;
+	if(tValue === ''){
+		oP[0].innerHTML = '请输入内容';
+	}else if(tValue.charAt(0) == ' '){
+		oP[0].innerHTML = '前后不能有空格';
+	}else if(tValue.charAt(tValue.length-1) === ' '){
+		oP[0].innerHTML = '前后不能有空格';
+	}else if(tValue.charAt(0) === 0){
+		oP[0].innerHTML = '不能有0在前面';
+	}else if(isNaN(tValue)){
+		oP[0].innerHTML = '请输入数字';
+	}else if(parseFloat( tValue ) != parseInt( tValue )){
+		oP[0].innerHTML = '不能是小数';
+	}else if(tValue.length<5){
+		oP[0].innerHTML = '最少5位最多13位';
+	}else if(tValue.length>13){
+		oP[0].innerHTML = '最少5位最多13位';
+	}else{
+		oP[0].innerHTML = '输入正确';
+	}
+}
+
+
+</script>
 </body>
 </html>
