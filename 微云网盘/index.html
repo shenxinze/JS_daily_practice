@@ -24,14 +24,14 @@
 </div>
 <div class="topInfo clear">
 	<div class="left clear">
-		<h1><a href=""><img src="images/logo.png">妙味云盘</a></h1>
+		<h1><a href="javascript:;"><img src="images/logo.png">妙味云盘</a></h1>
 		<span>妙味云盘</span>
 	</div>
 	<div class="right clear">
-		<a href=""><img src="images/user.png"></a>
-		<a href=""><img src="images/arrow.png"></a>
+		<a href="javascript:;"><img src="images/user.png"></a>
+		<a href="javascript:;"><img src="images/arrow.png"></a>
 		<span></span>
-		<a href=""><img src="images/set.png"></a>
+		<a href="javascript:;"><img src="images/set.png"></a>
 	</div>
 </div>
 <div class="menuBox clear">
@@ -52,9 +52,9 @@
 			<li><i></i><a href="javascript:;"></a></li>
 		</ul>
 		<div class="select-list">
-			<a href=""><i></i>按时间排序</a>
-			<a href="" class="active"><i></i>按字母顺序</a>
-			<a href=""><i></i>显示缩略图</a>
+			<a href="javascript:;"><i></i>按时间排序</a>
+			<a href="javascript:;" class="active"><i></i>按字母顺序</a>
+			<a href="javascript:;"><i></i>显示缩略图</a>
 		</div>
 	</div>
 
@@ -77,13 +77,13 @@
 				<p>请点击左上角的“上传”按钮添加</p>
 			</div>
 			<ul class="doc-list clear">
-				<li>
+				<!--<li>
 					<a href="javascript:;" class="active">
 						<span class="-doc-choose"></span>
 						<strong>JS基础课程</strong>
 					</a>
 				</li>
-				<!-- <li>
+				 <li>
 					<a href="javascript:;">
 						<span></span>
 						<strong>CSS课程</strong>
@@ -184,9 +184,6 @@
 		</ul> -->
 	</div>
 </div>
-
-
-
 <script src='js/data.js'></script>
 <script src='js/index.js'></script>
 <script>
@@ -262,12 +259,11 @@ function createFileHtml (id){
 			return `<li class='a' data-id="${item.id}">
 						<a href="javascript:;" class="active">
 							<span></span>
-							<strong>${item.title}</strong>
+							<input type="text" value='${item.title}' />
 						</a>
 					</li>`
 		}).join('');
 	}else{
-		//console.log(childs);
 		bgBox.style.display = 'block';
 		return null;
 	}
@@ -378,6 +374,9 @@ var lis = docList.getElementsByTagName('li');
 
 on(chooseAll,'click',function(){
 	var bl = this.classList.toggle('chooseActive');
+	if( lis.length === 0){
+		this.classList.remove('chooseActive');
+	}
 	if(bl){
 		for(var i = 0;i < spans.length;i++){
 			spans[i].classList.add('doc-choose');
@@ -431,17 +430,21 @@ on(docList,'click',function(ev){
 
 
 /*------------ 框选 ------------*/
+
 var cont = document.querySelector('.cont')
 
-for( var i = 0 ; i < spans.lenght ; i++ ){
+/*for( var i = 0 ; i < spans.lenght ; i++ ){
 	on(spans[i],'mousedown',function(ev){
 		ev.stopPropagation();
 		ev.preventDefault();
 	})
-}
+}*/
 
 on(cont,'mousedown',function(ev){
-	ev.preventDefault();
+	//ev.preventDefault();
+	if(lis.length === 0){
+		return;
+	}
 	var newDiv = document.createElement("div");
 	newDiv.className = 'newArea';
 	
@@ -458,9 +461,11 @@ on(cont,'mousedown',function(ev){
 
 	function moveFn(ev){
 
-		if(Math.abs(ev.clientX - disX > 10 || Math.abs(ev.clientY - disY) > 10) && !newDiv.isAppend){
-			document.body.appendChild(newDiv);
-			newDiv.isAppend = true;
+		if(Math.abs(ev.clientX - disX > 10 || Math.abs(ev.clientY - disY) > 10)){
+			if(!newDiv.isAppend){
+				document.body.appendChild(newDiv);
+				newDiv.isAppend = true;
+			}
 		}
 
 		newDiv.style.width = Math.abs(ev.clientX - disX) + 'px';
@@ -471,8 +476,6 @@ on(cont,'mousedown',function(ev){
 		for(var i = 0; i < lis.length; i++){
 			if(collision(newDiv,lis[i])){
 				lis[i].classList.add('active');
-				//console.log(lis[i].children.firstElementChild)
-				console.log(lis[i].firstElementChild.firstElementChild)
 				lis[i].firstElementChild.firstElementChild.classList.add('doc-choose');
 			}else{
 				lis[i].classList.remove('active');
@@ -487,7 +490,6 @@ on(cont,'mousedown',function(ev){
 		if(newDiv.isAppend){
 			document.body.removeChild(newDiv);
 		}
-		
 		
 		var spansChecked = docList.getElementsByClassName('doc-choose');
 		if(spansChecked.length === lis.length){
@@ -511,9 +513,43 @@ function collision(obj1,obj2){
 	}
 }
 
+/*------------ 新建文件夹 ------------*/
 
+var newFile = document.querySelector('.left li:nth-child(6)');
 
-
+on(newFile,'mousedown',function(){
+	var newLi = document.createElement('li');
+	newLi.className = 'a';
+	newLi.innerHTML = `
+		<a href="javascript:;" class="active">
+			<span></span>
+			<input type="text" value='' />
+		 </a>`;
+	var firstNode = docList.querySelector('li:nth-child(1)');
+	var input = newLi.getElementsByTagName('input');
+	on(newFile,'mouseup',function(ev){
+		ev.stopPropagation();
+		docList.insertBefore(newLi,firstNode);
+		input[0].focus();
+		if(input[0]){
+			input[0].style.borderColor = '#55addc';
+		}
+		on(document,'click',function(ev){
+			if(input[0]){
+				input[0].style.borderColor = 'red';
+			}
+			var id = Date.now();
+			var tValue = input[0].value;
+			data[id]={
+				"id": id,
+		        "pid": id - 1,
+		        "title": tValue,
+		        "type": "file"
+			};
+			//docList.innerHTML = createFileHtml();
+		})
+	})
+})
 
 
 </script>

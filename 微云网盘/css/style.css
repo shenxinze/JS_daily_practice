@@ -2,7 +2,7 @@
 * @Author: shen
 * @Date:   2017-08-02 17:16:38
 * @Last Modified by:   shen
-* @Last Modified time: 2017-08-14 17:42:55
+* @Last Modified time: 2017-08-15 20:59:07
 */
 body,p,h1,h2,h3,h4,h5,h6,dl,dd{
 	margin:0;
@@ -33,8 +33,8 @@ i,em{
 input,fieldset,textarea{
 	padding:0;
 	margin:0;
-	border:0;
-	background:none;
+	-border:0;
+	-background:none;
 	vertical-align:top;
 	resize:none;
 	outline: none;	
@@ -386,6 +386,11 @@ body{
 	background: url(../images/doc-icon.png) no-repeat center 34px #fff;
 	margin: 40px;
 }
+.content .right .doc-list li a{
+	display: block;
+	width: 178px;
+	height: 178px;
+}
 .content .right .doc-list li:hover,.content .right .doc-list .active{
 	border-color: #55addc; 
 }
@@ -404,38 +409,49 @@ body{
 	background: url(../images/choose.png) no-repeat center center #55addc!important;
 	visibility: visible;
 }
-.content .right .doc-list strong{
+.content .right .doc-list input{
+	/* border: none; */
+	/* background: none; */
 	display: block;
+	width: 160px;
+	line-height: 30px;
+	margin: 104px auto 0;
 	text-align: center;
 	font-size: 14px;
 	color: #55addc;
-	margin-top: 104px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	outline: none;
+}
+.content .right .doc-list .getFocus{
+	border: 1px solid #55addc;
+	border-radius: 4px;
 }
 .content .right .doc-list .type-1{
 	background-color: #ebeff0;
 }
-.content .right .doc-list .type-1 strong{
+.content .right .doc-list .type-1 input{
 	color: #66757f;
 }
 .content .right .doc-list .type-2{
 	background-image: url(../images/img-icon.png);
 	background-color: #ebeff0;
 }
-.content .right .doc-list .type-2 strong{
+.content .right .doc-list .type-2 input{
 	color: #66757f;
 }
 .content .right .doc-list .type-3{
 	background-image: url(../images/txt-icon.png);
 	background-color: #ebeff0;
 }
-.content .right .doc-list .type-3 strong{
+.content .right .doc-list .type-3 input{
 	color: #66757f;
 }
 .content .right .doc-list .type-4{
 	background-image: url(../images/zip-icon.png);
 	background-color: #ebeff0;
 }
-.content .right .doc-list .type-4 strong{
+.content .right .doc-list .type-4 input{
 	color: #66757f;
 }
 .content .right .doc-list-1ist{
