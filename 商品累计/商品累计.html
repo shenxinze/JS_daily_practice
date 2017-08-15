@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>商品累计</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+			font-size: 16px;
+			font-family: '微软雅黑';
+			line-height: 1;
+			cursor: pointer;
+		}
+		i{
+			font-style: normal;
+		}
+		.clear:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.wrap{
+			width: 574px;
+			height: 543px;
+			background: url(./images/bg.jpg) no-repeat;
+			margin: 50px auto 0;
+			padding: 257px 0 0 190px;
+		}
+		ul{
+			list-style: none;
+			width: 386px;
+			height: 260px;
+			/*background: #fff;*/
+		}
+		ul li{
+			height: 36px;
+			margin-bottom: 20px;
+		}
+		li:nth-last-child(1){
+			margin-bottom: 0;
+		}
+		ul b,ul strong{
+			float: left;
+			font-weight: normal;
+			width: 44px;
+			height: 36px;
+		}
+		ul b{
+			background: url(./images/j.jpg) no-repeat center;
+		}
+		ul span{
+			float: left;
+			width: 44px;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			margin: 0 10px;
+		}
+		ul strong{
+			float: left;
+			background: url(./images/add.png) no-repeat center;
+		}
+		ul p{
+			float: left;
+			width: 214px;
+			height: 36px;
+			margin-left: 20px;
+			color: #acacac;
+			line-height: 36px;
+			text-indent: 10px;
+			white-space: nowrap;
+		}
+		.bottom{
+			width: 386px;
+			height: 100px;
+			margin-top: 68px;
+		}
+		.bottom p{
+			color: #acacac;
+			line-height: 36px;
+			margin-bottom: 14px;
+		}
+		.bottom p:nth-child(2){
+			margin-bottom: 0;
+		}
+		.bottom span,.bottom strong{
+			font-weight: normal;
+			display: inline-block;
+			vertical-align: top;
+			height: 36px;
+			font-size: 18px;
+			line-height: 36px;
+			text-align: center;
+			margin: 0 10px;
+			border-radius: 5px;
+			background: #ebebeb;
+			color: #000;
+		}
+		.bottom span{
+			padding: 0 12px;
+		}
+		.bottom strong{
+			padding: 0 12px;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<ul>
+		<li>
+			<b></b>
+			<span>0</span>
+			<strong></strong>
+			<p>单价：<i>12.5</i>元  小计：<i>0</i>元</p>
+		</li>
+		<li>
+			<b></b>
+			<span>0</span>
+			<strong></strong>
+			<p>单价：<i>10.5</i>元  小计：<i>0</i>元</p>
+		</li>
+		<li>
+			<b></b>
+			<span>0</span>
+			<strong></strong>
+			<p>单价：<i>8.5</i>元  小计：<i>0</i>元</p>
+		</li>
+		<li>
+			<b></b>
+			<span>0</span>
+			<strong></strong>
+			<p>单价：<i>8</i>元  小计：<i>0</i>元</p>
+		</li>
+		<li>
+			<b></b>
+			<span>0</span>
+			<strong></strong>
+			<p>单价：<i>14</i>元  小计：<i>0</i>元</p>
+		</li>
+	</ul>
+	<div class="bottom">
+		<p>商品合计共：<span>0</span>件&nbsp;&nbsp;共花费了：<strong class="totalYuan">100</strong>元</p>
+		<p>其中最贵的商品单价是<strong class="maxYuan">100</strong>元</p>
+	</div>
+</div>
+</body>
+</html>
