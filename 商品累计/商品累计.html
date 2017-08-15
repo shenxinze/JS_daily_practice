@@ -140,9 +140,82 @@
 		</li>
 	</ul>
 	<div class="bottom">
-		<p>商品合计共：<span>0</span>件&nbsp;&nbsp;共花费了：<strong class="totalYuan">100</strong>元</p>
-		<p>其中最贵的商品单价是<strong class="maxYuan">100</strong>元</p>
+		<p>商品合计共：<span>0</span>件&nbsp;&nbsp;共花费了：<strong class="totalYuan">0</strong>元</p>
+		<p>其中最贵的商品单价是<strong class="maxYuan">0</strong>元</p>
 	</div>
 </div>
+<script>
+var lis = document.querySelectorAll('li');
+var spans = document.querySelectorAll('ul span');
+var ps = document.querySelectorAll('ul p');
+
+
+var bspan = document.querySelector('.bottom span');//商品总件数
+var totalYuan = document.querySelector('.totalYuan');//总共消费多少元
+var maxYuan = document.querySelector('.maxYuan');//最贵商品单价
+
+var totalNum = 0;//商品的总数量
+var totalPrice = 0;  // 共花费
+var maxPrice = 0; //最贵的单价
+
+function count(ele){
+	var b = ele.querySelector('b');
+	var span = ele.querySelector('span');
+	var strong = ele.querySelector('strong');
+	var is = ele.querySelectorAll('i');
+
+	var price = parseFloat(is[0].innerHTML);//单价
+	var n = 0;
+	//加
+	strong.onclick = function (){
+		n++;
+		span.innerHTML = n;
+		totalNum++;
+		bspan.innerHTML = totalNum;
+
+		is[1].innerHTML = n * price;
+		totalPrice += price;
+		totalYuan.innerHTML = totalPrice;
+
+		if(price > maxPrice){
+			maxPrice = price;
+		}
+		maxYuan.innerHTML = maxPrice;
+	}
+
+	//减
+	b.onclick = function (){
+		n--;
+		if(n < 0){
+			n = 0;
+			return;
+		};
+		span.innerHTML = n;
+		totalNum--;
+		bspan.innerHTML = totalNum;
+
+		is[1].innerHTML = n * price;
+		totalPrice -= price;
+		totalYuan.innerHTML = totalPrice;
+
+		if(n == 0){
+			maxPrice = 0;
+			for(var i = 0; i < spans.length; i++){
+				if(spans[i].innerHTML != 0){
+					var priceI = ps[i].querySelector('i');
+					if(maxPrice < parseFloat(priceI.innerHTML)){
+						maxPrice = parseFloat(priceI.innerHTML);	
+					}
+				}
+			}
+			maxYuan.innerHTML = maxPrice;
+		}
+	}
+}
+
+for(var i = 0;i < lis.length; i++){
+	count(lis[i]);
+}
+</script>
 </body>
 </html>
