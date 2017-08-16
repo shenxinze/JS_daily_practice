@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>修改文本框的值</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+			color: #fff;
+			font-size: 16px;
+			font-family: '微软雅黑';
+			line-height: 1;
+		}
+		ul{
+			list-style: none;
+			margin: 76px 0 0 0px;
+			
+		}
+		.wrap{
+			width: 764px;
+			height: 800px;
+			background: url(./images/bg.png) no-repeat;
+			margin: 50px auto 0;
+			position: relative;
+		}
+		.bg{
+			width: 440px;
+			height: 240px;
+			background: url(./images/bg1.png) no-repeat;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -220px;
+			margin-top: -120px;
+		}
+		li{
+			height: 86px;
+			border-bottom: 1px dashed #69585b;
+		}
+		p{
+			height: 62px;
+			padding-top: 24px;
+			/*display: none;*/
+		}
+		span{
+			float: left;
+			line-height: 38px;
+			margin-left: 30px;
+		}
+		i{
+			float: left;
+			width: 24px;
+			height: 24px;
+			background: url(./images/c.png);
+			margin: 8px 0 0 24px;
+		}
+		.box{
+			height: 62px;
+			padding-top: 24px;
+			display: none;
+		}
+		form{
+			height: 36px;
+		}
+		input{
+			background: none;
+			border: none;
+			float: left;
+			margin-right: 10px;
+		}
+		input:nth-child(1){
+			width: 253px;
+			height: 34px;
+			border: 1px solid #e15671;
+			margin-left: 20px;
+			text-indent: 8px;
+		}
+		input:nth-child(2){
+			width: 60px;
+			height: 36px;
+			border-radius: 5px;
+			background: #e15671;
+		}
+		input:nth-child(3){
+			width: 60px;
+			height: 36px;
+			border-radius: 5px;
+			border: 1px solid #e15671;
+			margin-right: 0;
+		}
+		li:nth-child(2){
+			height: 77px;
+			border-bottom: none;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="bg">
+		<ul>
+			<li>
+				<p>
+					<span>妙味实体课程</span>
+					<i></i>
+				</p>
+				<div class="box">
+					<form method="" action="">
+						<input type="text" name="" value="" />
+						<input type="button" name="" value="保存" />
+						<input type="button" name="" value="取消" />
+					</form>
+				</div>
+			</li>
+			<li>
+				<p>
+					<span>妙味实体课程</span>
+					<i></i>
+				</p>
+				<div class="box">
+					<form method="" action="">
+						<input type="text" name="" />
+						<input type="button" name="" value="保存" />
+						<input type="button" name="" value="取消" />
+					</form>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>
