@@ -128,5 +128,48 @@
 		</ul>
 	</div>
 </div>
+<script>
+var lis = document.getElementsByTagName('li');
+function lisClick(ele){
+	var reWrite = ele.querySelector('i');
+	var span = ele.querySelector('span');
+	var btnSure = ele.querySelector('form input:nth-child(2)');
+	var btnClose = ele.querySelector('form input:nth-child(3)');
+	var text = ele.querySelector('form input:nth-child(1)'); 
+	text.value = span.innerHTML;
+	var str = null;
+	reWrite.onclick = function (){
+		this.parentNode.style.display = 'none';
+		this.parentNode.nextElementSibling.style.display = 'block';
+		text.select();
+	}
+	btnSure.onclick = function (){
+		reWrite.parentNode.style.display = 'block';
+		reWrite.parentNode.nextElementSibling.style.display = 'none';
+		span.innerHTML = text.value;
+		str = span.innerHTML; 
+		if(str == ''){
+			span.innerHTML = '妙味实体课程';
+		}
+	}
+	btnClose.onclick = function (){
+		if(span.innerHTML == str){
+			reWrite.parentNode.style.display = 'block';
+			reWrite.parentNode.nextElementSibling.style.display = 'none';
+			span.innerHTML = text.value = str;
+		}else if(str == ''){
+			reWrite.parentNode.style.display = 'block';
+			reWrite.parentNode.nextElementSibling.style.display = 'none';
+		}
+		if(text.value !== span.innerHTML){
+			text.value = '';
+		}
+		
+	}
+}
+for( var i = 0 ; i < lis.length ; i++ ){
+	lisClick(lis[i]);
+}
+</script>	
 </body>
 </html>
