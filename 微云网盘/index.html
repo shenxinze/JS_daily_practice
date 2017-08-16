@@ -6,11 +6,11 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<div class="tipBox">
-	<div class="tipTimeOut"><i></i>连接服务器超时，请稍后再试</div>
-	<div class="tipDelSuccess"><i></i>删除文件成功</div>
-	<div class="tipSelectFile"><i></i>请选择文件</div>
-</div>
+<!-- tip -->
+<div class="tipTimeOut"><i></i>连接服务器超时，请稍后再试</div>
+<div class="tipSuccess"><i></i>删除文件成功</div>
+<div class="tipSelectFile"><i></i>请选择文件</div>
+
 <div class="warnTip">
 	<div class="tipDel">
 		<h3>确定要删除这个文件夹吗？</h3>
@@ -22,6 +22,7 @@
 		<span></span>
 	</div>
 </div>
+
 <div class="topInfo clear">
 	<div class="left clear">
 		<h1><a href="javascript:;"><img src="images/logo.png">妙味云盘</a></h1>
@@ -184,6 +185,7 @@
 		</ul> -->
 	</div>
 </div>
+<script src='js/utils.js'></script>
 <script src='js/data.js'></script>
 <script src='js/index.js'></script>
 <script>
@@ -307,18 +309,20 @@ navBar.innerHTML = creatNavHtml(0);
 
 /*------------ 给树形菜单每个菜单绑定事件 ------------*/
 
-var treeAs = left.getElementsByTagName('a');
-for(var i = 0;i<treeAs.length;i++){
-	treeAs[i].onclick = function(){
-		var treeId = this.dataset.id;
-		docList.innerHTML = createFileHtml(treeId);
-		navBar.innerHTML = creatNavHtml(treeId);
-		positionElement(treeId);
-		clickNavA();
-		clickFileLi();
+clickTree()
+function clickTree(){
+	var treeAs = left.getElementsByTagName('a');
+	for(var i = 0;i<treeAs.length;i++){
+		treeAs[i].onclick = function(){
+			var treeId = this.dataset.id;
+			docList.innerHTML = createFileHtml(treeId);
+			navBar.innerHTML = creatNavHtml(treeId);
+			positionElement(treeId);
+			clickNavA();
+			clickFileLi();
+		}
 	}
 }
-
 /*------------ 给导航中的每个元素绑定事件 ------------*/
 
 clickNavA()
@@ -438,8 +442,8 @@ var cont = document.querySelector('.cont')
 		ev.stopPropagation();
 		ev.preventDefault();
 	})
-}*/
-
+}
+*/
 on(cont,'mousedown',function(ev){
 	//ev.preventDefault();
 	if(lis.length === 0){
@@ -514,10 +518,18 @@ function collision(obj1,obj2){
 }
 
 /*------------ 新建文件夹 ------------*/
+/*
+	创建文件夹：
+		1.点击创建文件夹，生成一个新的结构；
+			1> 获得焦点，输入文件名称，点击其他地方失去焦点
+				1> 文件名与兄弟文件夹名不一样，点击其他地方失去焦点，创建a成功；
+				2> 文件名与兄弟文件夹有重名，创建不成功；
+				3> 文件夹名称为空，创建不成功
 
+*/
 var newFile = document.querySelector('.left li:nth-child(6)');
 
-on(newFile,'mousedown',function(){
+on(newFile,'mouseup',function(ev){
 	var newLi = document.createElement('li');
 	newLi.className = 'a';
 	newLi.innerHTML = `
@@ -526,29 +538,79 @@ on(newFile,'mousedown',function(){
 			<input type="text" value='' />
 		 </a>`;
 	var firstNode = docList.querySelector('li:nth-child(1)');
+	ev.stopPropagation();
+	if(docList.children){
+		bgBox.style.display = 'none';
+	}
+	docList.insertBefore(newLi,firstNode);
 	var input = newLi.getElementsByTagName('input');
-	on(newFile,'mouseup',function(ev){
-		ev.stopPropagation();
-		docList.insertBefore(newLi,firstNode);
-		input[0].focus();
-		if(input[0]){
-			input[0].style.borderColor = '#55addc';
-		}
-		on(document,'click',function(ev){
-			if(input[0]){
-				input[0].style.borderColor = 'red';
+	input[0].focus();
+	input[0].style.borderColor = '#55addc';
+
+	newFile.isCreateing = true;
+})
+
+on(document,'mousedown',function(){
+	if(newFile.isCreateing){
+		var inputs = docList.getElementsByTagName('input');
+
+		inputs[0].style.borderColor = 'transparent';
+
+		var pid = navBar.lastElementChild.dataset.id;
+		/*var arr = getChildsById(pid);
+		console.log(arr)
+		for(var attr in data){
+			for(var i = 0;i < arr.length;i++){
+				if(data[attr].title == arr[i].title){
+					
+				}
 			}
-			var id = Date.now();
-			var tValue = input[0].value;
-			data[id]={
-				"id": id,
-		        "pid": id - 1,
-		        "title": tValue,
-		        "type": "file"
-			};
-			//docList.innerHTML = createFileHtml();
-		})
-	})
+		}*/
+
+		/*for(var i = 0;i < inputs.length;i++){*/
+			if(inputs[0].value == ''){
+				inputs[0].parentNode.parentNode.remove();
+			}else{
+				var tipSuccess = document.querySelector('.tipSuccess');
+				tipSuccess.innerHTML = '<i></i>创建文件成功';
+				mTween(tipSuccess,{
+	                top: 15,
+	            },200,'linear',function(){
+	            	setTimeout(function(){
+	            		mTween(tipSuccess,{
+	            			opacity:0,
+	            			top:-55
+	            		},400)
+	            	},600)
+	            })
+			}
+		/*}*/
+
+		newFile.isCreateing = false;
+		var tValue = docList.querySelector('.doc-list li:nth-child(1) input').value;
+
+		var id = Date.now();
+		
+		//console.log(pid)
+		data[id] = {
+			"id": id,
+       		"pid": pid,
+        	"title": tValue
+		}
+	
+		var newLi = inputs[0].parentNode.parentNode;
+
+		newLi.setAttribute('data-id',id);
+
+		clickNavA();
+		clickFileLi()
+		left.innerHTML = createTreeHtml(initId,leval);
+		positionElement(id);
+		clickTree();
+	}
+
+
+
 })
 
 

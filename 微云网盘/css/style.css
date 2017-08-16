@@ -2,7 +2,7 @@
 * @Author: shen
 * @Date:   2017-08-02 17:16:38
 * @Last Modified by:   shen
-* @Last Modified time: 2017-08-15 20:59:07
+* @Last Modified time: 2017-08-16 19:01:41
 */
 body,p,h1,h2,h3,h4,h5,h6,dl,dd{
 	margin:0;
@@ -553,28 +553,22 @@ body{
 	right: 20px;
 	top: 200px;
 }
-
-.tipBox{
-	padding: 0 24px 0 52px;
-	height: 120px;
-	font-size: 14px;
-	color: #fff;
-	position: absolute;
-	left: 0;
-	top: 0;
-	display: none;
-}
-.tipBox .tipTimeOut,.tipBox .tipDelSuccess,.tipBox .tipSelectFile{
+/* tip */
+.tipTimeOut,.tipSuccess,.tipSelectFile{
 	padding: 0 24px 0 52px;
 	height: 40px;
 	line-height: 40px;	
-	position: relative;
+	position: absolute;
 	border-radius: 20px 20px;
+	left: 50%;
+	top: -55px;
+	color: #fff;
 }
-.tipBox .tipTimeOut{
+.tipTimeOut{
 	background: rgba(235,107,107,0.8);
+
 }
-.tipBox .tipTimeOut i{
+.tipTimeOut i{
 	width: 24px;
 	height: 24px;
 	background: url(../images/tip.png) no-repeat 0 -48px;
@@ -582,10 +576,11 @@ body{
 	left: 20px;
 	top: 8px;
 }
-.tipBox .tipDelSuccess{
+.tipSuccess{
 	background: #86ce8b;
+	margin-left: -80px;
 }
-.tipBox .tipDelSuccess i{
+.tipSuccess i{
 	width: 24px;
 	height: 24px;
 	background: url(../images/tip.png) no-repeat 0 -24px;
@@ -593,10 +588,10 @@ body{
 	left: 20px;
 	top: 8px;
 }
-.tipBox .tipSelectFile{
+.tipSelectFile{
 	background: #f3a960;
 }
-.tipBox .tipSelectFile i{
+.tipSelectFile i{
 	width: 24px;
 	height: 24px;
 	background: url(../images/tip.png) no-repeat 0 0;
