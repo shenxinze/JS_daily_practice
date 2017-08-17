@@ -246,6 +246,7 @@ function mTween(element,attrObj,duration,fx,callback){
 	fx = fx || 'linear';
 
 	clearInterval(element.timer);
+
 	element.timer = setInterval(function (){
 		// 已过去时间
 		var t = Date.now() - startTime;
@@ -267,8 +268,6 @@ function mTween(element,attrObj,duration,fx,callback){
 			}
 			
 		}
-
-		
 
 		if(t === duration){
 			typeof callback === 'function' && callback();

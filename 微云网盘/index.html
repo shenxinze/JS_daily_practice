@@ -15,7 +15,7 @@
 	<div class="tipDel">
 		<h3>确定要删除这个文件夹吗？</h3>
 		<p class="info">已删除的文件可以在回收站找到</p>
-		<p class="btn">
+		<p class="btn clear">
 			<a href="javascript:;">确定</a>
 			<a href="javascript:;">取消</a>
 		</p>
@@ -201,6 +201,15 @@ function getChildsById(id){
 		}
 	}
 	return arr;
+}
+
+// 通过id找数据
+function getDataById(id){
+	var item = data[id];
+	if(item){
+		return item
+	}
+	return null;
 }
 
 /*------------ 先渲染菜单区域 ------------*/
@@ -496,7 +505,7 @@ on(cont,'mousedown',function(ev){
 		}
 		
 		var spansChecked = docList.getElementsByClassName('doc-choose');
-		if(spansChecked.length === lis.length){
+		if(lis.length && spansChecked.length === lis.length){
 			chooseAll.classList.add('chooseActive');
 		}else{
 			chooseAll.classList.remove('chooseActive');
@@ -552,29 +561,38 @@ on(newFile,'mouseup',function(ev){
 
 on(document,'mousedown',function(){
 	if(newFile.isCreateing){
-		var inputs = docList.getElementsByTagName('input');
+		var newLi = docList.firstElementChild;
+		var newInput = newLi.getElementsByTagName('input')[0];
+		newInput.style.borderColor = 'transparent';
 
-		inputs[0].style.borderColor = 'transparent';
+		var tValue = newInput.value;
+		
+		if(tValue == ''){
+			newLi.remove();
+			if(!spans.length){
+				//console.log('我在这里')
+				bgBox.style.display = 'block';
+			}
 
-		var pid = navBar.lastElementChild.dataset.id;
-		/*var arr = getChildsById(pid);
-		console.log(arr)
-		for(var attr in data){
-			for(var i = 0;i < arr.length;i++){
-				if(data[attr].title == arr[i].title){
-					
+		}else{
+			var isExistName = false;
+			var id = navBar.lastElementChild.dataset.id;//当前id
+			var childs = getChildsById(id);//当前id下所有的子集
+			for(var i = 0;i < childs.length;i++){
+				if(childs[i].title === tValue){
+					isExistName = true;
+					break;
 				}
 			}
-		}*/
-
-		/*for(var i = 0;i < inputs.length;i++){*/
-			if(inputs[0].value == ''){
-				inputs[0].parentNode.parentNode.remove();
+			if(isExistName){
+				newLi.remove();
 			}else{
+				//创建成功提示动画
 				var tipSuccess = document.querySelector('.tipSuccess');
 				tipSuccess.innerHTML = '<i></i>创建文件成功';
 				mTween(tipSuccess,{
 	                top: 15,
+	                opacity:1
 	            },200,'linear',function(){
 	            	setTimeout(function(){
 	            		mTween(tipSuccess,{
@@ -583,37 +601,265 @@ on(document,'mousedown',function(){
 	            		},400)
 	            	},600)
 	            })
+	            var pid = navBar.lastElementChild.dataset.id;
+				var id = Date.now();
+				
+				data[id] = {
+					"id": id,
+		       		"pid": pid,
+		        	"title": tValue
+				}
+			
+				var newLi = newInput.parentNode.parentNode;
+
+				newLi.setAttribute('data-id',id);
+
+				clickNavA();
+				clickFileLi()
+				left.innerHTML = createTreeHtml(initId,leval);
+				positionElement(id);
+				clickTree();
 			}
-		/*}*/
-
-		newFile.isCreateing = false;
-		var tValue = docList.querySelector('.doc-list li:nth-child(1) input').value;
-
-		var id = Date.now();
-		
-		//console.log(pid)
-		data[id] = {
-			"id": id,
-       		"pid": pid,
-        	"title": tValue
 		}
 	
-		var newLi = inputs[0].parentNode.parentNode;
 
-		newLi.setAttribute('data-id',id);
-
-		clickNavA();
-		clickFileLi()
-		left.innerHTML = createTreeHtml(initId,leval);
-		positionElement(id);
-		clickTree();
+		newFile.isCreateing = false;
+		//var tValue = docList.querySelector('.doc-list li:nth-child(1) input').value;
+		
 	}
-
-
-
 })
 
+/*------------ 删除文件夹 ------------*/
 
+var delFile = document.querySelector('.left li:nth-child(5)');
+var warnTip = document.querySelector('.warnTip');
+var tipDel = document.querySelector('.tipDel');
+var btnSure = document.querySelector('.btn a:nth-child(1)');
+var btnClose = document.querySelector('.btn a:nth-child(2)');
+var closeTip = document.querySelector('.warnTip span');
+var tipSelectFile = document.querySelector('.tipSelectFile');
+//点击菜单中的删除按钮
+on(delFile,'click',function(){
+
+	if(spansChecked.length == 0){
+		tipSelectFile.innerHTML = '<i></i>请选择文件';
+		mTween(tipSelectFile,{
+            top: 15,
+            opacity:1
+        },200,'linear',function(){
+        	setTimeout(function(){
+        		mTween(tipSelectFile,{
+        			opacity:0,
+        			top:-55
+        		},400)
+        	},600)
+        })
+	}else{
+		warnTip.style.display = 'block';
+	}
+});
+
+//获取选中的span
+/*function whoSelected(){
+	var arr = [];
+	for(var i = 0;i < spans.length;i++ ){
+		if(spans[i].className == 'doc-choose'){
+			arr.push(spans[i]);
+		}
+		return arr;
+	}
+}*/
+
+//提示框 - 确定删除按钮
+on(btnSure,'click',function(){
+	var selectArr = [];
+	for(var i = 0;i < spans.length;i++){
+		if(spans[i].classList.contains('doc-choose')){
+			selectArr.push(spans[i]);
+		}
+	}
+	// 找到指定id下所有的子孙数据
+	function getChildsAllById(id){
+		// 找到这个id的数据
+		var item = getDataById(id);
+		var arr = [];
+		// 把id对对应的数据push到数组中
+		arr.push(item);
+		for(var attr in data){
+			if(data[attr].pid == id){
+				arr = arr.concat(getChildsAllById(data[attr].id))
+			}
+		}
+		return arr;
+	}
+
+	// 删除指定id下所有的子孙数据
+	function delectDataById(id){
+		var childsAll = getChildsAllById(id);
+		for( var i = 0; i < childsAll.length; i++ ){
+			delete data[childsAll[i].id]
+		}
+	}
+
+	for(var i = 0;i < selectArr.length;i++){
+		console.log(selectArr[i].parentNode.parentNode);
+		selectArr[i].parentNode.parentNode.remove();
+		delectDataById(selectArr[i].parentNode.parentNode.dataset.id);
+	}
+	if(lis.length === 0){
+		bgBox.style.display = 'block';
+		chooseAll.classList.remove('chooseActive');
+	}
+
+	warnTip.style.display = 'none';
+
+	left.innerHTML = createTreeHtml(initId,leval);
+	var id = navBar.lastElementChild.dataset.id;
+	positionElement(id);
+	clickTree();
+});
+
+//提示框 - 取消删除按钮
+on(btnClose,'click',function(){
+	warnTip.style.display = 'none';
+	/*for(var i = 0; i < lis.length;i++){
+		spans[i].className = '';
+		lis[i].classList.remove('active');
+	}
+	chooseAll.classList.remove('chooseActive');*/
+});
+
+on(closeTip,'click',function(){
+	warnTip.style.display = 'none';
+})
+
+//拖拽移动
+/*on(tipDel,'mousedown',function(ev){
+	var disX = ev.clientX - tipDel.offsetLeft;
+	var disY = ev.clientY - tipDel.offsetTop;
+
+	var maxX = document.documentElement.clientX - tipDel.clientWidth;
+	var maxY = document.documentElement.clientY - tipDel.clientHeight;
+
+	on(document,'mousemove',function(ev){
+		tipDel.style.cursor = 'move';
+		var w = ev.clientX - disX + tipDel.clientWidth/2;
+		var h = ev.clientY - disY + tipDel.clientHeight/2;
+
+		if( w < 0 ){
+			w = 0;
+		}
+		if( h < 0 ){
+			h = 0;
+		}
+		if( w > maxX ){
+			w = maxX;
+		}
+		if( h > maxY ){
+			h = maxY;
+		}
+
+		tipDel.style.left = w + 'px';
+		tipDel.style.top = h + 'px';
+	})
+
+	on(document,'mouseup',function(){
+		
+	})
+
+})*/
+
+
+/*------------ 重命名 ------------*/
+
+var reName = document.querySelector('.left li:nth-child(4)');
+var state = false;
+var oldValue = '';
+var newValue = '';
+on(reName,'click',function(ev){
+	if(spansChecked.length === 0){
+		tipSelectFile.innerHTML = '<i></i>请选择文件';
+		mTween(tipSelectFile,{
+            top: 15,
+            opacity:1
+        },200,'linear',function(){
+        	setTimeout(function(){
+        		mTween(tipSelectFile,{
+        			opacity:0,
+        			top:-55
+        		},400)
+        	},600)
+        })
+	}else{
+		if(spansChecked.length === 1){
+			for(var i = 0;i < spans.length;i++){
+				if(spans[i].classList.contains('doc-choose')){
+					var input = spans[i].parentNode.querySelector('input');
+					
+					input.focus();
+					input.select();
+					oldValue = input.value;
+					input.style.borderColor = '#55addc';
+				}
+			}
+			
+			state = true;
+		}else{
+			tipSelectFile.innerHTML = '<i></i>每次只能重新命名一个文件夹';
+			mTween(tipSelectFile,{
+	            top: 15,
+	            opacity:1
+	        },200,'linear',function(){
+	        	setTimeout(function(){
+	        		mTween(tipSelectFile,{
+	        			opacity:0,
+	        			top:-55
+	        		},400)
+	        	},600)
+	        })
+		}
+
+	}
+})
+on(document,'mouseup',function(){
+	var inputs = docList.getElementsByTagName('input');
+	if(state){
+		var isExistName = false;
+		var id = navBar.lastElementChild.dataset.id;//当前id
+		var childs = getChildsById(id);//当前id下所有的子集
+		for(var i = 0;i < childs.length;i++){
+			if(childs[i].title === newValue){
+				isExistName = true;
+				break;
+			}
+		}
+
+		//命名文件夹重名提示
+		if(isExistName){
+			tipSelectFile.innerHTML = '<i></i>文件夹有重名，不能命名';
+			console.log(newValue,oldValue)
+			newValue = oldValue;
+			mTween(tipSelectFile,{
+	            top: 15,
+	            opacity:1
+	        },200,'linear',function(){
+	        	setTimeout(function(){
+	        		mTween(tipSelectFile,{
+	        			opacity:0,
+	        			top:-55
+	        		},400)
+	        	},600)
+	        })
+		}
+
+		for(var i = 0;i < inputs.length;i++){
+			inputs[i].style.borderColor = 'transparent';
+			inputs[i].parentNode.parentNode.classList.remove('active');
+			spans[i].classList.remove('doc-choose');
+		}
+	}
+	state = false;
+})
 </script>
 </body>
 </html>
