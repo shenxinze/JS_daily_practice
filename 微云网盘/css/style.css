@@ -2,7 +2,7 @@
 * @Author: shen
 * @Date:   2017-08-02 17:16:38
 * @Last Modified by:   shen
-* @Last Modified time: 2017-08-17 17:45:01
+* @Last Modified time: 2017-08-18 18:11:59
 */
 body,p,h1,h2,h3,h4,h5,h6,dl,dd{
 	margin:0;
@@ -125,6 +125,12 @@ body{
 	margin-right: 10px;
 	background: #fff;
 }
+.menuBox .left li:hover{
+	border-color: #55addc;
+}
+.menuBox .left li:hover a{
+	color: #55addc;
+ }
 .menuBox .left li i{
 	float: left;
 	font-style: normal;
@@ -657,4 +663,24 @@ body{
 	top: 15px;
 	right: 15px;
 }
+
+.moveAddress{
+	width: 406px;
+	height: 416px;
+	border: 2px solid #55addc;
+	border-radius: 10px;
+	background: #fff;
+	display: none;
+}
+.moveAddress h3{
+	font-size: 16px;
+	color: #000;
+}
+.moveAddress h5{
+	font-size: 14px;
+	color: #66757f;
+}
+.moveAddress h5 i{}
+.moveAddress .moveBox{}
+
 
