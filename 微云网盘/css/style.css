@@ -2,7 +2,7 @@
 * @Author: shen
 * @Date:   2017-08-02 17:16:38
 * @Last Modified by:   shen
-* @Last Modified time: 2017-08-18 18:11:59
+* @Last Modified time: 2017-08-21 00:18:28
 */
 body,p,h1,h2,h3,h4,h5,h6,dl,dd{
 	margin:0;
@@ -664,23 +664,118 @@ body{
 	right: 15px;
 }
 
+.moveBigBox{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.4);
+	position: absolute;
+	z-index: 10;
+	display: none;
+}
 .moveAddress{
 	width: 406px;
 	height: 416px;
 	border: 2px solid #55addc;
 	border-radius: 10px;
 	background: #fff;
-	display: none;
+	position: relative;
+	left: 50%;
+	top: 50%;
+	margin-left: -203px;
+	margin-top: -208px;
+	z-index: 10;
 }
 .moveAddress h3{
 	font-size: 16px;
 	color: #000;
+	margin: 20px;
 }
 .moveAddress h5{
+	height: 21px;
 	font-size: 14px;
 	color: #66757f;
+	position: relative;
+	padding-left: 54px;
+	line-height: 21px;
 }
-.moveAddress h5 i{}
-.moveAddress .moveBox{}
-
-
+.moveAddress h5 b{
+	float: left;
+}
+.moveAddress h5 .doc-num{
+	margin-left: 10px;
+	margin-top: 1px;
+	font-size: 10px;
+	display: none;
+}
+.moveAddress h5 i{
+	width: 24px;
+	height: 21px;
+	background: url(../images/doc-icon.png) no-repeat;
+	background-size: 24px 21px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin-left: 20px;
+}
+.moveAddress .moveBox{
+	width: 358px;
+	height: 238px;
+	border: 1px solid #e1e8ed; 
+	background: #fff;
+	margin: 18px 0 0 22px;
+	position: relative;
+	overflow-y:auto;
+}
+.moveAddress .moveBox ul li{
+	width: 358px;
+}
+.moveAddress .moveBox li a{
+	display: block;
+}
+.moveAddress .moveBox li i{
+	float: left;
+	width: 10px;
+	height: 7px;
+	background: url(../images/arrow1.png) no-repeat;
+	margin: 14px 10px 0 0;
+}
+.moveAddress .moveBox li .doc-open{
+	background-image: url(../images/doc-open.png);
+}
+.moveAddress .moveBox li span{
+	float: left;
+	height: 36px;
+	background: url(../images/doc.png) no-repeat 0 10px;
+	padding-left: 22px;
+	font-size: 14px;
+}
+.moveAddress .moveBox li a:hover,.moveAddress .moveBox li .active{
+	background: #e1e8ed;
+} 
+.moveAddress p{
+	width: 184px;
+	margin: 25px auto 0;
+}
+.moveAddress p a{
+	width: 78px;
+	height: 28px;
+	border: 1px solid #55addc;
+	background: #fff;
+	color: #55addc;
+	float: left;
+	line-height: 28px;
+	text-align: center;
+}
+.moveAddress p a:nth-child(1){
+	background: #55addc;
+	color: #fff;
+	margin-right: 24px;
+}
+.moveAddress .close{
+	width: 15px;
+	height: 15px;
+	background: url(../images/close.png) no-repeat;
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}

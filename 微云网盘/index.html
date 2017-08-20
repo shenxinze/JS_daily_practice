@@ -23,26 +23,28 @@
 	</div>
 </div>
 
-<div class="moveAddress">
-	<h3>选择存储位置</h3>
-	<h5><i></i>JS基础课程</h5>
-	<div class="moveBox">
-		<ul>
-			<li>
-				<a href="javascript:;" class="clear"><i></i><span class="doc-open">JS课程</span></a>
-				<ul>
-					<li>
-						<a href="javascript:;" class="clear"><i></i><span class="doc-open">JS课程</span></a>
-					</li>
-				</ul>
-			</li>
-		</ul>
+<div class="moveBigBox">
+	<div class="moveAddress">
+		<h3>选择存储位置</h3>
+		<h5><i></i><b>JS基础课程</b><b class="doc-num">等&nbsp;<strong>2</strong>&nbsp;个文件</b></h5>
+		<div class="moveBox left">
+			<ul>
+				<li>
+					<a href="javascript:;" class="clear"><i></i><span class="doc-open">JS课程</span></a>
+					<ul>
+						<li>
+							<a href="javascript:;" class="clear"><i></i><span class="doc-open">JS课程</span></a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<p class="clear">
+			<a href="javascript:;">确定</a>
+			<a href="javascript:;">取消</a>
+		</p>
+		<b class="close"></b>
 	</div>
-	<p>
-		<a href="javascript:;">确定</a>
-		<a href="javascript:;">取消</a>
-	</p>
-	<b></b>
 </div>
 
 <div class="topInfo clear">
@@ -645,6 +647,7 @@ on(document,'mousedown',function(){
 				clickNavA();
 				clickFileLi()
 				left.innerHTML = createTreeHtml(initId,leval);
+				moveBox.innerHTML = createTreeHtml(initId,leval);
 				positionElement(id);
 				clickTree();
 			}
@@ -742,6 +745,7 @@ on(btnSure,'click',function(){
 	warnTip.style.display = 'none';
 
 	left.innerHTML = createTreeHtml(initId,leval);
+	moveBox.innerHTML = createTreeHtml(initId,leval);
 	var id = navBar.lastElementChild.dataset.id;
 	positionElement(id);
 	clickTree();
@@ -888,6 +892,7 @@ on(document,'mouseup',function(){
 		}else{
 			data[firstLi.dataset.id].title  = value;
 			left.innerHTML = createTreeHtml(initId,leval);
+			moveBox.innerHTML = createTreeHtml(initId,leval);
 			positionElement(id);
 			clickTree();
 		}
@@ -900,9 +905,79 @@ on(document,'mouseup',function(){
 	state = false;
 })
 
+//清除默认样式
 document.onmousedown = function(ev){
 	ev.preventDefault();
 }
+
+/*------------ 移动到 ------------*/
+var reMove = document.querySelector('.left li:nth-child(3)');
+var moveBigBox = document.querySelector('.moveBigBox');
+var moveSure = moveBigBox.querySelector('p a:nth-child(1)');
+var moveClose = moveBigBox.querySelector('p a:nth-child(2');
+var mClose = moveBigBox.querySelector('.close');
+var docNum = moveBigBox.querySelector('.doc-num');
+var totalNum = docNum.querySelector('strong');
+
+
+//点击移动到按钮
+on(reMove,'click',function(){
+	var spansArr = [];
+	for(var i = 0; i< spans.length; i++){
+		if(spans[i].classList.contains('doc-choose')){
+			spansArr.push(spans[i]);
+		}
+	}
+
+	if(spansArr.length){
+		console.log(spansArr.length)
+		if(spansArr.length > 1){
+			docNum.style.display = 'block';
+			console.log(spansArr.length)
+			totalNum.innerHTML = spansArr.length;
+
+		}else if(spansArr.length == 1){
+			docNum.style.display = 'none';
+		}
+		moveBigBox.style.display = 'block';	
+	}else{
+		console.log(spansArr.length)
+		tipSelectFile.innerHTML = '<i></i>请选择需要移动的文件';
+		mTween(tipSelectFile,{
+            top: 15,
+            opacity:1
+        },200,'linear',function(){
+        	setTimeout(function(){
+        		mTween(tipSelectFile,{
+        			opacity:0,
+        			top:-55
+        		},400)
+        	},600)
+        })
+
+	}
+
+})
+
+//渲染数据
+var moveBox = moveBigBox.querySelector('.moveBox');
+moveBox.innerHTML = createTreeHtml(initId,leval);
+
+//确定
+on(moveSure,'click',function(){
+	moveBigBox.style.display = 'none';
+
+})
+//取消
+on(moveClose,'click',function(){
+	moveBigBox.style.display = 'none';
+
+})
+//关闭
+on(mClose,'click',function(){
+	moveBigBox.style.display = 'none';
+
+})
 </script>
 </body>
 </html>
