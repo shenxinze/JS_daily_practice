@@ -2,7 +2,7 @@
 * @Author: shen
 * @Date:   2017-08-02 17:16:38
 * @Last Modified by:   shen
-* @Last Modified time: 2017-08-21 00:18:28
+* @Last Modified time: 2017-08-21 14:55:36
 */
 body,p,h1,h2,h3,h4,h5,h6,dl,dd{
 	margin:0;
@@ -690,6 +690,13 @@ body{
 	color: #000;
 	margin: 20px;
 }
+.moveAddress h3 .moveTip{
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 20px;
+	color: red;
+	visibility: hidden;
+}
 .moveAddress h5{
 	height: 21px;
 	font-size: 14px;
@@ -715,7 +722,7 @@ body{
 	position: absolute;
 	left: 0;
 	top: 0;
-	margin-left: 20px;
+	margin-left: 22px;
 }
 .moveAddress .moveBox{
 	width: 358px;

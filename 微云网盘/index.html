@@ -25,8 +25,8 @@
 
 <div class="moveBigBox">
 	<div class="moveAddress">
-		<h3>选择存储位置</h3>
-		<h5><i></i><b>JS基础课程</b><b class="doc-num">等&nbsp;<strong>2</strong>&nbsp;个文件</b></h5>
+		<h3>选择存储位置<b class="moveTip">您不能移动到此文件夹下</b></h3>
+		<h5><i></i><b class="newTarget">JS基础课程</b><b class="doc-num">等&nbsp;<strong>2</strong>&nbsp;个文件</b></h5>
 		<div class="moveBox left">
 			<ul>
 				<li>
@@ -445,30 +445,13 @@ on(docList,'click',function(ev){
 			//ev.target.style.visibility = 'hidden';
 			ev.target.parentNode.parentNode.classList.remove('active');
 		}
-
 		if(spansChecked.length === spans.length){
 			chooseAll.classList.add('chooseActive');
 		}else{
 			chooseAll.classList.remove('chooseActive');
 		}
-		
 	}
 })
-
-on(docList,'click',function(ev){
-	var target = ev.target;
-	if(target.classList.contains('doc-list')){
-		return;
-	}
-	if(target === 'SPAN'){
-		return;
-	}
-	if(target.parentNode.classList.contains('a')){
-		target = target.parentNode;
-	}
-})
-
-
 
 
 /*------------ 框选 ------------*/
@@ -594,11 +577,10 @@ on(document,'mousedown',function(){
 		var newLi = docList.firstElementChild;
 		var newInput = newLi.getElementsByTagName('input')[0];
 		newInput.style.borderColor = 'transparent';
-
 		var tValue = newInput.value;
-		
 		if(tValue == ''){
 			newLi.remove();
+			tips('tipSelectFile','创建文件夹失败，因为文件夹未命名');
 			if(!spans.length){
 				//console.log('我在这里')
 				bgBox.style.display = 'block';
@@ -615,10 +597,11 @@ on(document,'mousedown',function(){
 				}
 			}
 			if(isExistName){
+				tips('tipSelectFile','创建文件夹失败，因为有重名');
 				newLi.remove();
 			}else{
 				//创建成功提示动画
-				var tipSuccess = document.querySelector('.tipSuccess');
+				/*var tipSuccess = document.querySelector('.tipSuccess');
 				tipSuccess.innerHTML = '<i></i>创建文件成功';
 				mTween(tipSuccess,{
 	                top: 15,
@@ -630,7 +613,9 @@ on(document,'mousedown',function(){
 	            			top:-55
 	            		},400)
 	            	},600)
-	            })
+	            })*/
+            	tips('tipSuccess','创建文件成功');
+
 	            var pid = navBar.lastElementChild.dataset.id;
 				var id = Date.now();
 				
@@ -647,7 +632,6 @@ on(document,'mousedown',function(){
 				clickNavA();
 				clickFileLi()
 				left.innerHTML = createTreeHtml(initId,leval);
-				moveBox.innerHTML = createTreeHtml(initId,leval);
 				positionElement(id);
 				clickTree();
 			}
@@ -673,7 +657,7 @@ var tipSelectFile = document.querySelector('.tipSelectFile');
 on(delFile,'click',function(){
 
 	if(spansChecked.length == 0){
-		tipSelectFile.innerHTML = '<i></i>请选择文件';
+		/*tipSelectFile.innerHTML = '<i></i>请选择文件';
 		mTween(tipSelectFile,{
             top: 15,
             opacity:1
@@ -684,7 +668,8 @@ on(delFile,'click',function(){
         			top:-55
         		},400)
         	},600)
-        })
+        })*/
+        tips('tipSelectFile','请选择文件');
 	}else{
 		warnTip.style.display = 'block';
 	}
@@ -701,6 +686,21 @@ on(delFile,'click',function(){
 	}
 }*/
 
+// 找到指定id下所有的子孙数据
+function getChildsAllById(id){
+	// 找到这个id的数据
+	var item = getDataById(id);
+	var arr = [];
+	// 把id对对应的数据push到数组中
+	arr.push(item);
+	for(var attr in data){
+		if(data[attr].pid == id){
+			arr = arr.concat(getChildsAllById(data[attr].id))
+		}
+	}
+	return arr;
+}
+
 //提示框 - 确定删除按钮
 on(btnSure,'click',function(){
 	var selectArr = [];
@@ -709,20 +709,7 @@ on(btnSure,'click',function(){
 			selectArr.push(spans[i]);
 		}
 	}
-	// 找到指定id下所有的子孙数据
-	function getChildsAllById(id){
-		// 找到这个id的数据
-		var item = getDataById(id);
-		var arr = [];
-		// 把id对对应的数据push到数组中
-		arr.push(item);
-		for(var attr in data){
-			if(data[attr].pid == id){
-				arr = arr.concat(getChildsAllById(data[attr].id))
-			}
-		}
-		return arr;
-	}
+	
 
 	// 删除指定id下所有的子孙数据
 	function delectDataById(id){
@@ -735,6 +722,7 @@ on(btnSure,'click',function(){
 	for(var i = 0;i < selectArr.length;i++){
 		//console.log(selectArr[i].parentNode.parentNode);
 		selectArr[i].parentNode.parentNode.remove();
+		tips('tipSuccess','文件删除成功');
 		delectDataById(selectArr[i].parentNode.parentNode.dataset.id);
 	}
 	if(lis.length === 0){
@@ -809,7 +797,7 @@ var state = false;
 var oldValue = '';
 on(reName,'click',function(ev){
 	if(spansChecked.length === 0){
-		tipSelectFile.innerHTML = '<i></i>请选择文件';
+		/*tipSelectFile.innerHTML = '<i></i>请选择文件';
 		mTween(tipSelectFile,{
             top: 15,
             opacity:1
@@ -820,7 +808,8 @@ on(reName,'click',function(ev){
         			top:-55
         		},400)
         	},600)
-        })
+        })*/
+        tips('tipSelectFile','请选择文件');
 	}else{
 		if(spansChecked.length === 1){
 			for(var i = 0;i < spans.length;i++){
@@ -835,7 +824,7 @@ on(reName,'click',function(ev){
 			}
 			state = true;
 		}else{
-			tipSelectFile.innerHTML = '<i></i>每次只能重新命名一个文件夹';
+			/*tipSelectFile.innerHTML = '<i></i>每次只能重新命名一个文件夹';
 			mTween(tipSelectFile,{
 	            top: 15,
 	            opacity:1
@@ -846,7 +835,8 @@ on(reName,'click',function(ev){
 	        			top:-55
 	        		},400)
 	        	},600)
-	        })
+	        })*/
+	        tips('tipSelectFile','每次只能重新命名一个文件夹');
 		}
 
 	}
@@ -877,7 +867,7 @@ on(document,'mouseup',function(){
 		if(isExistNameById(id,value)){
 			//firstLi.remove();
 			newInput.value = oldValue;
-			tipSelectFile.innerHTML = '<i></i>文件夹有重名，不能命名';
+			/*tipSelectFile.innerHTML = '<i></i>文件夹有重名，不能命名';
 			mTween(tipSelectFile,{
 	            top: 15,
 	            opacity:1
@@ -888,8 +878,12 @@ on(document,'mouseup',function(){
 	        			top:-55
 	        		},400)
 	        	},600)
-	        })
+	        })*/
+	        console.log(123)
+	        tips('tipSelectFile','文件夹有重名，不能命名');
+	        console.log('命名已经存在的，会弹出有重名问题');
 		}else{
+			tips('tipSuccess','文件夹命名成功');
 			data[firstLi.dataset.id].title  = value;
 			left.innerHTML = createTreeHtml(initId,leval);
 			moveBox.innerHTML = createTreeHtml(initId,leval);
@@ -918,7 +912,7 @@ var moveClose = moveBigBox.querySelector('p a:nth-child(2');
 var mClose = moveBigBox.querySelector('.close');
 var docNum = moveBigBox.querySelector('.doc-num');
 var totalNum = docNum.querySelector('strong');
-
+var newTarget = moveBigBox.querySelector('.newTarget');
 
 //点击移动到按钮
 on(reMove,'click',function(){
@@ -928,12 +922,13 @@ on(reMove,'click',function(){
 			spansArr.push(spans[i]);
 		}
 	}
-
 	if(spansArr.length){
-		console.log(spansArr.length)
+		var nextBrother = spansArr[0].nextElementSibling;
+		newTarget.innerHTML = nextBrother.value;
+		//console.log(spansArr.length)
 		if(spansArr.length > 1){
 			docNum.style.display = 'block';
-			console.log(spansArr.length)
+			//console.log(spansArr.length)
 			totalNum.innerHTML = spansArr.length;
 
 		}else if(spansArr.length == 1){
@@ -942,7 +937,7 @@ on(reMove,'click',function(){
 		moveBigBox.style.display = 'block';	
 	}else{
 		console.log(spansArr.length)
-		tipSelectFile.innerHTML = '<i></i>请选择需要移动的文件';
+		/*tipSelectFile.innerHTML = '<i></i>请选择需要移动的文件';
 		mTween(tipSelectFile,{
             top: 15,
             opacity:1
@@ -953,19 +948,113 @@ on(reMove,'click',function(){
         			top:-55
         		},400)
         	},600)
-        })
+        })*/
+        tips('tipSelectFile','请选择需要移动的文件');
 
 	}
 
 })
 
+
+
+
 //渲染数据
 var moveBox = moveBigBox.querySelector('.moveBox');
 moveBox.innerHTML = createTreeHtml(initId,leval);
+var moveOneA = moveBox.querySelector("a[data-id='0']");
+moveOneA.classList.add('active');
+var isMove = false;//声明一个状态
+var targetId = null;
+
+//给每个li中的A绑定点击事件
+var moveAs = moveBox.querySelectorAll('a');
+var moveTip = moveBigBox.querySelector('.moveTip');
+for(var i = 0;i < moveAs.length;i++){
+	moveAs[i].onclick = function(){
+		for(var i = 0;i < moveAs.length;i++){
+			moveAs[i].classList.remove('active');
+		}
+		this.classList.add('active');
+		//找到需要移动的文件id 以及所有的子级id
+		var moveIdAll = [];
+		for(var i = 0; i< spans.length; i++){
+			if(spans[i].classList.contains('doc-choose')){
+				var id = spans[i].parentNode.parentNode.dataset.id;
+				moveIdAll = moveIdAll.concat(getChildsAllById(id));
+			}
+		}
+
+		var currentId = navBar.lastElementChild.dataset.id;
+
+		moveIdAll.push(getDataById(currentId));
+
+		//console.table(moveIdAll);
+
+		//得到需要移动到对应文件夹的id
+		var moveAsId = this.dataset.id;
+		targetId = moveAsId;
+
+		//移动的id以及子id在当前的id中，不能移动
+		for(var i = 0;i < moveIdAll.length;i++){
+			if(moveIdAll[i].id == moveAsId){
+				//alert(123)
+				moveTip.style.visibility = 'visible';
+				break;
+			}else{
+				//能移动，记录状态
+				moveTip.style.visibility = 'hidden';
+				isMove = true;
+			}
+		}
+	}
+}
 
 //确定
+var selectArr = [];
 on(moveSure,'click',function(){
-	moveBigBox.style.display = 'none';
+	if(isMove){
+		//处在可以移动文件夹状态
+		//判断移动到的文件夹是否有重名文件
+		for(var i = 0; i< spans.length; i++){
+			if(spans[i].classList.contains('doc-choose')){
+				var id = spans[i].parentNode.parentNode.dataset.id;
+				selectArr.push(id);
+				var item = getDataById(id);
+			}else{
+				continue;
+			}
+			//console.log(item)
+			//console.log(!isExistNameById(targetId,item.title))
+			if(!isExistNameById(targetId,item.title)){
+				//没有重名
+				//console.log('没有重名')
+				spans[i].parentNode.parentNode.remove();
+				item.pid = targetId;
+				 tips('tipSuccess','文件移动成功');
+
+			}else{
+				//有重名，提示
+				console.log('有重名')
+				/*tipSelectFile.innerHTML = '<i></i>部分文件移动失败，因为重名了';
+				mTween(tipSelectFile,{
+		            top: 15,
+		            opacity:1
+		        },200,'linear',function(){
+		        	setTimeout(function(){
+		        		mTween(tipSelectFile,{
+		        			opacity:0,
+		        			top:-55
+		        		},400)
+		        	},600)
+		        })*/
+		        tips('tipSelectFile','部分文件移动失败，因为重名了');
+			}
+		}
+		//重新渲染左侧树形结构
+		left.innerHTML = createTreeHtml(initId,leval);
+		clickTree();
+		moveBigBox.style.display = 'none';
+	}
 
 })
 //取消
@@ -978,6 +1067,25 @@ on(mClose,'click',function(){
 	moveBigBox.style.display = 'none';
 
 })
+
+/*------------ 提示封装 ------------*/
+function tips(ele,value){
+	var ele = document.querySelector('.'+ele+'');
+	ele.style.top = '-55px';
+	ele.innerHTML = '<i></i>'+value+'';
+	mTween(ele,{
+        top: 15,
+        opacity:1
+    },200,'linear',function(){
+    	setTimeout(function(){
+    		mTween(ele,{
+    			opacity:0,
+    			top:-55
+    		},400)
+    	},1000)
+    })
+}
+
 </script>
 </body>
 </html>
