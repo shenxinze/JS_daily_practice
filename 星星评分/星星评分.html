@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>评分模拟</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+			font-family: '微软雅黑';
+			font-size: 14px;
+			line-height: 1;
+		}
+		.clear{
+			content: "";
+			display: block;
+			clear: both;
+			height: 0;
+			overflow: hidden;
+		}
+		.wrap{
+			width: 460px;
+			height: 210px;
+			background: #fff;
+			border: 2px solid #e15671;
+			border-radius: 10px;
+			box-sizing: border-box;
+			margin: 100px auto 0;
+		}
+		h1{
+			font-size: 0;
+			width: 124px;
+			height: 31px;
+			background: url(images/logo.png) no-repeat;
+			float: left;
+		}
+		h2{
+			float: left;
+			font-size: 18px;
+			color: #000;
+			height: 31px;
+			line-height: 31px;
+		}
+		.title-box{
+			width: 230px;
+			height: 31px;
+			margin: 20px auto 0;
+		}
+		.title-box span{
+			float: left;
+			width: 1px;
+			height: 20px;
+			background: #000;
+			margin: 5px 16px 0;
+		}
+		.cont{
+			width: 252px;
+			height: 30px;
+			margin: 30px auto 0;
+		}
+		.cont a{
+			float: left;
+			width: 30px;
+			height: 30px;
+			background: url(images/star.png) no-repeat;
+			margin-right: 12px;
+		}
+		a:nth-child(5){
+			margin-right: 18px;
+		}
+		.cont span{
+			float: left;
+			height: 30px;
+			line-height: 30px;
+			font-size: 18px;
+			color: #e15671;
+			display: none;
+		}
+		p{
+			width: 246px;
+			height: 33px;
+			background: url(images/warn.png) no-repeat 20px 8px #e15671;
+			border-radius: 16px;
+			font-size: 14px;
+			color: #fff;
+			line-height: 33px;
+			text-align: center;
+			text-indent: 10px;
+			margin: 35px auto 0;
+		}
+
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="title-box clear">
+		<h1>妙味课堂</h1>
+		<span></span>
+		<h2>总体评价</h2>
+	</div>
+	<div class="cont clear">
+		<a href="javascript:;"></a>
+		<a href="javascript:;"></a>
+		<a href="javascript:;"></a>
+		<a href="javascript:;"></a>
+		<a href="javascript:;"></a>
+		<span>推荐</span>
+	</div>
+	<p>小提示：点击星星就能打分</p>
+</div>
+<script>
+var cont = document.getElementsByClassName('cont');
+var star = cont[0].getElementsByTagName('a');
+var span = cont[0].getElementsByTagName('span');
+var arr = ['极差','一般','不错','推荐','力推']
+
+var len = star.length;
+/*
+for(var i = 0;i<len;i++){
+	star[i].index = i;
+	star[i].onmouseover = function(){
+		for(var j = 0;j<len;j++){
+			if(star[j].index<=this.index){
+				if(this.index<2){
+					this.style.background = 'url(./images/r-1-star.png) no-repeat';
+				}else{
+					this.style.background = 'url(./images/r-star.png) no-repeat';
+				}
+			}else{
+				star[j].style.background = '';
+			}
+		}
+	}
+}
+*/
+var n = 0;//记录点击的状态 为0默认没有点击过
+var m = 0;//用来记录被点击元素的标识
+for(var i = 0;i<len;i++){
+	star[i].index = i;
+	star[i].onmouseover = function(){
+		/*for(var j = 0;j<len;j++){
+			if(star[j].index<=this.index){
+				if(this.index<2){
+					star[j].style.background = 'url(./images/r-1-star.png) no-repeat';
+				}else{
+					star[j].style.background = 'url(./images/r-star.png) no-repeat';
+				}
+			}else{
+				star[j].style.background = '';
+			}
+		}*/
+		shen(this.index);
+		span[0].style.display = 'block';
+		span[0].innerHTML = arr[this.index];
+	}
+	star[i].onmouseout = function(){
+		if(n == 1){  //点击
+			/*for(var j = 0;j<len;j++){
+				if(star[j].index<=m){
+					if(m<2){
+						star[j].style.background = 'url(./images/r-1-star.png) no-repeat';
+					}else{
+						star[j].style.background = 'url(./images/r-star.png) no-repeat';
+					}
+				}else{
+					star[j].style.background = '';
+				}
+			}*/
+			shen(m);
+			span[0].innerHTML = arr[m];
+		}else{  //未点击
+			for(var i = 0;i<len;i++){
+				star[i].style.background = '';
+			}
+			span[0].style.display = 'none';
+		}
+		
+	}
+	star[i].onclick = function(){  //点击事件只用来记录是否点击过和当前点击元素的标识
+		n = 1;//n不等于0 ，表示被点击过了
+		m = this.index; //记录当前的被点击元素的标识
+		/*for(var j = 0;j<len;j++){
+			if(star[j].index<=this.index){
+				if(this.index<2){
+					star[j].style.background = 'url(./images/r-1-star.png) no-repeat';
+				}else{
+					star[j].style.background = 'url(./images/r-star.png) no-repeat';
+				}
+			}else{
+				star[j].style.background = '';
+			}
+		}*/
+	}
+}
+//传参 用于复用的代码，但是局部有细微变化的
+function shen(styleChange){
+	for(var j = 0;j<len;j++){
+		if(star[j].index<=styleChange){
+			if(styleChange<2){
+				star[j].style.background = 'url(./images/r-1-star.png) no-repeat';
+			}else{
+				star[j].style.background = 'url(./images/r-star.png) no-repeat';
+			}
+		}else{
+			star[j].style.background = '';
+		}
+	}
+}
+</script>
+</body>
+</html>
