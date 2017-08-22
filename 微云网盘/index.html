@@ -879,9 +879,7 @@ on(document,'mouseup',function(){
 	        		},400)
 	        	},600)
 	        })*/
-	        console.log(123)
 	        tips('tipSelectFile','文件夹有重名，不能命名');
-	        console.log('命名已经存在的，会弹出有重名问题');
 		}else{
 			tips('tipSuccess','文件夹命名成功');
 			data[firstLi.dataset.id].title  = value;
@@ -1020,6 +1018,7 @@ on(moveSure,'click',function(){
 				var id = spans[i].parentNode.parentNode.dataset.id;
 				selectArr.push(id);
 				var item = getDataById(id);
+
 			}else{
 				continue;
 			}
@@ -1030,7 +1029,11 @@ on(moveSure,'click',function(){
 				//console.log('没有重名')
 				spans[i].parentNode.parentNode.remove();
 				item.pid = targetId;
-				 tips('tipSuccess','文件移动成功');
+				tips('tipSuccess','文件移动成功');
+				i--;
+				if(spans.length == 0){
+					chooseAll.classList.remove('chooseActive');
+				}
 
 			}else{
 				//有重名，提示
@@ -1081,7 +1084,7 @@ function tips(ele,value){
     		mTween(ele,{
     			opacity:0,
     			top:-55
-    		},400)
+    		},200)
     	},1000)
     })
 }
