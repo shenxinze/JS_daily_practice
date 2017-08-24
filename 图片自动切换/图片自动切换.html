@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>图片自动切换</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+		}
+		.wrap{
+			width: 658px;
+			height: 511px;
+			background: url(./images/big-bg.jpg) no-repeat;
+			margin: 50px auto 0;
+			position: relative;
+			padding-top: 6px;
+		}
+		.bg{
+			width: 658px;
+			height: 517px;
+			background: url(./images/bg.png) no-repeat;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		ul{
+			width: 600%;
+			height: 290px;
+			-overflow: hidden;
+			/*margin: 0 0 0 143px;*/
+			padding: 0;
+			position: absolute;
+			left: 0;
+			top: 6px;
+		}
+		li{
+			list-style: none;
+			float: left;
+		}
+		li img{
+			display: block;
+			vertical-align: top;
+		}
+		p{
+			width: 380px;
+			height: 40px;
+			color: #fff;
+			font-size: 16px;
+			text-indent: 10px;
+			line-height: 40px;
+			background: rgba(0,0,0,0.5);
+			position: absolute;
+			bottom: -40px;
+			left: 0px;
+		}
+		.box{
+			width: 380px;
+			height: 296px;
+			/*background: red;*/
+			margin: 0 0 0 143px;
+			overflow: hidden;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="box">
+		<ul>
+			<li>
+				<img src="images/img1.png" />
+			</li>
+			<li>
+				<img src="images/img2.png" />
+			</li>
+			<li>
+				<img src="images/img3.png" />
+			</li>
+			<li>
+				<img src="images/img4.png" />
+			</li>
+			<li>
+				<img src="images/img5.png" />
+			</li>
+			<li>
+				<img src="images/img1.png" />
+			</li>
+		</ul>
+		<p>图片描述加载中...</p>
+	</div>
+	
+	<div class="bg"></div>
+</div>
+
+<script src='js/utils.js'></script>
+
+<script>
+
+var ul = $("ul")[0];
+var li =$("li");
+var img =$("img",ul);
+var p =$("p")[0];
+var num = 0;
+var arrp = ['文字描述一','文字描述二','文字描述三','文字描述四','文字描述五'];
+var timer = null;
+p.innerHTML = arrp[0];
+animforp();
+timer = setInterval(function(){
+	num++;
+	animforul(num);
+},2500);
+
+function animforul (n){
+	mTween(ul,"left",-380*n,500,"linear",function(){
+		p.innerHTML = arrp[n];
+		animforp();
+		if(n>=li.length-1){
+			num = 0;
+			ul.style.left = 0;
+			p.innerHTML = arrp[0];
+		}
+	})
+}
+function animforp (){
+	mTween(p,'bottom',0,500,'linear',function(){
+		setTimeout(function(){
+			mTween(p,'bottom',-40,500);
+		},1000)
+	})
+}
+
+</script>
+</body>
+</html>
