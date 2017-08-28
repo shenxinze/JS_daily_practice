@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>商品下架</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: '微软雅黑';
+		}
+		body{
+			background: url(./images/logo.png) no-repeat center 50px #d83a4a;
+		}
+		.wrap{
+			width: 990px;
+			height: 980px;
+		}
+		.wrap .box{
+			width: 990px;		
+			position: absolute;
+			left: 50%;
+			top: 150px;
+			margin-left: -495px;
+		}
+		.wrap .box ul{
+			width: 990px; 
+			height: 400px;
+			position: relative;
+		}
+		.wrap .box li{
+			list-style: none;
+			width: 240px;
+			height: 400px;
+			background-color: #fff;
+			position: absolute;
+		}
+		.wrap .box li:nth-child(2){
+			left: 250px;
+		}
+		.wrap .box li:nth-child(3){
+			left: 500px;
+		}
+		.wrap .box li:nth-child(4){
+			left: 750px;
+		}
+		.wrap li .proItem{
+			width: 240px;
+			height: 400px;
+		}
+		.wrap li .setTime{
+			height: 40px;
+			background: #191919;
+			padding-left: 20px;
+		}
+		.wrap li input{
+			float: left;
+			background: none;
+			border: none;
+			outline: none;
+		}
+		.wrap li input:nth-child(1){
+			width: 140px;
+			font-size: 14px;
+			color: #e15671;
+			line-height: 40px;
+		}
+		.wrap li input:nth-child(2){
+			float: right;
+			width: 55px;
+			height: 24px;
+			border: 1px solid #e15671;
+			border-radius: 3px;
+			font-size: 14px;
+			color: #e15671;
+			margin-top: 8px;
+			margin-right: 8px;
+		}
+		.wrap li .stopTime{
+			height: 28px;
+			margin: 30px 0 0 20px;
+		}
+		.wrap li .stopTime strong{
+			float: left;
+			height: 28px;
+			line-height: 28px;
+			font-weight: normal;
+			font-weight: 14px;
+			color: #8f8f8f;
+			margin-right: 15px;
+		}
+		.wrap li .stopTime span{
+			float: left;
+			width: 20px;
+			height: 28px;
+			background-color: #e15671;
+			border-radius: 2px;
+			font-weight: 20px;
+			color: #fff;
+			line-height: 28px;
+			text-align: center;
+			margin-right: 3px;
+		}
+		.wrap li .stopTime :nth-child(4),.wrap li .stopTime :nth-child(7){
+			background: none;
+			width: 3px;
+			color: #e15671;
+		}
+		.wrap li .pro-img{
+			width: 240px;
+			height: 180px;
+			margin-top: 14px;
+			text-align: center;
+		}
+		.wrap li .pro-img img{
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.wrap li .pro-img span{
+			width: 0;
+			height: 100%;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.wrap li .pro-info{
+
+		}
+		.wrap li .pro-info span:nth-child(1){
+			display: inline-block;
+			width: 220px;
+			text-align: center;
+			padding: 0 10px;
+			font-size: 14px;
+			color: #000;
+			margin: 18px 0 20px;
+		}
+		.wrap li .pro-info span:nth-child(2){
+			display: inline-block;
+			width: 220px;
+			text-align: center;
+			padding: 0 10px;
+			font-size: 16px;
+			color: #8f8f8f;
+		}
+		.wrap li .pro-info span:nth-child(2) strong{
+			font-size: 18px;
+			color: #e15671;
+		}
+		.wrap li .bgColor{
+			 width: 240px;
+			height: 400px; 
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: rgba(0,0,0,0.8);
+			opacity: 0;
+			display: none;
+			z-index: 99;
+		}
+		.wrap li .bgImg{
+			width: 264px;
+			height: 264px;
+			position: absolute;
+			left: -7px;
+			top: 68px;
+			background: url(./images/icon.png) no-repeat center;
+			background-size: contain;
+			display: none;
+			z-index: 100;
+			opacity: 0;
+		}
+
+		.bottom{
+
+		}
+		.bottom dl{
+			margin-top: 10px;
+		}
+		.bottom dt{
+			width: 970px;
+			height: 40px;
+			padding-left: 20px;
+			background-color: #191919;
+			line-height: 40px;
+		}
+		.bottom dt span{
+			float: left;
+			font-size: 14px;
+			color: #fff;
+			width: 460px;
+		}
+		.bottom dd{
+			height: 80px;
+			background: #fff;
+			padding-left: 20px;
+		}
+		.bottom dd span{
+			float: left;
+			width: 440px;
+			height: 80px;
+			line-height: 80px;
+		}
+		.bottom dd span:nth-child(1){
+			font-size: 16px;
+			color: #000;
+		}
+		.bottom dd span:nth-child(2){
+			width: 450px;
+			font-size: 18px;
+			color: #e15671;
+		}
+		.bottom dd span:nth-child(3){
+			width: 60px;
+
+		}
+		.bottom dd img{
+			width: 50px;
+			height: 50px;
+			padding: 4px;
+			border: 1px solid #bfbfbf;
+			margin-top: 10px;
+		}
+
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="box">
+		<ul>
+			<!-- <li>
+				<p class="setTime">
+					<input type="text" name="" value="2017 7 17 15:30:00" />
+					<input type="button" name="" value="确定" />
+				</p>
+				<p class="stopTime">
+					<strong>剩余</strong>
+					<span>0</span>
+					<span>0</span>
+					<span>:</span>
+					<span>0</span>
+					<span>9</span>
+					<span>:</span>
+					<span>4</span>
+					<span>0</span>
+				</p>
+				<p class="pro-img">
+					<img src="images/img1.png" />
+					<span></span>
+				</p>
+				<p class="pro-info">
+					<span>27 英寸配备 Retina 5K显示屏</span>
+					<span>抢购价：<strong>¥15999</strong></span>
+				</p>
+				<p class="bgColor"></p>
+				<p class="bgImg"></p>
+			</li> -->
+		</ul>
+		<div class="bottom">
+			<dl>
+				<dt>
+					<span>商品名称</span>
+					<span>价钱</span>
+				</dt>
+				<!-- <dd>
+					<span>Apple iPhone 7 Plus 64g </span>
+					<span>¥5799</span>
+					<span><img src="images/img-s-1.jpg" /></span>
+				</dd>
+				<dd>
+					<span>Apple iPhone 7 Plus 64g </span>
+					<span>¥5799</span>
+					<span><img src="images/img-s-1.jpg" /></span>
+				</dd>
+				<dd>
+					<span>Apple iPhone 7 Plus 64g </span>
+					<span>¥5799</span>
+					<span><img src="images/img-s-1.jpg" /></span>
+				</dd>
+				<dd>
+					<span>Apple iPhone 7 Plus 64g </span>
+					<span>¥5799</span>
+					<span><img src="images/img-s-1.jpg" /></span>
+				</dd> -->
+			</dl>
+		</div>
+	</div>
+</div>
+
+<script src='./utils.js'></script>
+
+<script>
+var arr = [
+	{
+		id:1,
+		name:"Apple iPhone 7 Plus 64g",
+		price:"¥5799",
+		imgIcon:"images/img1.png"
+	},
+	{
+		id:2,
+		name:"27 英寸配备 Retina 5K显示屏",
+		price:"¥15999",
+		imgIcon:"images/img2.png"
+	},
+	{
+		id:3,
+		name:"魅族、锤子、小米 '集'群",
+		price:"¥1799",
+		imgIcon:"images/img3.png"
+	},
+	{
+		id:4,
+		name:"Apple iPhone 7 Plus 64g",
+		price:"¥5799",
+		imgIcon:"images/img4.png"
+	}
+];
+
+//生成结构
+
+function render (data){
+	var html = data.map(function (item){
+		return 	`<li>
+					<p class="setTime">
+						<input type="text" name="" value="2017 07 17 15:30:00" class="text" />
+						<input type="button" name="" value="确定" class="btn" />
+					</p>
+					<p class="stopTime">
+						<strong>剩余</strong>
+						<span>0</span>
+						<span>0</span>
+						<span>:</span>
+						<span>0</span>
+						<span>9</span>
+						<span>:</span>
+						<span>4</span>
+						<span>0</span>
+					</p>
+					<p class="pro-img">
+						<img src="${item.imgIcon}" />
+						<span></span>
+					</p>
+					<p class="pro-info">
+						<span>${item.name}</span>
+						<span>抢购价：<strong>${item.price}</strong></span>
+					</p>
+					<p class="bgColor"></p>
+					<p class="bgImg"></p>
+				</li>`
+	}).join('');
+	return html;
+}
+
+
+//获取当前的时间 并与未来时间相差3秒
+function getCurrentTime (){
+	var d = new Date();
+		return d.getFullYear()+" "+(d.getMonth()+1)+ " " + d.getDate() + " "+ addZero(d.getHours())+":"+addZero(d.getMinutes())+":"+ addZero(d.getSeconds()+3);	
+}
+
+var container = document.querySelector('ul');
+var newHtml = render(arr);
+container.innerHTML = newHtml;
+
+var lis = $('li',container);//找到所有的li
+var dl = $('dl')[0];//找到下拉列表的容器
+for(var i = 0;i < lis.length;i++){
+	fn(lis[i],i);
+}
+//操作每一个li下的内容
+function fn(li,index){
+	var btn = $('.btn',li)[0];
+	var time = $(".text",li)[0];
+	var allSpans = $('.stopTime span',li);
+	var bgColor = $('.bgColor',li)[0];
+	var bgImg = $('.bgImg',li)[0];
+	var timer = null;
+	btn.onclick = function (){
+		clearInterval(timer);
+		time.value = getCurrentTime();//获取value值做倒计时
+		var futrueTime = time.value;//未来时间
+		func(futrueTime);
+		//开启定时器，自动倒计时
+		timer = setInterval(function(){
+			func(futrueTime);
+		},1000)
+	};
+	//封装倒计时函数
+	function func(futrueTime){
+		var futrueDate = new Date(futrueTime);// 未来时间对象
+		var nowDate = new Date();// 此时此刻的时间对象
+		// 与未来时间的差值
+		var dValue = (futrueDate.getTime() - nowDate.getTime())/1000;
+		if(dValue <= 0){
+			dValue = 0;
+			clearInterval(timer);
+			shake(li,'left',30,function(){
+				//淡出bgColor遮罩层
+				bgColor.style.display = 'block';
+				bgImg.style.display = 'block';
+				mTween(bgColor,{
+					opacity:1
+				},200)
+				mTween(bgImg,{
+					left:54,
+					top:154,
+					width:132,
+					height:132,
+					opacity:1
+				},100,'bounceOut',function (){
+					var html1 = ''
+					var html = `<dt>
+									<span>商品名称</span>
+									<span>价钱</span>
+								</dt>`;
+					html1 += `<dd>
+								<span>${arr[index].name}</span>
+								<span>${arr[index].price}</span>
+								<span><img src="${arr[index].imgIcon}" /></span>
+							 </dd>`;
+				 	dl.innerHTML += html1;
+				 	//获取所有的dd
+				 	var dd = dl.querySelectorAll('dd');
+				 	dd[dd.length-1].style.opacity = 0;
+				 	mTween(dd[dd.length-1],{
+				 		opacity:1
+				 	},500)
+				});
+			});
+		}
+		//计算出剩余的时分秒
+		var hours = Math.floor(dValue%86400/3600);
+		var min = Math.floor(dValue%86400%3600/60);
+		var se = Math.floor(dValue%60);
+
+		var str = addZero(hours)+":"+addZero(min)+":"+addZero(se);
+
+		for( var i = 0; i < allSpans.length; i++ ){
+			allSpans[i].innerHTML = str.charAt(i);
+		}
+	}
+}
+
+
+
+
+</script>
+</body>
+</html>
