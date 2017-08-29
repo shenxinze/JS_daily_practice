@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<section class="wrap">
+	<div class="wrap-left">
+		<ul class="list">
+			<li>
+				<span>jQuery</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up">上移</a>
+					<a href="javascript:;" class="down">下移</a>
+				</div>
+			</li>
+			<li>
+				<span>AJAX</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up">上移</a>
+					<a href="javascript:;" class="down">下移</a>
+				</div>
+			</li>
+			<li>
+				<span>JS基础-2</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up">上移</a>
+					<a href="javascript:;" class="down">下移</a>
+				</div>
+			</li>
+			<li>
+				<span>移动端实战</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up">上移</a>
+					<a href="javascript:;" class="down">下移</a>
+				</div>
+			</li>
+			<li>
+				<span>canvas游戏</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up">上移</a>
+					<a href="javascript:;" class="down">下移</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="wrap-right">
+		<ul class="list">
+			<li>
+				<span>jQuery</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up"></a>
+					<a href="javascript:;" class="down"></a>
+				</div>
+			</li>
+			<li>
+				<span>小程序</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up"></a>
+					<a href="javascript:;" class="down"></a>
+				</div>
+			</li>
+			<li>
+				<span>jQuery</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up"></a>
+					<a href="javascript:;" class="down"></a>
+				</div>
+			</li>
+			<li>
+				<span>面向对象-上</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up"></a>
+					<a href="javascript:;" class="down"></a>
+				</div>
+			</li>
+			<li>
+				<span>面向对象-下</span>
+				<div class="btn">
+					<a href="javascript:;"  class="up"></a>
+					<a href="javascript:;" class="down"></a>
+				</div>
+			</li>
+		</ul>
+	</div>
+</section>
+
+<script src="js/utils.js"></script>
+
+<script>
+var list = document.getElementsByClassName('list');
+var lis = list[0].children;
+var down = list[0].getElementsByClassName('down');
+var up = list[0].getElementsByClassName('up');
+var wrapLeft = document.getElementsByClassName('wrap-left')[0];
+for(var i = 0;i<down.length;i++){
+	lis[i].style.top = ''+i*62+'px';
+	funcDown(down[i],i);
+	funcUp(up[i],i)
+}
+
+function funcDown(down,index){
+	down.onclick = function (){
+		//console.log(this.parentNode.parentNode)
+		//console.log(this.parentNode.parentNode.nextElementSibling);
+		var preNode = this.parentNode.parentNode
+		var newNode = this.parentNode.parentNode.nextElementSibling;
+		
+		if(newNode){
+			list[0].insertBefore(newNode,preNode);
+			mTween(preNode,'top',newNode.offsetTop,300,'linear');
+			mTween(newNode,'top',preNode.offsetTop,300,'linear');
+		}else{
+			list[0].insertBefore(lis[lis.length-1],list[0].children[0]);
+			for(var i = 0;i<lis.length;i++){
+				mTween(lis[i],'top',i*62,300,'linear');
+			}
+		}
+	}
+}
+
+function funcUp(up,index){
+	up.onclick = function (){
+		//console.log(this.parentNode.parentNode)
+		//console.log(this.parentNode.parentNode.nextElementSibling);
+		var preNode = this.parentNode.parentNode
+		var newNode = this.parentNode.parentNode.previousElementSibling;
+		
+		if(newNode){
+			list[0].insertBefore(preNode,newNode);
+			mTween(preNode,'top',newNode.offsetTop,300);
+			mTween(newNode,'top',preNode.offsetTop,300);
+		}else{
+			list[0].removeChild(preNode);
+			list[0].appendChild(preNode);	
+			for(var i = 0;i<lis.length;i++){
+				mTween(lis[i],'top',i*62,300);
+			}
+		}
+	}
+}
+
+</script>
+</body>
+</html>
