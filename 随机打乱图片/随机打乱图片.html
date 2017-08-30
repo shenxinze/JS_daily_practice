@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>随机打乱图片</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+		}
+		a{
+			text-decoration: none;
+			color: inherit;
+		}
+		.clear:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.wrap{
+			width: 1000px;
+			height: 564px;
+			background: url(images/bg.jpg) no-repeat;
+			margin: 50px auto 0;
+			padding-top: 136px;
+		}
+		.top-btn{
+			width: 360px;
+			margin: 0 auto;
+		}
+		.top-btn a{
+			float: left;
+			width: 148px;
+			height: 38px;
+			border: 1px solid #4f497e;
+			border-radius: 15px 15px;
+			background-color: #c4c2de;
+			text-align: center;
+			line-height: 38px;
+			font-size: 16px;
+			color: #332d52;
+			box-shadow: 1px 1px 3px rgba(98,97,169,0.3);
+			margin-right: 60px;
+		}
+		.top-btn a:nth-last-child(1){
+			margin-right: 0;
+		}
+		.top-btn .active{
+			background: #332d52;
+			color: #fff;
+		}
+		ul{
+			margin: 60px 0 0 104px;
+		}
+		li{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			width: 150px;
+			height: 150px;
+			background-color: red;
+			border-radius: 10px;
+			position: relative;
+			/*background: url(./images/img1.png) no-repeat;*/
+			float: left;
+			margin-right: 60px;
+			margin-bottom: 72px;
+		}
+		li span{
+			position: absolute;
+			width: 110px;
+			height: 30px;
+			background: #fff;
+			border-radius: 15px 15px;
+			line-height: 30px;
+			text-align: center;
+			box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+			bottom: -15px;
+			left: 50%;
+			margin-left: -55px;
+			font-size: 14px;
+			color: #6a54a0;
+		}
+
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<p class="top-btn clear">
+		<a href="javascript:;" class="active" id="btn1">从小到大</a>
+		<a href="javascript:;" id="btn2">打乱顺序</a>
+	</p>
+	<ul class="clear">
+		<!-- <li><img src="images/img1.png"><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li>
+		<li><span>1-粉红</span></li> -->
+	</ul>
+</div>	
+<script>
+var data = [
+	{
+		imgSrc:'images/img1.png',
+		name:'1-粉红'
+	},
+	{
+		imgSrc:'images/img2.png',
+		name:'2-粉黄'
+	},
+	{
+		imgSrc:'images/img3.png',
+		name:'3-黄绿'
+	},
+	{
+		imgSrc:'images/img4.png',
+		name:'4-娕绿'
+	},
+	{
+		imgSrc:'images/img5.png',
+		name:'5-湖蓝'
+	},
+	{
+		imgSrc:'images/img6.png',
+		name:'6-蓝紫'
+	},
+	{
+		imgSrc:'images/img7.png',
+		name:'7-粉紫'
+	},
+	{
+		imgSrc:'images/img8.png',
+		name:'8-紫红'
+	}
+]
+var ul = document.getElementsByTagName('ul')[0];
+function cretatHtml (data){
+	var html = '';
+	data.forEach(function(item){
+		html += `<li><img src="${item.imgSrc}"><span>${item.name}</span></li>`
+	})
+	ul.innerHTML = html;
+}
+cretatHtml(data);
+
+var a = document.getElementsByTagName('a')
+
+a[1].onclick = function(){
+	data.sort(function(){
+		return  Math.random() - 0.5;
+	});
+	cretatHtml(data);
+}
+
+console.log(data[0].name)
+
+
+
+a[0].onclick = function(){
+	data.sort(function(a,b){
+		return  parseInt(a.name) - parseInt(b.name)
+	});
+	cretatHtml(data);
+}
+
+
+</script>
+</body>
+</html>
