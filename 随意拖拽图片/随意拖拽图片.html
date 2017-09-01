@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>随意拖拽图片</title>
+	<style>
+		body *{
+			cursor: pointer;
+		}
+		.clear:after{
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.box{
+			width: 1200px;
+			height: 602px;
+			background: url(./images/bg.jpg) no-repeat;
+			margin: 30px auto 0;
+			padding-top: 198px;
+		}
+		.content{
+			width: 639px;
+			height: 370px;
+			margin-left: 281px;
+			padding-top: 10px;
+		}
+		#menu{
+			float: left;
+			width: 96px;
+			height: 38px;
+			border: 2px solid #fff;
+			border-radius: 5px;
+			font-size: 20px;
+			color: #fff;
+			line-height: 38px;
+			text-align: center;
+			margin: 162px 22px 0 26px;
+		}
+		#list{
+			padding: 0;
+			float: left;
+			width: 482px;
+			height: 360px;
+			position: relative;
+		}
+		#list li{
+			list-style: none;
+			width: 122px;
+			height: 120px;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			background-image: url(./images/img1.png);
+			background-repeat: no-repeat;
+		}
+		.active{
+			background: #fff;
+			color: #594da7!important;
+		}
+	</style>
+</head>
+<body>
+<div class="box">
+	<div class="content clear">
+		<div id="menu">随机</div>
+		<ul id="list">
+			<!-- <li style="left:122px;top:0;"></li> -->
+		</ul>
+	</div>
+</div>
+
+<script src='js/utils.js'></script>
+<script>
+
+var list = document.getElementById('list');
+
+
+var str = '';
+
+/*
+	0 1 2  3
+	4 5 6  7 
+	8 9 10 11
+*/
+var n = -1;
+for(var i = 0 ;i<12;i++){
+	if(i % 4 == 0){
+		//console.log(i)
+		n++;
+	}
+	str += '<li style="left:'+122*(i%4)+'px;top:'+n*120+'px;background-image: url(./images/img'+(1+i)+'.png);"></li>';
+}
+list.innerHTML = str;
+
+var lis = list.children;//获取list下所有的li
+
+//循环li，把left 和 top 放入数组
+var arr = [];//声明一个数组，用于储存每个li的left和top值
+for( var i = 0; i < lis.length; i++ ){
+	lis[i].index = i;
+	arr.push({
+		left:lis[i].offsetLeft,
+		top:lis[i].offsetTop
+	})
+}
+//点击 随机 left 和 top
+var btn = document.getElementById('menu');
+btn.onclick = function (){
+	this.className = 'active';
+	arr.sort(function (){//将数组arr中的项随机
+		return Math.random()-0.5;
+	});
+	for( var i = 0; i < lis.length; i++ ){
+		mTween(lis[i],{
+			left:arr[i].left,//li的left值和随机后的数组arr中的项匹配
+			top:arr[i].top
+		},500);
+	}
+}
+//限制图片拖拽的范围
+var minL = 0;
+var minT = 0;
+var maxL = list.clientWidth - lis[0].offsetWidth;
+var maxT = list.clientHeight - lis[0].offsetHeight;
+var zIndex = 1;
+list.onmousedown = function (ev){
+	var target = ev.target;
+	console.log(target.nodeName)
+	ev.preventDefault();
+	if(target.nodeName === "LI" && target.id !== 'list'){
+		console.log(target.nodeName)
+		var disX = ev.clientX - target.offsetLeft;
+		var disY = ev.clientY - target.offsetTop;
+
+		zIndex++;
+		target.style.zIndex = zIndex;
+
+		//在鼠标down的时候记录元素的位置，目的是在up时候回到这个位置
+		var downLeft = target.offsetLeft;
+		var downTop = target.offsetTop;
+
+		document.onmousemove = function (ev){
+			var l = ev.clientX - disX;
+			var t = ev.clientY - disY;
+			if(l<minL) l = minL;
+			if(t<minT) t = minT;
+			if(l>maxL) l = maxL;
+			if(t>maxT) t = maxT;
+
+			target.style.left = l + 'px';
+			target.style.top = t + 'px';
+		}
+
+		document.onmouseup = function (){
+			document.onmousemove = document.onmouseup = null;
+			//在up的时候，检测一下碰撞的元素
+			var collisionElement = [];
+			for( var i = 0; i < lis.length; i++ ){
+				if(collision(target,lis[i]) && lis[i] !== target){
+					collisionElement.push(lis[i]);
+				}
+			}
+			if(collisionElement.length === 0){
+				mTween(target,{
+					left:arr[target.index].left,
+					top:arr[target.index].top
+				},300)
+			}else{
+				var element = null;
+				if(collisionElement.length === 1){
+					element = collisionElement[0];
+				}else{
+					// 可能碰上了两个以上的元素
+                    // 判断最近的
+                	var min = 999999;
+                	for( var i = 0; i < collisionElement.length; i++ ){
+                		var x = (collisionElement[i].offsetLeft + collisionElement[i].offsetWidth/2) - (target.offsetLeft + target.offsetWidth/2);
+                		var y = (collisionElement[i].offsetTop + collisionElement[i].offsetHeight/2) - (target.offsetTop + target.offsetHeight/2);
+                		var xiebian = x * x + y * y;
+                		if(min > xiebian){
+                			min = xiebian;
+                			element = collisionElement[i];
+                		}
+
+                	}
+				}
+			}
+			element.style.zIndex = zIndex;
+			mTween(target,{
+				left:arr[element.index].left,
+				top:arr[element.index].top
+			},300,'linear',function(){
+				var i = target.index;
+				target.index = element.index;
+				element.index = i;
+			})
+			mTween(element,{
+				left:arr[target.index].left,
+				top:arr[target.index].top
+			},300)
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
