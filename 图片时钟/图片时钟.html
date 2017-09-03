@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>图片时钟</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+		}
+		img{
+			display: block;
+			vertical-align: top;
+		}
+		.clear:after{
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.wrap{
+			width: 1024px;
+			height: 446px;
+			background: url(./images/bg.jpg) no-repeat;
+			padding-top: 255px;
+			margin: 30px auto 0;
+		}
+		.box{
+			width: 511px;
+			height: 97px;
+			/*background: red;*/
+			margin-left: 181px;
+			padding: 19px 0 0 114px;
+		}
+		ul{
+			width: 511px;
+			height: 80px;
+			margin-right: 58px;
+			overflow: hidden;
+		}
+
+		li{
+			list-style: none;
+			float: left;
+		}
+		li:nth-child(2n){
+			margin: 0 58px 0 5px;
+		}
+		li:nth-last-child(1){
+			margin-right: 0;
+		}
+		li:nth-last-child(2){
+			margin-left: 1px;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="box">
+		<ul class="clear">
+			<li>
+				<img src="images/0.png" />
+				<img src="images/0.png" />
+			</li>
+			<li>
+				<img src="images/0.png" />
+				<img src="images/0.png" />
+			</li>
+			<li>
+				<img src="images/0.png" />
+				<img src="images/0.png" />
+			</li>
+			<li>
+				<img src="images/0.png" />
+				<img src="images/0.png" />
+			</li>
+			<li>
+				<img src="images/0.png" />
+				<img src="images/0.png" />
+			</li>
+			<li>
+				<img src="images/0.png" />
+				<img src="images/0.png" />
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script src="js/utils.js"></script>
+
+<script>
+showTime();
+setInterval(function(){
+	showTime();
+},1000)
+//获取时间
+function addZero (n){
+	return n < 10 ? '0' + n : '' + n;
+}
+
+function showTime (){
+	var d = new Date();
+	var time = addZero(d.getHours())+addZero(d.getMinutes())+addZero(d.getSeconds());
+	var li = document.querySelectorAll('li');
+	for(var i = 0;i<li.length;i++){
+		animforli(li[i],time.charAt(i));
+	}
+}
+function animforli(obj,num){
+	if(!obj.time){
+		obj.time = num;
+	}
+	var img = obj.getElementsByTagName('img');
+	img[0].src = "images/"+obj.time+".png";
+	img[1].src = "images/"+num+".png";
+	if(obj.time!=num){
+		mTween(obj,'marginTop',-80,500,'linear',function(){
+			img[0].src = "images/"+num+".png";
+			obj.style.marginTop = 0;
+		})
+	}
+	obj.time = num;
+}
+</script>
+</body>
+</html>
