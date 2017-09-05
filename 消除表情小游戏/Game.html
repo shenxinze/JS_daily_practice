@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game_main</title>
+<link rel="stylesheet" href="style/Game_main.css">
+<style>
+	.content {
+		-overflow: hidden;
+	}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div class="head">
+		<div id="log"></div>
+		<h3 class="title">你的鼠标有多快?</h3>
+		<p class="explain">游戏说明：“点击游戏”，随机掉下表情点中它，千万别让它掉下去！！</p>
+	</div>
+	<div class="content">
+		<div class="win">
+			<span class="winNum">0分</span>
+			<p>得分</p>
+		</div>
+		<div class="lose">
+			<span class="loseNum">0分</span>
+			<p>失分</p>
+		</div>
+		<a href="javascript:;" class="btn">开始游戏</a>
+		<img src='img/1.png' id="runImg" style="position: absolute;left:0;top:-54px;">
+	</div>
+
+</div>
+<script src="js/utils.js"></script>
+<script>
+ /*
+1. 点击开始游戏  动画
+2. 让这个img随机的到一个src地址，并且left随机计算（0-框框width-img的width）
+3. 让img运动 目标是框框height-img的height
+4. 运动过程中点中了：
+		img抖动 抖完之后
+			top为0 left随机算出，src随机得到一个地址
+			让img运动 目标是框框height-img的height
+		img抖动 抖完之后
+			top为0 left随机算出，src随机得到一个地址
+			让img运动 目标是框框height-img的height
+
+5. 运动过程中没有点中了：
+		框框抖动，抖动之后
+			img的top为0 left随机算出，src随机得到一个地址
+			让img运动 目标是框框height-img的height
+		框框抖动，抖动之后
+			img的top为0 left随机算出，src随机得到一个地址
+			让img运动 目标是框框height-img的height
+
+*/
+
+	var arr = [
+		'./img/1.png',
+		'./img/3.png',
+		'./img/4.png',
+		'./img/5.png',
+		'./img/6.png'
+	]
+
+	var btn = $(".btn")[0];
+	var win = $(".win")[0];
+	var lose = $(".lose")[0];
+	btn.onclick = function (){
+		mTween(win,{left:-100},500)	
+		mTween(lose,{left:-100},500)	
+		mTween(this,{bottom:0,opacity:0},500,'linear',actionImg)	
+	};
+
+	// 调整 src随机得到地址 得到随机的left
+	var runImg = $("#runImg");
+	var content = $(".content")[0]; // 大框框
+	var time = 5000;
+	var winNum = 0;
+	var loseNum = 0;
+
+	var winNumSpan = $(".winNum")[0];
+	var loseNumSpan = $(".loseNum")[0];
+
+	function actionImg(){
+		runImg.style.top = '-54px';
+		// 控制随机去src地址的
+		var index = Math.round(Math.random()*(arr.length-1))
+
+		runImg.onload = function (){
+			// 等图片加载完成之后，获取offsetHeight是正确的值
+			var target = content.clientHeight - runImg.offsetHeight;
+			time -= 100;
+			mTween(runImg,{top:target},time,'linear',function (){
+				// 执行了这个回调函数，说明没点到
+				runImg.style.top = '-60px';
+				shake(content,"top",50,function (){
+					loseNum++;  // 失分
+					loseNumSpan.innerHTML = loseNum + '分';
+					if(loseNum === 3){
+						// 异步，当操作的DOM频繁，当DOM执行完后，在执行这段代码，这时候使用setTimeout
+						/*setTimeout(function (){
+							alert("你失败了，重新开始吧");		
+						});*/
+
+						mTween(win,{left:14},500)	
+						mTween(lose,{left:14},500)	
+						mTween(btn,{bottom:20,opacity:1},500,'linear')
+						btn.innerHTML = '重新开始';
+						loseNum = 0;
+						winNum = 0;
+						time = 1000;
+						winNumSpan.innerHTML = winNum + '分';
+						loseNumSpan.innerHTML = loseNum + '分';
+						return;
+					}
+
+					
+					actionImg();	
+				})	
+			})	
+		};
+		runImg.src = arr[index];  // 有一个加载的过程
+
+		// 随机left位置
+		var left = Math.round(Math.random()*(content.clientWidth - runImg.offsetWidth));
+
+			runImg.style.left = left + 'px';
+	}
+
+
+	// 点中了
+
+	runImg.onclick = function (){
+		console.log('点中了');
+		// 先让img停下来
+		clearInterval(runImg.timer);
+		shake(runImg,"left",30,function (){
+			winNum++; // 得分
+			winNumSpan.innerHTML = winNum + '分';
+
+
+			actionImg();
+
+		})
+	};
+
+	
+
+
+
+</script>
+</body>
+</html>
