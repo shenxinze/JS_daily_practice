@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>todos</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <style>
+        /* .view{
+            height: 60px;
+        } */
+        li{
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+<section class="todoapp" id="app">
+<div>
+    <header class="header" >
+        <h1>todos</h1>
+        <input 
+            class="new-todo" 
+            placeholder="请输入内容" 
+            v-model="newTodo"
+            @keyup.13="addTodo"
+        >
+    </header>
+    <section class="main" v-show="list.length">
+        <input 
+            class="toggle-all" 
+            type="checkbox"
+            v-model="isAllSelected"
+         />
+        <ul class="todo-list">
+            <!-- <li>
+                <div class="view">
+                    <input class="toggle" type="checkbox" />
+                    <label></label>
+                    <button class="destroy" ></button>
+                </div>
+                <input class="edit" />
+            </li> -->
+        </ul>
+    </section>
+    <footer class="footer" v-show="list.length">
+        <span class="todo-count">
+        	<strong></strong>
+        	<span class="num"></span>
+        </span>
+        <ul class="filters">
+            <li>
+                <a href="#all" 
+                    :class="{selected:dataType=='all'}">
+                 All
+                </a>
+            </li>
+            <li>
+                <a href="#active" 
+                    :class="{selected:dataType=='active'}">
+                 Active
+                </a>
+            </li>
+            <li>
+                <a href="#completed" 
+                    :class="{selected:dataType=='completed'}">
+                 Completed
+                </a>
+            </li>
+        </ul>
+        <button class="clear-completed" @click="clearCompleted">
+            Clear completed
+        </button>
+    </footer>
+</div>
+</section>
+<!-- <script src="./src/vue.js"></script>
+<script src="./app.js"></script> -->
+
+<script>
+let main = document.querySelector('.main');
+let footer = document.querySelector('.footer');
+let newTodo = document.querySelector('.new-todo');
+let todoList = document.querySelector('.todo-list');
+var num = document.querySelector('.num');
+let toggleAll = document.querySelector('.toggle-all');
+let inputs = document.getElementsByClassName('toggle');
+main.style.display = 'none'; 
+footer.style.display = 'none';
+
+newTodo.onkeydown = function (e){
+    let keycode = e.which;
+    if(keycode === 13 && newTodo.value !== ''){
+        main.style.display = 'block'; 
+        footer.style.display = 'block';
+
+        let val = newTodo.value;
+        newTodo.value = '';
+        let html = `<li>
+                        <div class="view">
+                            <input class="toggle" type="checkbox" />
+                            <label>${val}</label>
+                            <button class="destroy" ></button>
+                        </div>
+                        <input class="edit" />
+                    </li>`
+        todoList.innerHTML += html;
+        /*for(var i = 0; i < inputs.length;i++){
+            if(inputs[i].checked == true){
+                inputs[i].checked == true;
+            }
+        }*/
+        num.innerHTML = ''+todoList.children.length+'条未选中'
+    }
+}
+
+
+
+//点击删除
+let m = 0;
+let state = false;
+let toggle = todoList.getElementsByTagName('input');
+let edit = todoList.querySelector('.edit');
+let view = todoList.querySelectorAll('.view');
+todoList.addEventListener('click',function(ev){
+    //点击删除
+    if(ev.target.nodeName === 'BUTTON'){
+        //console.log(ev.target.parentNode.parentNode)
+        ev.target.parentNode.parentNode.remove();
+        for(var i = 0 ; i < toggle.length ; i++){
+            if(toggle[i].checked === true){
+                console.log(toggle[i])
+                num.innerHTML = '0条未选中';
+                toggleAll.checked = true; 
+            }
+        }
+        if(todoList.children.length === 0){
+              footer.style.display = 'none';
+              main.style.display = 'none';      
+        } 
+    }
+
+    //点击单选
+    if(ev.target.className === 'toggle'){
+        if(ev.target.checked == true){
+            m++;
+            //console.log(m)
+            //console.log(ev.target.checked)
+            //console.log(ev.target.parentNode.parentNode)
+            ev.target.parentNode.parentNode.className = 'completed';
+                   
+            if(m == toggle.length/2){
+                toggleAll.checked = true;
+                num.innerHTML = '0条未选中'; 
+            }else{
+                m > toggle.length/2 ? m = 1 : null;
+                num.innerHTML = ''+toggle.length/2-m+'条未选中';
+                //console.log(m)
+            }
+        
+        }else{
+            ev.target.parentNode.parentNode.className = '';
+            toggleAll.checked = false;
+            m--
+            //console.log(m)
+            num.innerHTML = ''+toggle.length/2-m+'条未选中';
+        }
+    }
+})
+
+app.addEventListener('dblclick',function(ev){
+    if(ev.target.nodeName ==='LABEL'){
+        ev.target.parentNode.style.display = 'none';
+        console.log(ev.target.parentNode.nextElementSibling)
+        ev.target.parentNode.nextElementSibling.style.display = 'block';
+    }
+})
+
+
+//全选
+toggleAll.onclick = function (){
+    if(this.checked == true){
+        //console.log(toggle)
+        for(var i = 0 ; i < toggle.length ; i++){
+            toggle[i].checked = true;
+            num.innerHTML = '0条未选中';
+        }
+    }else{
+         for(var i = 0 ; i < toggle.length ; i++){
+            toggle[i].checked = false;
+            num.innerHTML = ''+toggle.length/2+'条未选中';
+        }
+    }
+}
+
+</script>
+</body>
+</html>
