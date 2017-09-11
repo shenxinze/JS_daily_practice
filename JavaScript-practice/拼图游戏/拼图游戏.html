@@ -90,7 +90,7 @@ btn2.onclick = function (){
             if( i % 9 == 0 ){
                 n++;
             }
-            str += `<li style="width:${arr[0]}px;height:${arr[0]}px;left:${(i%9)*arr[0]}px;top:${n*arr[0]}px;background-position:${(-i%9)*arr[0]}px ${-n*arr[0]}px;"></li>`;
+            str += `<li style="width:${arr[0]}px;height:${arr[0]}px;left:${(i%9)*arr[0]}px;top:${n*arr[0]}px;background-position:${(-i%9)*arr[0]}px ${-n*arr[0]}px; "></li>`;
         } 
     }
     list.innerHTML = str;

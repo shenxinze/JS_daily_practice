@@ -1,0 +1,5 @@
+[0628/075721.259:ERROR:process_reader_win.cc(233)] ReadMemory at 0x55d40000 of 64 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
+[0628/075721.295:WARNING:pe_image_reader.cc(281)] could not read dos header from C:\Program Files (x86)\Google\Chrome\Application\56.0.2924.87\chrome_child.dll
+[0628/075721.306:ERROR:process_reader_win.cc(233)] ReadMemory at 0x4f36000 of 40960 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
+[0628/075721.306:ERROR:crash_report_exception_handler.cc(111)] WriteEverything failed
+[0628/075721.306:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess: 已尝试访问正在退出的过程。  (0xc000010a)
