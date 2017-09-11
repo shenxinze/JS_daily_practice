@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>todos</title>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+<section class="todoapp">
+    <div>
+        <header class="header">
+            <h1>todos</h1>
+            <input
+                class="new-todo"
+                placeholder="请输入内容"
+                v-model='todo'
+                @keydown.enter='addTodo'
+            />
+        </header>
+        <section class="main" v-show='list.length'>
+            <input class="toggle-all" type="checkbox" v-model="isAllSelected" />
+            <ul class="todo-list">
+                <li :class="{completed:item.selected,editing:edit === item}" v-for='item,index in list'>
+                    <div class="view">
+                        <input class="toggle" type="checkbox" v-model="item.selected" />
+                        <label @dblclick="editTodo(item)">{{item.title}}</label>
+                        <button class="destroy" @click='delectTodo(index)'></button>
+                    </div>
+                    <input
+                        class="edit"
+                        v-model="item.title"
+                        @blur="editDone(item)"
+                        @keydown.enter="editDone(item)"
+                        @keydown.esc="cancelTodo(item)"
+                     />
+                </li>
+            </ul>
+        </section>
+        <footer class="footer" v-show='list.length'>
+            <span class="todo-count">
+            	<strong>{{unSelectedNum}}</strong>
+            	<span>条未选中</span>
+            </span>
+            <ul class="filters">
+                <li>
+                    <a href="#all">
+                     All
+                    </a>
+                </li>
+                <li>
+                    <a href="#active">
+                     Active
+                    </a>
+                </li>
+                <li>
+                    <a href="#completed">
+                     Completed
+                    </a>
+                </li>
+            </ul>
+            <button class="clear-completed">
+                Clear completed
+            </button>
+        </footer>
+    </div>
+</section>
+<script src='vue.js'></script>
+<script>
+let data = localStorage.getItem('shen');
+if(data){
+    data = JSON.parse(data);
+}else{
+    data = [];
+}
+/*let data = [{
+                id:1,
+                title:'周一好困',
+                show:true
+           },
+            {
+                id:2,
+                title:'周日好远',
+                show:false
+         }];*/
+new Vue({
+    el:".todoapp",
+    data:{
+        list:data,
+        todo:'',//需要添加的内容
+        edit:'',//用来存储正在编辑的那条数据
+        editBeforeTitle:''
+    },
+    watch:{//监控data的变化触发
+        list:{
+            deep: true,
+            handler(){
+                localStorage.setItem('shen',JSON.stringify(this.list));
+            }
+        }
+    },
+    computed:{
+        //选中的数据
+        selectedItems(){
+            return this.list.filter(function(item){
+                return item.selected
+            });
+        },
+        //判断是否全选
+        //选中的等于 data的长度 表示全选中
+        isAllSelected:{
+            get(){
+                return this.selectedItems.length === this.list.length;
+            },
+            set(newValue){
+                this.list.forEach(function(item){
+                    item.selected = newValue;
+                })
+            }
+            
+        },
+        //未选中的数量
+        //总数 - 选中的
+        unSelectedNum(){
+            console.log(123)
+            return this.list.length - this.selectedItems.length;
+        }
+    },
+    methods:{
+        addTodo(ev){
+            this.list.push({
+                id:Math.random(),
+                title:this.todo,
+                selected:false
+            })
+            this.todo = '';
+        },
+        delectTodo(index){
+            this.list.splice(index,1);
+        },
+        editTodo(item){
+            // 让双击的这一条信息，标题隐藏，编辑框显示
+            console.log(item);
+            // edit存一下这在双击的这条信息
+            this.edit = item;
+            // 保存编辑之前的title
+            this.editBeforeTitle = item.title;
+        },
+        editDone(item){
+            if(item.title === ''){
+                // 拿到数组中这条数据的下标
+                let i = this.list.indexOf(item);
+                this.list.splice(i,1)
+            }
+            this.edit = '';
+        },
+        cancelTodo(item){
+            //esc键取消编辑，恢复到编辑前
+            item.title = this.editBeforeTitle;
+            this.editBeforeTitle = '';
+            this.edit = '';
+        }
+    }
+})
+</script>
+</body>
+</html>
