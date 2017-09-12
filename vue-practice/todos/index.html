@@ -23,7 +23,7 @@
         <section class="main" v-show='list.length'>
             <input class="toggle-all" type="checkbox" v-model="isAllSelected" />
             <ul class="todo-list">
-                <li :class="{completed:item.selected,editing:edit === item}" v-for='item,index in list'>
+                <li :class="{completed:item.selected,editing:edit === item}" v-for='item,index in filterList'>
                     <div class="view">
                         <input class="toggle" type="checkbox" v-model="item.selected" />
                         <label @dblclick="editTodo(item)">{{item.title}}</label>
@@ -45,21 +45,9 @@
             	<span>条未选中</span>
             </span>
             <ul class="filters">
-                <li>
-                    <a href="#all">
-                     All
-                    </a>
-                </li>
-                <li>
-                    <a href="#active">
-                     Active
-                    </a>
-                </li>
-                <li>
-                    <a href="#completed">
-                     Completed
-                    </a>
-                </li>
+                <li><a href="#/all" :class="{selected:filterHash==='all'}">全部</a>
+                </li> <li><a href="#/active" :class="{selected:filterHash==='active'}">未选中</a></li> 
+                <li><a href="#/completed" :class="{selected:filterHash==='completed'}">选中</a></li>
             </ul>
             <button class="clear-completed">
                 Clear completed
@@ -85,13 +73,14 @@ if(data){
                 title:'周日好远',
                 show:false
          }];*/
-new Vue({
+let vm = new Vue({
     el:".todoapp",
     data:{
         list:data,
         todo:'',//需要添加的内容
         edit:'',//用来存储正在编辑的那条数据
-        editBeforeTitle:''
+        editBeforeTitle:'',
+        filterHash:'all'
     },
     watch:{//监控data的变化触发
         list:{
@@ -106,6 +95,12 @@ new Vue({
         selectedItems(){
             return this.list.filter(function(item){
                 return item.selected
+            });
+        },
+        //未选中的数据
+        unSelectedItems(){
+            return this.list.filter(function(item){
+                return !item.selected
             });
         },
         //判断是否全选
@@ -124,8 +119,19 @@ new Vue({
         //未选中的数量
         //总数 - 选中的
         unSelectedNum(){
-            console.log(123)
+            //console.log(123)
             return this.list.length - this.selectedItems.length;
+        },
+        filterList(){
+            if(this.filterHash==='all'){
+                return this.list;
+            }else if(this.filterHash==='active'){
+                return this.unSelectedItems;
+            }else if(this.filterHash==='completed'){
+                return this.selectedItems;
+            }else{
+                 return this.list;
+            }
         }
     },
     methods:{
@@ -164,6 +170,21 @@ new Vue({
         }
     }
 })
+
+
+// hash改变触发的事件
+window.onhashchange = function (){
+    //console.log("hash改变了"); 
+    let hash = window.location.hash;
+    //console.log(hash);
+    if(hash){
+        vm.filterHash = hash.slice(2)
+    }
+    console.log(vm.filterHash);
+}
+
+window.onhashchange();
+
 </script>
 </body>
 </html>
