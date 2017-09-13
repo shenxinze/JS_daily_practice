@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+		<style>
+			
+		</style>
+		<script>
+			/*
+				订阅发布模式
+				订阅者
+				发布者
+				事件
+			*/	
+			// 类，用来描述一组具有相同特性和方法的对象
+			class SalesOffices {
+				constructor(){
+					this.telephoneBook = {};  // 记录订阅者
+				}
+				// 订阅方法
+				subscribe(area,telephone){
+					// 先判断有没有，没有的话再创建一个空数组
+					if(!this.telephoneBook[area]){
+						this.telephoneBook[area] = [];
+					}
+					
+					this.telephoneBook[area].push(telephone)
+				}
+				// 发布的方法
+				publish(areaName){
+
+					let arr = this.telephoneBook[areaName];
+
+					// 有人订阅了再通知
+					if(arr){
+
+						for( var i = 0; i < arr.length; i++ ){
+							arr[i]();
+						}
+					}
+
+				}
+				// 取消订阅的方法
+				remove(telephone){
+					for( var i = 0; i < this.telephoneBook.length; i++ ){
+						if(this.telephoneBook[i] === telephone){
+							this.telephoneBook.splice(i,1);
+							break;
+						}
+					}
+				}
+			}
+
+			// 通过类得到具体的对象
+
+			let office = new SalesOffices();
+
+			// 小明关心 100平的
+
+			office.subscribe('100',function (){
+				console.log('通知小明');
+			})
+			office.subscribe('100',function (){
+				console.log('通知小李');
+				console.log();	
+			})
+
+			// 小红  200平
+
+			office.subscribe('200',function (){
+				console.log('通知小红');
+
+			})
+			console.log(office.telephoneBook);
+			document.onclick = function (){
+				office.publish('200')	
+			};
+
+		</script>
+	</head>
+
+	<body>
+		
+	</body>
+</html>

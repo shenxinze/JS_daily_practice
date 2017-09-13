@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj1={
+            name:'leo',
+            list:{
+                sex:'男',
+                age:'14'
+            }
+        }
+        let obj2={}
+
+        function deepClone(obj){
+            let newObj=obj instanceof Array ? [] : {}
+
+            for (let attr in obj) {
+                if (typeof obj[attr]==='object'&& obj[attr] !==null) {
+                    newObj[attr]=deepClone(obj[attr])
+                    
+                }else{
+                    newObj[attr]=obj[attr]
+                }
+            }
+            return newObj
+        }
+        
+        obj2=deepClone(obj1)
+        obj1.list.age=222
+        console.log(obj2)
+        console.log(obj1)
+    </script>
+</body>
+</html>

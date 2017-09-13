@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+        #box2{
+            width: 500px;
+            height: 30px;
+            border: 1px solid #000;
+            position: absolute;
+            left: 50px;
+            top: 180px;
+        }
+        #bar{
+            width: 30px;
+            height: 100%;
+            background: blue;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <div id="box2">
+        <div id="bar"></div>
+    </div>
+    <script src="./tools.js"></script>
+    <script>
+        class Drag extends admin{
+            constructor(dragbox){
+                super()
+                this.dragbox=dragbox
+            }
+            dragInit(){
+                this.dragbox.onmousedown=this.downFn.bind(this)
+            }
+            downFn(ev){
+                this.fabu('down-fabu')
+                this.disX=ev.clientX-this.dragbox.offsetLeft
+                this.disY=ev.clientY-this.dragbox.offsetTop
+                document.onmousemove=this.moveFn.bind(this)
+                document.onmouseup=this.upFn.bind(this)
+            }
+            moveFn(ev){
+                this.fabu('move-fabu')
+                this.left=ev.clientX-this.disX
+                this.top=ev.clientY-this.disY
+                
+                this.fabu('limit-fabu')
+                this.dragbox.style.left=this.left+'px'
+                this.dragbox.style.top=this.top+'px'
+            }
+            upFn(ev){
+                this.fabu('up-fabu')
+                document.onmousemove=document.onmouseup=null
+            }
+        }
+        let d=new Drag(bar)
+        d.dragInit()
+        d.dingyue('limit-fabu',function(){
+            d.top=0
+            if(d.left<0){
+                d.left=0
+            }
+            var maxX=box2.clientWidth-bar.clientWidth
+            if(d.left>maxX){
+                d.left=maxX
+            }
+        })
+        d.dingyue('move-fabu',function(){
+            d.top=0
+            box.style.left=d.left+'px'
+        })
+        function fn1(){
+            console.log('通知小李')
+        }
+        function fn2(){
+            console.log('通知小王')
+        }
+        function fn3(){
+            console.log('通知小红')
+        }
+        //订阅
+        d.dingyue('100',fn1)
+        d.dingyue('200',fn2)
+        d.dingyue('300',fn3)
+
+         //移除
+        d.remove('300',fn3)
+
+        //发布消息
+        document.onclick=function(){
+            d.fabu('300')
+            d.fabu('200')
+        }
+       
+
+        let d2=new Drag(box)
+        d2.dragInit()
+    </script>
+</body>
+</html>
