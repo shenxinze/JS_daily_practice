@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>好友列表</title>
+	<style>
+		h3{
+			margin: 0;
+			width: 280px;
+			height: 46px;
+			/*background: url(./images/r-arrow.png) no-repeat 14px 20px rgba(0,0,0,0.7);*/
+			background-image: url(./images/r-arrow.png);
+			background-repeat: no-repeat;
+			background-position: 14px 20px;
+			background-color: rgba(0,0,0,0.7);
+			font: 16px/46px '微软雅黑';
+			color: #fff;
+			text-indent: 40px;
+			border-radius: 4px;
+		}
+		ul{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			margin: 20px 0 0 20px;
+		}
+		a{
+			text-decoration: none;
+			color: inherit;
+			display: block;
+		}
+		.wrap{
+			width: 1000px;
+			height: 750px;
+			background: url(./images/bg.png) no-repeat;
+			margin: 50px auto 0;
+			padding-top: 50px;
+		}
+		.phone{
+			width: 384px;
+			height: 707px;
+			background: url(./images/bg1.png) no-repeat;
+			margin: 0 auto;
+			position: relative;
+		}
+		.box{
+			width: 322px;
+			height: 562px;
+			/*background: #000;*/
+			position: absolute;
+			top: 50px;
+			left: 26px;
+		}
+		p{
+			margin: 0;
+			padding: 5px 0 4px 0px;
+			width: 280px;
+			background: #000;
+			/*background: #fff;*/
+			-display: none;
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+		}
+		a{
+			color: #fff;
+			font: 14px/36px '微软雅黑';
+			text-indent: 42px;
+		}
+		li{
+			width: 280px;
+			margin-bottom: 10px;
+		}
+		.active{
+			background-color: rgba(221,84,111,0.9);
+			background-image: url(./images/b-arrow.png);
+		}
+		.active1{
+			background: #dd556f;
+		}
+		.ahover{
+			background: #666;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<div class="phone">
+		<div class="box">
+			<ul>
+				<li v-for="item,index of data">
+					<h3 :class="{active: item.isShow}" @click="toggle(index)">{{item.title}}</h3>
+					<p v-show="item.isShow">
+						<a href="javascript:;"
+							v-for="item2,index2 of item.friend"
+							:class="{active1: id == item2.user_id,ahover: id == }"
+							@click="clickA(item2)"
+							@mouseover="hoverOver(item2)"
+							@mouseOut="hoverOut(item2)"
+							
+						>{{item2.name}}</a>
+						<!-- <a href="javascript:;">从来就是这么任性～～</a>
+						<a href="javascript:;">风雨无阻</a>
+						<a href="javascript:;">LEO</a> -->
+					</p>
+				</li>
+				<!-- <li>
+					<h3>企业好友</h3>
+					<p>
+						<a href="javascript:;">美丽俏佳人LOVE</a>
+						<a href="javascript:;">从来就是这么任性～～</a>
+						<a href="javascript:;">风雨无阻</a>
+						<a href="javascript:;">LEO</a>
+					</p>
+				</li>
+				<li>
+					<h3>黑名单</h3>
+					<p>
+						<a href="javascript:;">美丽俏佳人LOVE</a>
+					</p>
+				</li> -->
+			</ul>
+		</div>	
+	</div>
+</div>
+<script src="js/vue.js"></script>
+<script>
+let data =[
+	{
+		id: 0,
+		title: '我的好友',
+		friend: [
+			{	
+				user_id: 1001,
+				name: '美丽俏佳人LOVE',
+				isClick: false
+			},
+			{
+				user_id: 1002,
+				name: '从来就是这么任性～～',
+				isClick: false
+			},
+			{
+				user_id: 1003,
+				name: '风雨无阻',
+				isClick: false
+			},
+			{
+				user_id: 1004,
+				name: 'Leo',
+				isClick: false
+			}
+		],
+		isShow: false
+	},
+	{
+		id: 1,
+		title:' 企业好友',
+		friend: [
+			{
+				user_id: 2001,
+				name: '美丽',
+				isClick: false
+			},
+			{
+				user_id: 2002,
+				name: '从来',
+				isClick: false
+			},
+			{
+				user_id: 2003,
+				name: '风雨',
+				isClick: false
+			}
+		],
+		isShow: false
+	},
+	{
+		id: 2,
+		title: '黑名单',
+		friend: [
+			{
+				user_id: 3001,
+				name: '星期一',
+				isClick: false
+			}
+		],
+		isShow: false
+	}
+]
+new Vue({
+	el: '.wrap',
+	data: {
+		data: data,
+		id: '',
+		prevId: ''
+	},
+	methods: {
+		toggle(i){
+			this.id = '';// 点击前先清空
+			//console.log(i,this.data[i].id);
+			//console.log(this.data)
+			this.data.forEach((item,index) => {
+				if(item.isShow === true && i !== index){//排除自身
+					//console.log('已经有展开的啦');
+					item.isShow = false;
+				}
+			})
+			if(i === this.data[i].id){
+				this.data[i].isShow = !this.data[i].isShow;
+			}
+		},
+		clickA(i){
+			//鼠标点击效果
+			//console.log(i.user_id)
+			this.id = i.user_id;
+			this.prevId = this.id;
+			//console.log(i.user_id,this.id)
+		},
+		hoverOver(i){
+			//鼠标移入效果
+			this.id = i.user_id;
+		},
+		hoverOut(i){
+			//鼠标移出效果
+			//如果已经点击选中，移除保持原先状态
+			console.log(this.id,this.prevId)
+			if(this.id == this.prevId){
+
+			}else{
+				this.id = '';
+			}
+			
+		}
+	}
+})
+</script>	
+</body>
+</html>
