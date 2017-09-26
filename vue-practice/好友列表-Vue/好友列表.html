@@ -75,10 +75,13 @@
 			background-image: url(./images/b-arrow.png);
 		}
 		.active1{
-			background: #dd556f;
+			background: #dd556f!important;
 		}
 		.ahover{
 			background: #666;
+		}
+		[v-cloak]{
+		    display: none;
 		}
 	</style>
 </head>
@@ -86,17 +89,16 @@
 <div class="wrap">
 	<div class="phone">
 		<div class="box">
-			<ul>
+			<ul v-cloak><!-- v-cloak 解决 在使用vue绑定数据的时候，渲染页面时会出现变量闪烁 -->
 				<li v-for="item,index of data">
 					<h3 :class="{active: item.isShow}" @click="toggle(index)">{{item.title}}</h3>
 					<p v-show="item.isShow">
 						<a href="javascript:;"
 							v-for="item2,index2 of item.friend"
-							:class="{active1: id == item2.user_id,ahover: id == }"
+							:class="{active1: id == item2.user_id,ahover: clickId == item2.user_id}"
 							@click="clickA(item2)"
 							@mouseover="hoverOver(item2)"
-							@mouseOut="hoverOut(item2)"
-							
+							@mouseout="hoverOut(item2)"
 						>{{item2.name}}</a>
 						<!-- <a href="javascript:;">从来就是这么任性～～</a>
 						<a href="javascript:;">风雨无阻</a>
@@ -131,23 +133,19 @@ let data =[
 		friend: [
 			{	
 				user_id: 1001,
-				name: '美丽俏佳人LOVE',
-				isClick: false
+				name: '美丽俏佳人LOVE'
 			},
 			{
 				user_id: 1002,
-				name: '从来就是这么任性～～',
-				isClick: false
+				name: '从来就是这么任性～～'
 			},
 			{
 				user_id: 1003,
-				name: '风雨无阻',
-				isClick: false
+				name: '风雨无阻'
 			},
 			{
 				user_id: 1004,
-				name: 'Leo',
-				isClick: false
+				name: 'Leo'
 			}
 		],
 		isShow: false
@@ -158,18 +156,15 @@ let data =[
 		friend: [
 			{
 				user_id: 2001,
-				name: '美丽',
-				isClick: false
+				name: '美丽'
 			},
 			{
 				user_id: 2002,
-				name: '从来',
-				isClick: false
+				name: '从来'
 			},
 			{
 				user_id: 2003,
-				name: '风雨',
-				isClick: false
+				name: '风雨'
 			}
 		],
 		isShow: false
@@ -180,8 +175,7 @@ let data =[
 		friend: [
 			{
 				user_id: 3001,
-				name: '星期一',
-				isClick: false
+				name: '星期一'
 			}
 		],
 		isShow: false
@@ -191,8 +185,8 @@ new Vue({
 	el: '.wrap',
 	data: {
 		data: data,
-		id: '',
-		prevId: ''
+		id: -1,
+		clickId: -2
 	},
 	methods: {
 		toggle(i){
@@ -210,26 +204,18 @@ new Vue({
 			}
 		},
 		clickA(i){
+			console.log(i)
 			//鼠标点击效果
 			//console.log(i.user_id)
 			this.id = i.user_id;
-			this.prevId = this.id;
-			//console.log(i.user_id,this.id)
 		},
 		hoverOver(i){
 			//鼠标移入效果
-			this.id = i.user_id;
+			this.clickId = i.user_id;
 		},
 		hoverOut(i){
 			//鼠标移出效果
-			//如果已经点击选中，移除保持原先状态
-			console.log(this.id,this.prevId)
-			if(this.id == this.prevId){
-
-			}else{
-				this.id = '';
-			}
-			
+			this.clickId = '';
 		}
 	}
 })
