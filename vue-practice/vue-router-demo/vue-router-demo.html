@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="box">
+	<nav>
+		<router-link to="/index">首页</router-link>	
+		<router-link to="/news">新闻</router-link>
+		<router-link to="/video">视频</router-link>	
+	</nav>
+	<router-view></router-view>	
+</div>
+<script src="vue.min.js"></script>
+<script src="./vue-router.js"></script>
+<script>
+let Index ={
+	template: '<div>我是主页</div>'
+}
+let News ={
+	template: '<div>我是新闻页</div>'
+}
+let Video ={
+	template: '<div>我是视频页</div>'
+}
+
+let routes = [
+	{
+		path: '/index',
+		component: Index
+	},
+	{
+		path: '/news',
+		component: News
+	},
+	{
+		path: '/video',
+		component: Video
+	}
+]
+
+let router = new VueRouter({
+	routes
+})
+
+
+new Vue({
+	el: '#box',
+	router
+
+})
+</script>
+</body>
+</html>
