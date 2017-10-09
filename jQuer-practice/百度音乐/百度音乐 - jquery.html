@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>百度音乐盒</title>
+	<style>
+		body{
+			background: #333;
+			font-family: '微软雅黑';
+			font-size: 14px;
+		}
+		.wrap{
+			width: 480px;
+			height: 300px;
+			border-radius: 10px;
+			background: /*url(./images/logo.png) no-repeat 140px 36px*/ #fff;
+			margin: 100px auto 0;
+		}
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			padding: 20px 0 0 0;
+			/*background:  url(./images/logo.png) no-repeat 140px 36px;*/
+		}
+		li{
+			height: 36px;
+			/*background: #e7788d;*/
+			line-height: 36px;
+		}
+		input{
+			padding: 0;
+			margin: 0;
+			float: left;
+			margin: 12px 0 0 30px;
+		}
+		ul label{
+			display: block;
+			width: 480px;
+			height: 36px;
+		}
+		span{
+			float: left;
+			margin-left: 20px;
+		}
+		strong{
+			font-weight: normal;
+			float: right;
+			margin-right: 32px;
+		}
+		
+
+		.menu{
+			height: 46px;
+			background: #e15671;
+			margin-top: 18px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+		.menu form{
+			float: left;
+			line-height: 46px;
+		}
+		.menu input{
+			float: left;
+			margin-top: 18px;
+		}
+		.menu label{
+			float: left;
+			color: #fff;
+			margin-left: 20px;
+			margin-right: 76px;
+		}
+		.menu a{
+			float: left;
+			color: #fff;
+			text-decoration: none;
+			line-height: 46px;
+			/*background: url(./images/1.png) no-repeat 0 -30px;*/
+			width: 70px;
+			height: 21px;
+			padding-left: 34px;
+			position: relative;
+		}
+		.menu i{
+			width: 24px;
+			height: 20px;
+			background: url(./images/1.png) no-repeat;
+			position: absolute;
+			top: 14px;
+			left: 0;
+		}
+		.menu .one{
+			height: 24px;
+			background-position: 0 -21px;
+			top: 13px;
+		}
+		.menu .tow{
+			height: 26px;
+			background-position: 0 -45px;
+			top: 10px;
+		}
+		/*li:nth-child(2n){
+			background: rgba(255,86,113,0.1);
+		}
+		.active{
+			background: rgba(255,86,113,0.8);
+		}*/
+	</style>
+</head>
+<body>
+<div class="wrap">
+	<ul>
+		<li>
+			<form method="" action="">
+				<input type="checkbox" name="" id="o1">
+				<label for="o1">
+					<span>私奔</span>
+					<strong>梁博</strong>
+				</label>
+			</form>
+		</li>
+		<li>
+			<form method="" action="">
+				<input type="checkbox" name="" id="o2">
+				<label for="o2">
+					<span>北京北京</span>
+					<strong>梁博 黄勇</strong>
+				</label>
+			</form>
+		</li>
+		<li>
+			<form method="" action="">
+				<input type="checkbox" name="" id="o3">
+				<label for="o3">
+					<span>我爱你中国</span>
+					<strong>梁博</strong>
+				</label>
+			</form>
+		</li>
+		<li>
+			<form method="" action="">
+				<input type="checkbox" name="" id="o4">
+				<label for="o4">
+					<span>花火</span>
+					<strong>梁博</strong>
+				</label>
+			</form>
+		</li>
+		<li>
+			<form method="" action="">
+				<input type="checkbox" name="" id="o5">
+				<label for="o5">
+					<span>回来</span>
+					<strong>梁博</strong>
+				</label>
+			</form>
+		</li>
+		<li>
+			<form method="" action="">
+				<input type="checkbox" name="" id="o6">
+				<label for="o6">
+					<span>爱要有你才完美</span>
+					<strong>梁博 那英</strong>
+				</label>
+			</form>
+		</li>
+	</ul>
+	<div class="menu">
+		<form method="" action="">
+			<input type="checkbox" name="selectAll" id="alls">
+			<label for="alls">全选</label>
+		</form>
+		<a href=""><i></i>收藏</a>
+		<a href=""><i class="one"></i>添加</a>
+		<a href=""><i class="tow"></i>删除</a>
+	</div>
+</div>
+<script src="jquery-3.2.0.min.js"></script>
+<script>
+$('ul li:even').css('background','#fff');
+$('ul li:odd').css('background','red');
+let arr = ['#fff','red'];
+let lis = $('ul li');
+let inputs = $('ul input');
+let checkedAll = $('input[name="selectAll"]');
+lis
+	.mouseenter(function (){
+		$(this).css('background','yellow');
+	})
+	.mouseleave(function() {
+		let input = $(this).find('input');
+		//console.log(input.prop('checked'))
+		if(!input.prop('checked')){
+			let i = $(this).index();
+			$(this).css('background',arr[i % 2]);
+		}
+	});
+checkedAll.click(function() {
+	let checked = $(this).prop('checked');
+	inputs.prop('checked',checked);
+	if(checked){
+		lis.css('background','yellow');
+	}else{
+		lis.each(function (index){
+			$(this).css('background',arr[index % 2]);
+		})
+	}
+});
+$('ul').on('click','input',function (){
+	let i = inputs.toArray().find(function (item){
+		return !item.checked;
+	})
+	checkedAll.prop('checked',!i);
+})
+</script>
+</body>
+</html>
