@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="css/clear.css">
+</head>
+<body>
+<section id="wrap">
+	<div id="content">
+		<h2 class="logo"><img src="img/log.png"></h2>
+		<div class="clearfix">
+			<textarea class="message"></textarea>
+			<input type="button" value="提交" class="btn">
+		</div>
+		<ul id="mList">
+			<!-- <li class="mText clearfix">
+				<span class="mIcon1"></span>
+				<p class="mComtent">你好!</p>
+				<input type="button"  value="删除" />
+			</li>
+			<li class="mText clearfix">
+				<span class="mIcon1 mIcon2"></span>
+				<p class="mComtent">你好!</p>
+				<input type="button"  value="删除" />
+			</li> -->
+		</ul>
+	</div>
+</section>
+<script src="js/jquery-3.2.0.min.js"></script>
+<script>
+$('.btn').click(function (){
+	let val = $('.message').val().trim();
+	if(val === ''){
+		alert('输入的内容不能为空！')
+	}else{
+		let html = `<li class="mText clearfix">
+						<span class="mIcon1"></span>
+						<p class="mComtent">${val}</p>
+						<input type="button"  value="删除" />
+					</li>`
+		$('#mList').prepend(html);	
+	}
+	$('.message').val('');
+})
+
+$('#mList').on('click','input',function (){
+	$(this).parent().remove();
+})
+</script>
+</body>
+</html>
