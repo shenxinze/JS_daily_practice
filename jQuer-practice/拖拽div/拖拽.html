@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#box{
+			width: 100px;
+			height: 100px;
+			background: skyblue;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		#box1{
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
+			left: 0;
+			top: 200px;
+		}
+	</style>
+</head>
+<body>
+<div id="box"></div>
+<div id="box1"></div>		
+<script src="./js/events.js"></script>
+<script src="./js/jquery-3.2.0.js"></script>
+<script>
+class Drag extends Events {
+	constructor(dragId){
+		super();
+		this.dragEle = $(dragId);
+		this.init();
+	}
+
+	init(){
+		this.dragEle.mousedown(this.mousedown.bind(this));
+	}
+
+	mousedown(ev){
+		this.disX = ev.clientX - $(this.dragEle).offset().left;
+		this.disY = ev.clientY - $(this.dragEle).offset().top;
+
+		// 调用bind之后，会返回新函数，把这新函数挂载在实例上，
+		// 目的就是当取消的时候，可以取消这个返回的新函数，因为这个返回的新函数才是事件处理函数
+		this.bindMove = this.move.bind(this);
+		this.bindUp = this.move.bind(this);
+
+		//发布一个事件 custom-down
+		this.emit('custom-down');
+
+		$(document).mousemove(this.bindMove);
+		$(document).mouseup(this.up.bind(this));
+	}
+
+	move(ev){
+		this.dragEle.css({
+			left: ev.clientX - this.disX,
+			top: ev.clientY - this.disY
+		})
+		this.emit('custom-down')
+	}
+
+	up(){
+		$(document).off('mousemove',this.bindMove);
+		$(document).off('mouseup','this.bindUp');
+
+		//发布一个事件 custom-up
+		this.emit('custom-up')
+	}
+}
+
+//拖拽实例
+let d1 = new Drag('#box');
+//down的时候做一些事情
+d1.on('custom-down',function (){
+	$('#box').css('background','yellow')
+})
+let d2 = new Drag('#box1');
+d2.on('custom-down',function (){
+	$('#box1').css('background','pink')
+})
+d2.on('custom-up',function (){
+	$('#box1').css('background','green')
+})
+</script>
+</body>
+</html>
