@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	
+	<link rel="stylesheet" type="text/css" href="./css/slide.css" />
+	<style type="text/css">
+		body{
+			background-color: #ffd800;
+		}
+		.nav .blue {
+			background-color: blue;
+		}
+	</style>
+</head>
+
+<body>
+<div class="slide">
+	<div class="tagClient">
+		<ul class="list">
+			<li><img src="./imgs/1.png" /></li> 
+			<li><img src="./imgs/2.png" /></li> 
+			<li><img src="./imgs/3.png" /></li> 
+			<li><img src="./imgs/4.png" /></li> 
+			<li><img src="./imgs/5.png" /></li>
+		</ul>
+		<div class="prev"></div>
+		<div class="next"></div>
+	</div>
+	<div class="nav">
+		<span class="active"></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+</div>
+<script src="./js/jquery-3.2.0.min.js"></script>
+<script>
+$(function(){
+	
+	let list = $('.list');
+	let lis = $('.list li');
+
+	//克隆第一个li放在最后位置
+	let newLi = lis.eq(0).clone();
+	list.append(newLi);
+
+	
+	
+	let w = $('.list li:first').width();
+	let n = 0;
+	let len = lis.length;
+
+	let spans = $('.nav span');
+	spans.eq(0).addClass('active');
+
+
+	setInterval(function (){
+		n++;
+		if(n > len - 1){
+			n = 0;
+		}
+		spans.eq(n-1).removeClass('active');
+		spans.eq(n).addClass('active');
+		list.stop().animate({
+			left: -n * w
+		},300)		
+	},1000)
+
+	$('.next').click(function (){
+		if(list.is(":animated")) return;
+		console.log(lis.eq(0));
+		
+		n++;
+		if(n > len -1){
+			list.css('left','0')
+			n = 1;
+		}
+		console.log(n)
+		spans.eq(n-1).removeClass('active');
+		spans.eq(n).addClass('active');
+		list.animate({
+			left: -n * w
+		});
+	})
+	$('.prev').click(function (){
+		n--;
+		if(n < 0){
+			let s = -w * ( len - 1 ) + 'px';
+			list.css('left','s');
+			n = len - 2;
+		}
+		console.log(n)
+		spans.eq(n == len -1 ? 0 : n + 1).removeClass('active');
+		spans.eq(n).addClass('active');
+		list.animate({
+			left: -n * w
+		});
+	})
+	$('.nav').on('mouseover', 'span', function() {
+		let index = $(this).index();
+		spans.eq(n).removeClass('active');
+		$(this).addClass('active');
+		list.animate({
+			left: -index * w
+		});
+	});
+})
+
+</script>
+</body>
+
+</html>
