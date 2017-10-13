@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>百度一下，你就知道</title>
+	<style>
+		body *{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		a{
+			display: block;
+			text-decoration: none;
+			color: inherit;
+		}
+		li{
+			list-style: none;
+		}
+		.box{
+			margin-top: 180px;
+		}
+		.logo{
+			text-align: center;
+		}
+		.search-box{
+			height: 36px;
+			text-align: center;
+		}
+		.search{
+			width: 640px;
+			height: 36px;
+			margin: 0 auto;
+			position: relative;
+			z-index: 10;
+		}
+		.search-box input{
+			outline: none;
+			-webkit-appearance: none;
+			border-radius: 0;
+			display: inline-block;
+			width: 540px;
+			height: 36px;
+			border: 1px solid #b8b8b8;
+			border-right: none;
+			font-size: 16px;
+			line-height: 34px;
+			color: #000;
+			text-indent: 8px;
+			
+		}
+		.search-box button{
+			display: inline-block;
+			border: 0;
+			width: 100px;
+			height: 36px;
+			background: #3385ff;
+			border-bottom: 1px solid #2d78f4;
+			font-size: 14px;
+			color: #fff;
+			line-height: 36px;
+			outline: none;
+			cursor: pointer;
+		}
+		.list{
+			width: 540px;
+			/* height: 252px; */
+			border: 1px solid #cccccc;
+			box-shadow:0px 2px 5px rgba(0,0,0,0.1);
+			position: absolute;
+			left: 0;
+			top: 35px;
+		}
+		.list li{
+			text-align: left;
+			font-size: 14px;
+			line-height: 25px;
+		}
+		.list li a{
+			padding-left: 8px;
+		}
+		.bgColor,.list li a:hover{
+			background: #f0f0f0;
+		}
+		[v-cloak]{
+		    display: none;
+		}
+	</style>
+</head>
+<body>
+<div class="box">
+	<div class="logo"><img src="./images/bd_logo1.png" alt="" width="270" height="129"></div>
+	<div class="search-box">
+		<div class="search">
+			<input type="text" v-model='keyWord' @keyup="get($event)" @keydown.down="changeDown()" @keydown.up.prevent="changeUp()"><button @click="enterPage">百度一下</button>
+			<ul class="list" v-cloak>
+				<li v-for="value,index in myData" @click="enterPage(index)"><a href="" :class="{bgColor:index==init}">{{value}}</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script src="./js/vue.js"></script>	
+<script src="js/axios.min.js"></script>
+<script src="js/vue-resource.js"></script>
+
+<script>
+new Vue({
+	el: '.box',
+	data: {
+		myData: [],
+		keyWord: '',
+		init: -1
+	},
+	methods: {
+		get:function(ev){
+            if(ev.keyCode==38 || ev.keyCode==40)return;
+
+            if(ev.keyCode==13){
+                window.open('https://www.baidu.com/s?wd='+this.keyWord);
+                this.keyWord='';
+            }
+            this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{
+                wd:this.keyWord
+            },{
+                jsonp:'cb'
+            }).then(function(res){
+                this.myData=res.data.s;
+            },function(){
+                
+            });
+        },
+        enterPage(index){
+        	//alert(this.myData[index])
+        	this.keyWord = this.myData[index] || this.keyWord;
+        	window.open('https://www.baidu.com/s?wd='+this.keyWord);
+        	this.keyWord='';
+        },
+		changeDown:function(){
+            this.init++;
+            if(this.init==this.myData.length)this.init=-1;
+            this.keyWord=this.myData[this.init];
+        },
+        changeUp:function(){
+            this.init--;
+            if(this.init==-2)this.init=this.myData.length-1;
+            this.keyWord=this.myData[this.init];
+        }
+	}
+})
+
+</script>
+
+</body>
+</html>
