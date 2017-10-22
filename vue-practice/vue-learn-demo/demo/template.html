@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Template三种写法</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>Template三种写法</h1>
+<hr />
+<div id='app'>
+	{{message}}
+</div>
+<!-- <template>标签模板 -->
+<template id="dd2">
+	<h2 style="color: blue">我是Template标签模板</h2>
+</template>
+
+<!-- script标签模板 -->
+<script type="x-template" id="dd3">
+	<h2 style="color: skyblue">我是Script标签模板</h2>
+</script>
+	
+<script>
+/*
+	一、直接写在选项里的模板
+			直接在构造器里的template选项后边编写。
+			这种写法比较直观，但是如果模板html代码太多，不建议这么写。
+	二、写在<template>标签里的模板
+			这种写法更像是在写HTML代码，就算不会写Vue的人，也可以制作页面。
+	三、写在<script>标签里的模板
+			这种写模板的方法，可以让模板文件从外部引入。
+*/
+new Vue({
+	el: '#app',
+	data: {
+		message: 'hello,world!'
+	},
+	// template: `
+	// 	<h2 style="color:red">我是选项模板</h2>
+	// `
+	template: '#dd3'
+
+})
+</script>
+
+</body>
+</html>

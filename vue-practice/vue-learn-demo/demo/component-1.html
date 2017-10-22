@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>component-1</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>component-1</h1>
+<hr />
+<div id='app'>
+	<shen></shen>
+	<sdk></sdk>
+</div>
+
+<!-- <div id="ppa">
+	<shen></shen>	
+</div> -->
+
+<script>
+Vue.component('shen',{
+	template: `
+		<div styly="color:red">我是全局的shen组件</div>
+	`
+})
+new Vue({
+	el: '#app',
+	components: {
+		'sdk': {
+			template: `
+				<div styly="color:red">我是局部的sdk组件</div>
+			`
+		}
+	}
+})
+
+// new Vue({
+// 	el: '#ppa'
+// })
+</script>
+
+</body>
+</html>
