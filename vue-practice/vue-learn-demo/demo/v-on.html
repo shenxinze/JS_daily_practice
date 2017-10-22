@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>v-on 实例</title>
+</head>
+<body>
+<h1>v-on 实例</h1>
+<hr />
+<div id='app'>
+	本场比赛得分：{{score}}
+	<p>
+		<button v-on:click="add">加分</button>
+		<button @click="reduce">减分</button><br />
+		<input type="text" @keyup.enter="onEnter" v-model="score1" />
+	</p>
+</div>
+<script src='../assets/js/vue.js'></script>	
+<script>
+new Vue({
+	el: '#app',
+	data: {
+		score: 0,
+		score1: 1
+	},
+	methods: {
+		add(){
+			this.score++;
+		},
+		reduce(){
+			this.score--;
+		},
+		onEnter(){
+			this.score = this.score + parseInt(this.score1);
+		}
+	}
+})
+</script>
+
+</body>
+</html>
