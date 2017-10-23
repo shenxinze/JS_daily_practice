@@ -2,46 +2,41 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<title>component-2</title>
+	<title>component-3</title>
 	<script src='../assets/js/vue.js'></script>	
 </head>
 <body>
-<h1>component-2</h1>
+<h1>component-3</h1>
 <hr />
 <div id='app'>
-	<!-- <shen here="China"></shen> -->
-
-	<!-- - 用小驼峰的写法 -->
-	<!-- <shen from-here="China"></shen> -->
-
-	<shen :from-here="message"></shen>
-
-	<sdk></sdk>
+	<shen></shen>
+	<city></city>
 </div>
 
-<!-- <div id="ppa">
-	<shen></shen>	
-</div> -->
-
 <script>
-Vue.component('shen',{
-	template: `
-		<div styly="color:red">Shen from {{ fromHere }}</div>
-	`,
-	props: ['fromHere']
 
-})
+let city = {
+	template: `
+		<div>Shen from xinYang!</div>
+	`
+}
+
+let shenInfo = {
+	template: `
+		<div>
+			<div style="color:red;">Shen from China!</div>
+			<city></city>
+		</div>
+	`,
+	components: {
+		"city": city
+	}
+}
+
 new Vue({
 	el: '#app',
-	data: {
-		message: 'China'
-	},
 	components: {
-		'sdk': {
-			template: `
-				<div styly="color:red">我是局部的sdk组件</div>
-			`
-		}
+		'shen': shenInfo
 	}
 })
 
