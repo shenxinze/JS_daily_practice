@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>mixins option</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>mixins option</h1>
+<hr />
+<div id='app'>
+	<!-- {{num}} -->
+	${num}
+	<p><button @click="add">add</button></p>
+</div>
+
+<script>
+let extendsObj = {
+	updated: function(){
+		console.log('我是扩展的updated');
+	},
+	methods: {//不会被执行
+		add: function(){
+			console.log('我是被扩展出来的方法');
+			this.num++;
+		}
+	}
+}
+new Vue({
+	el: '#app',
+	data: {
+		num: 1
+	},
+	methods: {
+		add(){
+			console.log('我是原生的方法');
+			this.num++;
+		}
+	},
+	updated: function(){
+		console.log('我是原生的updated');
+	},
+	extends: extendsObj,//扩展只能一个对象，不能放数组
+	delimiters: ['${','}']
+
+})
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>propsData option</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>propsData option</h1>
+<hr />
+<topHeader></topHeader>
+
+<script>
+let vm = Vue.extend({
+	template:`<p>{{message}}-{{a}}</p>`,
+	data:function(){
+		return {
+			message: 'hello,I am topHeader!'
+		}
+	},
+	props: ['a']
+})
+
+new vm({propsData:{a:'hi'}}).$mount('topHeader');
+
+</script>
+
+</body>
+</html>

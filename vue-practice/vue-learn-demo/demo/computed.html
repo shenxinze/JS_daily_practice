@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>computed option</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>computed option</h1>
+<hr />
+<div id='app'>
+	<p>{{newPrice}}</p>
+	<ul>
+		<li v-for="item in reverseNews">{{item.title}}--{{item.date}}</li>
+	</ul>
+</div>
+
+<script>
+let newsList = [
+	{
+		title: '时速350公里“复兴号”运营满月 平均客座率95%',
+		date: '2017/10/18'
+	},
+	{
+		title: '商务部最终裁定:韩国等国进口共聚聚甲醛存在倾销',
+		date: '2017/10/19'
+	},
+	{
+		title: '中国在建全球海拔最高的引力波观测站长什么样？',
+		date: '2017/10/20'
+	},
+	{
+		title: '明年军队计划招收研究生6800人:压缩规模优化结构',
+		date: '2017/10/21'
+	}
+]
+new Vue({
+	el: '#app',
+	data: {
+		price: 100,
+		newsList: newsList
+	},
+	computed: {
+		newPrice(){
+			return this.price = '¥' + this.price + '元';
+		},
+		reverseNews(){
+			return this.newsList.reverse();
+		}
+	}
+})
+</script>
+
+</body>
+</html>

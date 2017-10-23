@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>methods Option</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>methods Option</h1>
+<hr />
+<div id='app'>
+	<p>{{a}}</p>
+	<button @click="add(2,$event)">add</button>
+	<p><btn @click.native="add(2,$event)"></btn></p>
+	<!-- native 修饰符 给组件绑定构造器里的原生事件。 -->
+</div>
+<button onclick="app.add(4)">外部组件Add</button>
+
+<script>
+let btn = {
+	template: `<button>组件Add</button>`
+}
+let app = new Vue({
+	el: '#app',
+	data: {
+		a: 1
+	},
+	components: {
+		'btn': btn
+	},
+	methods: {
+		add(num,event){
+			console.log(event)
+			if(num !== ''){
+				this.a += num;
+			}else{
+				this.a++; 
+			}
+		}
+	}
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>mixins option</title>
+	<script src='../assets/js/vue.js'></script>	
+</head>
+<body>
+<h1>mixins option</h1>
+<hr />
+<div id='app'>
+	{{num}}
+	<p><button @click="add">add</button></p>
+</div>
+
+<script>
+/*
+	优先级
+		全局混入 > 构造器混入 > 原生
+*/ 
+let addConsole = {
+	//updated 生命周期里面的函数
+	updated: function(){
+		console.log('数据发生了变化，变成了' + this.num);
+	}
+};
+
+Vue.mixin({
+	updated: function(){
+		console.log('我是全局的混入');//这个优先级最高
+	}
+});
+
+new Vue({
+	el: '#app',
+	data: {
+		num: 1
+	},
+	methods: {
+		add(){
+			this.num++;
+		}
+	},
+	updated: function(){
+		console.log('我是原生的updated')//原生后执行，混入先执行
+	},
+	mixins: [addConsole]
+})
+
+</script>
+
+</body>
+</html>
