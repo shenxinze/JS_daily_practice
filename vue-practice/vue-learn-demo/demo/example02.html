@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>example methods demo</title>
+	<script src='../assets/js/vue.js'></script>	
+	<script src='../assets/js/jquery-3.2.0.min.js'></script>
+</head>
+<body>
+<h1>example methods demo</h1>
+<hr />
+<div id='app'></div>
+<p><button onclick="destroy()">卸载</button></p>
+<p><button onclick="reload()">刷新</button></p>
+<p><button onclick="tick()">更改数据</button></p>
+
+
+<script>
+let shen  = Vue.extend({
+	template: `<p>{{message}}</p>`,
+	data: function(){
+		return {
+			message: 'Hello,I am Shenxinze!'
+		}
+	},
+	mounted: function(){
+		console.log('mounted 被创建了！');
+	},
+	destroyed: function(){
+		console.log('destroy 销毁之后');
+	},
+	updated: function(){
+		console.log('update 更新之后');
+	}
+})
+let vm = new shen().$mount('#app');
+
+function destroy(){
+   vm.$destroy();
+}
+
+function reload(){
+   vm.$forceUpdate();
+}
+
+function tick(){
+	vm.message = 'update message info';
+	vm.$nextTick(function(){
+		console.log('message 更新完成后我被调用啦');
+	})
+}
+</script>
+
+</body>
+</html>

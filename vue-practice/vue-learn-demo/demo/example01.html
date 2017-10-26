@@ -18,8 +18,17 @@ let app = new Vue({
 	el: '#app',
 	data: {
 		message: 'hello,world!'
+	},
+	mounted: function(){
+		$('#app').html('我是jquer');
+	},
+	methods: {
+		add(){
+			console.log('调用了构造器内部的add方法');
+		}
 	}
 })
+app.add();
 </script>
 
 </body>
