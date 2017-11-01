@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+		<style>
+			
+		</style>
+		<script>
+
+		</script>
+	</head>
+
+	<body>
+		<h2>注册get-ajax</h2>
+			用户名：<input type="text" name="user" id="username" /><span id="tip"></span>
+			<br/>
+			密码：<input type="password" name="password" /><br/>
+			<input type="button" id="send" value="提交">
+		<script>
+			username.onblur = function (){
+				// 向后端发送数据，查询名字是否存在
+				// 和服务器进行交互
+				let xhr = new XMLHttpRequest();
+				console.log(xhr.readyState);	
+				xhr.open(
+					'get',
+					'http://localhost:8088/backend/php/get.php?user='+this.value,
+					true
+				);
+				// 4. 响应触发的事件
+
+				// 监控ajax每一个步骤，ajax每进行一步都会触发这个事件
+				console.log(xhr.readyState);
+				xhr.onreadystatechange = function (){
+					if(xhr.readyState === 4){  // 相当于触发了onload
+
+						console.log(xhr.readyState);	
+						console.log(xhr.getAllResponseHeaders());
+						console.log(xhr.responseText);
+					}
+				}
+
+				// 只要触发onload，ajax的步骤已经进行到了第五步，也就是xhr.readyState = 4；
+				// 数据完全接完成，拿数据做事情了
+				xhr.onload = function (){
+					console.log("ajax回来了");	
+					console.log(xhr.readyState,"c");
+				};
+				// 3.发送
+				xhr.send();	
+			};
+		</script>
+	</body>
+</html>
