@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.tabBox div{
+			display: none;
+			width: 800px;
+			height: 500px;
+			border: 1px solid red;
+			margin-top: 10px;
+		}
+		.tabBox .active{
+			background: #f60;
+		}
+	</style>
+</head>
+<body>
+	<div class="tabBox">
+		<input type="button" value="tab1" class="active" />
+		<input type="button" value="tab2" />
+		<input type="button" value="tab3" />
+		<div style="display: block;">111</div>
+		<div>222</div>
+		<div>333</div>
+	</div>
+	<script src="./jquery.js"></script>
+	<script>
+		// 原生js写法
+
+		/*var oDiv = document.getElementsByClassName('tabBox')[0];
+		var btns = oDiv.getElementsByTagName('input');
+		var conts = oDiv.getElementsByTagName('div');
+		var prevIndex = 0;
+		for(var i = 0; i < btns.length; i++){
+			btns[i].index = i;
+			btns[i].onclick = function(){
+				btns[prevIndex].className = '';
+				this.className = 'active';
+				conts[prevIndex].style.display = 'none';
+				conts[this.index].style.display = 'block';
+				prevIndex = this.index;
+			}
+		} */
+
+		// jq写法
+		
+		$('.tabBox input').click(function(){
+
+			var i = $(this).index();
+
+			$('.tabBox input').attr('class','');
+			$(this).attr('class','active');
+
+			$('.tabBox div').css('display','none');
+			$('.tabBox div').eq(i).css('display','block');
+		})
+
+	</script>
+</body>
+</html>
