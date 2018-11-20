@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<ul>
+		<li>1 <button value="上移">上移</button> <button value="下移">下移</button></li>
+		<li>2 <button value="上移">上移</button> <button value="下移">下移</button></li>
+		<li>3 <button value="上移">上移</button> <button value="下移">下移</button></li>
+		<li>4 <button value="上移">上移</button> <button value="下移">下移</button></li>
+		<li>5 <button value="上移">上移</button> <button value="下移">下移</button></li>
+	</ul>
+	<script src="./jquery.js"></script>
+	<script>
+		$('button[value="上移"]').click(function(){
+			var nowLi = $(this).closest('li');
+			var prevLi = null;
+			if(nowLi.index() == 0){
+				prevLi = nowLi.parent().children(':last')
+				nowLi.insertAfter(prevLi);
+			}else{
+				prevLi = nowLi.prev();
+				nowLi.insertBefore(prevLi);
+			}
+		})
+
+		$('button[value="下移"]').click(function(){
+			var nowLi = $(this).closest('li');
+			var total = nowLi.parent().children().length;
+			var nextLi = null;
+			if(nowLi.index() + 1 == total){
+				nextLi = nowLi.parent().children(':first');
+				nowLi.insertBefore(nextLi);
+			}else{
+				nextLi = nowLi.next();
+				nowLi.insertAfter(nextLi);
+			}
+		})
+	</script>
+</body>
+</html>

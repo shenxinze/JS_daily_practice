@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.colorBox span{
+			width: 36px;
+			height: 36px;
+			border: 1px solid #000;
+			font-size: 36px;
+			margin-right: 20px;
+			display: inline-block;
+		}
+		.colorBox span:nth-child(1){
+			background: red;
+		}
+		.colorBox span:nth-child(2){
+			background: yellow;
+		}
+		.colorBox span:nth-child(3){
+			background: skyblue;
+		}
+		.colorBox span:nth-child(4){
+			background: pink;
+		}
+		.box div{
+			width: 120px;
+			height: 120px;
+			border: 1px solid #000;
+			display: inline-block;
+			margin: 20px;
+		}
+	</style>
+</head>
+<body>
+	<h3>点击色块给方块设置颜色</h3>
+	<div class="colorBox">
+		<span bg="red"></span>
+		<span bg="yellow"></span>
+		<span bg="skyblue"></span>
+		<span bg="pink"></span>
+	</div>
+	<div class="box">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+	<input type="button" value="清空红色" />
+	<script src="./jquery.js"></script>
+	<script>
+		var color = '';
+		$('span').click(function(){
+			color = $(this).attr('bg');
+		})
+		$('.box div').click(function(){
+			$(this).css('background',color);
+		})
+		$('input').click(function(){
+			$('.box div[style*=red]').css('background','');
+		})
+	</script>
+</body>
+</html>
