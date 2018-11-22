@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+<body>
+  <div class="popUp">
+    <div class="titleBox clear">
+      <div class="tabBox clear">  
+        <a href="javascript:;" class="active">措施类型</a>
+        <a href="javascript:;">措施内容</a>
+      </div>
+      <a href="javascript:;" class="close"></a>
+    </div>
+    <div class="contBox clear">
+      <div class="title left">
+        <h3>措施类型</h3>
+        <div class="cont">
+          <div class="selectBox">
+            <div class="select" name="genCd" id="J_Gender_Select">
+              <div class="select_text">请选择</div>
+              <ul class="select_ul" id='select_ul5'>
+                <li data-value="">请选择</li>
+                <li data-value="1">发展就业</li>
+                <li data-value="2">土地清理分配</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="title right">
+        <h3>措施属性</h3>
+        <ul class="cont">
+          <li class="contItem">
+            <span>脱贫状态</span>
+            <div class="selectBoxCheck">
+              <div class="select" name="genCd" id="J_Gender_Select">
+                <div class="select_text">请选择</div>
+                <ul class="select_ul" id='select_ul1'>
+                  <li data-value="">请选择</li>
+                  <li data-value="1"><a href="javascript:;"></a>发展就业</li>
+                  <li data-value="2"><a href="javascript:;"></a>土地清理分配</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="contItem">
+            <span>贫困户属性</span>
+            <div class="selectBoxCheck">
+              <div class="select" name="genCd" id="J_Gender_Select">
+                <div class="select_text">请选择</div>
+                <ul class="select_ul" id='select_ul2'>
+                  <li data-value="">请选择</li>
+                  <li data-value="1"><a href="javascript:;"></a>发展就业</li>
+                  <li data-value="2"><a href="javascript:;"></a>土地清理分配</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="contItem">
+            <span>主要致贫原因</span>
+            <div class="selectBoxCheck">
+              <div class="select" name="genCd" id="J_Gender_Select">
+                <div class="select_text">请选择</div>
+                <ul class="select_ul" id='select_ul3'>
+                  <li data-value="">请选择</li>
+                  <li data-value="1"><a href="javascript:;"></a>发展就业</li>
+                  <li data-value="2"><a href="javascript:;"></a>土地清理分配</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="contItem">
+            <span>其他致贫原因</span>
+            <div class="selectBoxCheck">
+              <div class="select" name="genCd" id="J_Gender_Select">
+                <div class="select_text">请选择</div>
+                <ul class="select_ul" id='select_ul4'>
+                  <li data-value="">请选择</li>
+                  <li data-value="1"><a href="javascript:;"></a>发展就业</li>
+                  <li data-value="2"><a href="javascript:;"></a>土地清理分配</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <table cellpadding="0" cellspacing="0">
+      <tr class="title">
+        <td><a href="javascript:;" class="addTr">+ 新增</a></td>
+        <td>序号</td>
+        <td>措施名称</td>
+        <td colspan="4">措施详细数据</td>
+      </tr>
+      <tr class="item">
+        <td><a href="javascript:;" class="delTr">- 减少</a></td>
+        <td>123</td>
+        <td>
+          <div class="select" name="genCd" id="J_Gender_Select">
+            <div class="select_text">请选择</div>
+            <ul class="select_ul">
+              <li data-value="">请选择</li>
+              <li data-value="1">发展就业</li>
+              <li data-value="2">土地清理分配</li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <div class="title clear">
+            <div><a href="javascript:;" class="addTd">+ 新增</a></div>
+            <div>措施内容</div>
+            <div>单位</div>
+            <div>补助标准</div>
+          </div>
+          <div class="subItemBox">
+            <div class="subItem">
+              <div><a href="javascript:;" class="delTd">- 减少</a></div>
+              <div><input type="text" /></div>
+              <div><input type="text" /></div>
+              <div><input type="text" /></div>
+            </div>
+        </td>
+      </tr>
+    </table>
+    <div class="btnBox">
+      <a href="javascript:;" class="close">取消</a>
+      <a href="javascript:;" class="save">保存</a>
+    </div>
+  </div>
+    <script src="./jquery.min.js"></script>
+    <script>
+      // tab切换
+      $('.tabBox a').click(function(){
+        var i = $(this).index();
+        if(i == '0'){
+          $('.tabBox a').removeClass('active');
+          $(this).addClass('active');
+          $('.contBox').show();
+          $('table').hide();
+        }
+        if(i == '1'){
+          $('.tabBox a').removeClass('active');
+          $(this).addClass('active');
+          $('.contBox').hide();
+          $('table').show();
+        }
+      })
+      // 新增行
+      $('.addTr').on('click',function(){
+        var html = $('<tr class="item"><td><a href="javascript:;" class="delTr">- 减少</a></td><td>123</td><td><div class="select" name="genCd" id="J_Gender_Select"><div class="select_text">请选择</div><ul class="select_ul"><li data-value="">请选择</li><li data-value="1">发展就业</li><li data-value="2">土地清理分配</li></ul></div></td><td><div class="title clear"><div><a href="javascript:;" class="addTd">+ 新增</a></div><div>措施内容</div><div>单位</div><div>补助标准</div></div><div class="subItemBox"><div class="subItem"><div><a href="javascript:;" class="delTd">- 减少</a></div><div><input type="text" /></div><div><input type="text" /></div><div><input type="text" /></div></div></td></tr>');
+        $('table').append(html);
+      })
+      // 删除行
+      $('table').delegate('.delTr','click',function(){
+        if($('table tr').length <= 2){
+          alert('只有一条，不能删除！');
+          return;
+        }
+        $(this).closest('.item').remove();
+      })
+      // 新增td
+      $('table').delegate('.addTd','click',function(){
+        var html = $('<div class="subItem"><div><a href="javascript:;" class="delTd">- 减少</a></div><div><input type="text" /></div><div><input type="text" /></div><div><input type="text" /></div></div>');
+        var parent = $(this).parent().parent().siblings();
+        parent.append(html);
+      })
+      // 删除td
+      $('table').delegate('.delTd','click',function(){
+        var len = $(this).closest('.subItem').siblings().length;
+        if(len == 0){
+          alert('只有一条，不能删除！');
+          return;
+        }
+        $(this).closest('.subItem').remove();
+      })
+
+      // 下拉框事件
+      $('body').on('click',function(e){
+        $('.select_ul').stop().slideUp();
+      });
+      $('body').on('click','.select',function(event){
+        $(this).find('.select_ul').stop().slideToggle().end().siblings('div.select').find('.select_ul').slideUp();
+        event.stopPropagation();
+      });
+      select('#select_ul1 li');
+      select('#select_ul2 li');
+      select('#select_ul3 li');
+      select('#select_ul4 li');
+      select('#select_ul5 li');
+      function select(id){
+        var str = [];
+        $('body').on('click',id,function(){
+          var li = $(this);
+          if($.inArray(li.text(),str) == '-1' && li.text() != '请选择'){
+            str.push(li.text());
+          }else{
+            str.splice($.inArray(li.text(),str),1)
+          }
+          if($(this).find('a').index() == 0){
+            if(str.length == 0){
+              $(this).parents('.select').find('.select_text').text('请选择');
+            }else{
+              $(this).parents('.select').find('.select_text').text(str.join('、'));
+            }
+          }else{
+            $(this).parents('.select').find('.select_text').text(li.text());
+          }
+
+          if(li.data('value') !== 0 && li.data('value') != ''){
+            if(str.length == 0){
+              $(this).parents('.select').find('.select_text').css('color','#999');
+            }else{
+              $(this).parents('.select').find('.select_text').css('color','#333');
+            }
+          }else{
+            $(this).parents('.select').find('.select_text').css('color','#999');
+          }
+
+          if($(this).find('a').hasClass('checked')){
+            $(this).find('a').removeClass('checked active');
+          }else{
+            $(this).find('a').addClass('checked active');
+          }
+        })
+      }
+    </script>
+</body>
+</html>

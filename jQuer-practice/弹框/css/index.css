@@ -1,0 +1,393 @@
+body {
+  background: rgba(0, 0, 0, 0.8);
+}
+h3 {
+  font-weight: normal;
+  margin: 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.clear:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+.clear {
+  zoom: 1;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.popUp {
+  width: 1016px;
+  background: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 6px;
+  padding: 0 0 30px 0;
+}
+.popUp .titleBox .tabBox {
+  float: left;
+  margin: 20px 0 0 30px;
+}
+.popUp .titleBox .tabBox a {
+  display: block;
+  width: 120px;
+  height: 32px;
+  background: #EFF4FF;
+  float: left;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 6px 6px 0px 0px;
+  margin-right: 1px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  color: #4c84ff;
+}
+.popUp .titleBox .tabBox .active {
+  background: #4C84FF;
+  font-weight: 400;
+  color: #ffffff;
+}
+.popUp .titleBox .close {
+  float: right;
+  width: 14px;
+  height: 14px;
+  background: red;
+  margin: 23px 31px 0 0;
+}
+.popUp .contBox {
+  width: 960px;
+  margin: 30px auto 0;
+}
+.popUp .contBox .title h3 {
+  height: 50px;
+  background: #fafafa;
+  border: 1px solid #EBEBEB;
+  line-height: 50px;
+  text-align: center;
+}
+.popUp .contBox .title .cont {
+  height: 220px;
+  border: 1px solid #EBEBEB;
+  border-top: none;
+}
+.popUp .contBox .left {
+  float: left;
+}
+.popUp .contBox .left h3 {
+  width: 353px;
+}
+.popUp .contBox .left .cont {
+  position: relative;
+}
+.popUp .contBox .left .cont .selectBox {
+  width: 313px;
+  height: 32px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.popUp .contBox .right {
+  float: left;
+}
+.popUp .contBox .right h3 {
+  width: 604px;
+  border-left: none;
+}
+.popUp .contBox .right .cont {
+  border-left: none;
+  padding: 16px 20px 0 0;
+  height: 204px;
+}
+.popUp .contBox .right .cont .contItem {
+  height: 32px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.popUp .contBox .right .cont .contItem span {
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #333333;
+  line-height: 20px;
+  display: block;
+  width: 100px;
+  text-align: right;
+  line-height: 32px;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck {
+  width: 476px;
+  position: absolute;
+  left: 110px;
+  top: 0;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck .select {
+  width: 476px;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck .select .select_ul {
+  width: 476px;
+  z-index: 1000;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck .select .select_ul li a {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #E3E6ED;
+  display: block;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+  margin-right: 10px;
+  background: #fff;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck .select .select_ul li .active {
+  background: #4C84FF;
+  color: #fff;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck .select .select_ul li .checked:after {
+  content: '√';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: -8px;
+  top: -11px;
+}
+.popUp .contBox .right .cont .contItem .selectBoxCheck .select .select_ul li:hover a {
+  border-style: dashed;
+}
+.popUp table {
+  width: 956px;
+  border: 1px solid #EBEBEB;
+  margin: 30px auto 0;
+  display: none;
+}
+.popUp table a {
+  width: 47px;
+  height: 20px;
+  background: #4c84ff;
+  border-radius: 2px;
+  display: block;
+  font-size: 10px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 20px;
+  text-align: center;
+  margin: 0 auto;
+}
+.popUp table td {
+  border-bottom: 1px solid #EBEBEB;
+  border-right: 1px solid #EBEBEB;
+  text-align: center;
+}
+.popUp table tr:nth-last-child(1) td:nth-child(1) {
+  border-bottom: none;
+}
+.popUp table tr:nth-last-child(1) td:nth-child(2) {
+  border-bottom: none;
+}
+.popUp table tr:nth-last-child(1) td:nth-child(3) {
+  border-bottom: none;
+}
+.popUp table tr:nth-child(2) td:nth-child(4) .title {
+  border-top: none;
+}
+.popUp table .title td {
+  height: 50px;
+  background: #FAFAFA;
+  font-size: 14px;
+  font-family: PingFangSC-Semibold;
+  font-weight: 600;
+  color: #333333;
+}
+.popUp table .title td:nth-child(1) {
+  width: 70px;
+}
+.popUp table .title td:nth-child(2) {
+  width: 52px;
+}
+.popUp table .title td:nth-child(3) {
+  width: 152px;
+}
+.popUp table .title td:nth-child(4) {
+  width: 684px;
+  border-right: none;
+}
+.popUp table .item td:nth-child(1) {
+  border-bottom: 1px solid #EBEBEB;
+}
+.popUp table .item td:nth-child(2) {
+  border-bottom: 1px solid #EBEBEB;
+}
+.popUp table .item td:nth-child(3) {
+  border-bottom: 1px solid #EBEBEB;
+  text-align: left;
+  position: relative;
+}
+.popUp table .item td:nth-child(3) .select {
+  width: 136px;
+  left: 7px;
+}
+.popUp table .item td:nth-child(3) .select .select_ul {
+  width: 136px;
+  z-index: 1000;
+}
+.popUp table .item td:nth-child(4) {
+  border-bottom: none;
+}
+.popUp table .item td {
+  border-bottom: none;
+}
+.popUp table .item td .subItemBox .subItem {
+  height: 50px;
+  border-top: 1px solid #EBEBEB;
+}
+.popUp table .item td .subItemBox .subItem input {
+  width: 186px;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #E3E6ED;
+  text-indent: 10px;
+}
+.popUp table .item td .subItemBox .subItem:nth-child(1) {
+  border-top: none;
+}
+.popUp table .item td .title {
+  border-top: 1px solid #EBEBEB;
+}
+.popUp table .item td .title div {
+  float: left;
+  background: #FAFAFA;
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  font-family: PingFangSC-Medium;
+  font-weight: 500;
+  color: #333333;
+  border-right: 1px solid #EBEBEB;
+  border-bottom: 1px solid #EBEBEB;
+}
+.popUp table .item td .title div:nth-child(1) {
+  width: 70px;
+}
+.popUp table .item td .title div:nth-child(1) a {
+  margin-top: 9px;
+}
+.popUp table .item td .title div:nth-child(2) {
+  width: 202px;
+}
+.popUp table .item td .title div:nth-child(3) {
+  width: 202px;
+}
+.popUp table .item td .title div:nth-child(4) {
+  width: 200px;
+  border-right: none;
+}
+.popUp table .item td .subItem div {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  border-right: 1px solid #EBEBEB;
+}
+.popUp table .item td .subItem div:nth-child(1) {
+  width: 70px;
+}
+.popUp table .item td .subItem div:nth-child(1) a {
+  margin-top: 16px;
+}
+.popUp table .item td .subItem div:nth-child(2) {
+  width: 202px;
+}
+.popUp table .item td .subItem div:nth-child(3) {
+  width: 202px;
+}
+.popUp table .item td .subItem div:nth-child(4) {
+  width: 200px;
+  border-right: none;
+}
+.popUp table .item td:nth-last-child(1) {
+  border-right: none;
+}
+.popUp .btnBox {
+  width: 332px;
+  text-align: center;
+  margin: 40px auto 0;
+}
+.popUp .btnBox a {
+  width: 156px;
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+  font-size: 16px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #666666;
+  border: 1px dashed #EBEBEB;
+}
+.popUp .btnBox .close {
+  float: left;
+  background: #F5F6FA;
+}
+.popUp .btnBox .save {
+  float: right;
+  background: #4C84FF;
+  color: #ffffff;
+}
+.select {
+  position: relative;
+  width: 313px;
+  height: 32px;
+  border: 1px solid #eee;
+  cursor: pointer;
+  display: inline-block;
+}
+.select:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: -2px;
+  border-top: 5px solid #666;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+.select .select_text {
+  padding: 0 20px 0 10px;
+  height: 32px;
+  line-height: 36px;
+  color: #999;
+}
+.select_ul {
+  display: none;
+  position: absolute;
+  top: 32px;
+  left: -1px;
+  width: 313px;
+  border: 1px solid #D4D4D4;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  background: #fff;
+}
+.select_ul li {
+  line-height: 36px;
+  text-indent: 10px;
+}
+.select_ul li:hover {
+  color: #fff;
+  background: #4C84FF;
+}
+.select_ul li.cur {
+  color: #fff;
+  background: #4C84FF;
+}
