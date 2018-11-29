@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		li{
+			width: 480px;
+			height: 360px;
+			overflow: hidden;
+			margin-bottom: 30px;
+		}
+		li img{
+			width: 100%;
+			height: auto;
+		}
+	</style>
+	<script src="./jquery.js"></script>
+	<script>
+		$(function(){
+			changeImg();
+			$(window).scroll(changeImg);
+			function changeImg(){
+				$('img').each(function(index, el) {
+					console.log($(el).offset().top,$(window).height() + $(window).scrollTop())
+						if($(el).offset().top < ($(window).height() + $(window).scrollTop())){
+							console.log(12)
+							$(el).attr('src',$(el).attr('_src'))
+						}
+				});
+			}
+		})
+	</script>
+</head>
+<body>
+	<ul>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/6.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/7.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/8.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/9.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/10.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+		<li>
+			<img _src="http://cdn.jirengu.com/book.jirengu.com/img/11.jpg" src="http://www.3d2000.com/wp-content/uploads/2016/05/294194-7268075d6ad931da.gif" alt="">
+		</li>
+	</ul>
+</body>
+</html>

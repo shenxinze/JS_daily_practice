@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.drag{
+			width: 80px;
+			height: 80px;
+			background: #f60;
+			position: absolute;
+			left: 10px;
+			top: 10px;
+		}
+	</style>
+	<script src="./jquery.js"></script>
+	<script>
+		$(function(){
+			$('.drag').mousedown(function(event) {
+				var disX = event.pageX - $('.drag').offset().left;
+				var disY = event.pageY - $('.drag').offset().top;
+				$(document).mousemove(function(event) {
+					var clientW = $(document).width();
+					var clientH = $(document).height();
+					var left = event.pageX - disX;
+					var top = event.pageY - disY;
+					if(left < 0){
+						left = 0;
+					}
+					if(left > (clientW - $('.drag').outerWidth())){
+						left = clientW - $('.drag').outerWidth();
+					}
+					if(top < 0){
+						top = 0;
+					}
+					if(top > (clientH - $('.drag').outerHeight())){
+						top = clientH - $('.drag').outerHeight();
+					}
+					$('.drag').css({
+						'left': left,
+						'top': top
+					})
+				});
+				$(document).mouseup(function(event) {
+					$(document).off();
+				});
+				return false
+			});
+		})
+	</script>
+</head>
+<body>
+	<div class="drag"></div>
+</body>
+</html>
