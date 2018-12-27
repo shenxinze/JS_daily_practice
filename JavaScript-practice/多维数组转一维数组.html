@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var arr = [1,[2,3,[4,[,5,[6,7],8],9],10]];
+		var newArr = [];
+		function toArr(arr){
+			for(var i = 0; i < arr.length; i++){
+				if(Array.isArray(arr[i])){
+					toArr(arr[i])
+				}else{
+					if(arr[i] !== undefined){
+						newArr.push(arr[i])
+					}
+				}
+			}
+		}
+		toArr(arr)
+		console.log(newArr)
+
+
+		var newArr1 = arr.toString().split(',').filter((item,index)=>{
+			return item != ''
+		});
+		var newArr2 = newArr1.map(item=>Number(item));
+		console.log(newArr2);
+
+
+		var num = 1;
+		function flat(arr){
+			for(var i = 0; i < arr.length; i++){
+				if(Array.isArray(arr[i])){
+					num++;
+					flat(arr[i])
+				}
+			}
+			return num
+		}
+		console.log(arr.flat(flat(arr)));
+
+
+		const flatten = arr => arr.reduce(
+            (acc,val) => acc.concat(Array.isArray(val) ? flatten(val):val),[]
+    	)
+    	console.log(flatten(arr));
+	</script>
+</body>
+</html>
